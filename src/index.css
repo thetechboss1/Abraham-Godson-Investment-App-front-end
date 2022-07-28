@@ -23,11 +23,15 @@ body {
 
 /*== Auth section ===*/
 .auth_page {
-  @apply w-full h-screen flex items-center justify-center px-5 bg-neutral;
+  @apply w-full h-screen flex items-center justify-center px-20 bg-neutral;
 }
 
 .auth_page button {
-  @apply bg-primary text-white w-full rounded mt-3 py-2;
+  @apply bg-primary text-white w-full rounded mt-5 py-2;
+}
+
+.form-group {
+  @apply w-full;
 }
 
 .form-group label {
