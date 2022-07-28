@@ -21,6 +21,10 @@ body {
   font-family: "Roboto", sans-serif;
 }
 
+.Container {
+  @apply container w-full mx-auto md:px-6 lg:px-12 px-5;
+}
+
 /*== Auth section ===*/
 .auth_page {
   @apply w-full h-screen flex items-center justify-center px-5 bg-neutral;
@@ -40,4 +44,14 @@ body {
 
 .form-group input {
   @apply w-full border border-slate-300 pl-2 pr-10 py-2 rounded-md placeholder:text-sm text-sm focus:outline-none;
+}
+
+/*== Sidebar menu ==*/
+.sidebarWrap{
+  background: var(--primary);
+  color: #fff;
+  height: 100vh;
+  width: 200px;
+  transition: all 0.5s;
+  position: fixed;
 }
