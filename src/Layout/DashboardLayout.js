@@ -8,7 +8,7 @@ const DashboardLayout = ({ children }) => {
         <div className="sidebarWrap">
           <Sidebar />
         </div>
-        <main className="flex-1 lg:ml-52">{children}</main>
+        <main className="flex-1 lg:ml-60">{children}</main>
       </div>
     </>
   );
