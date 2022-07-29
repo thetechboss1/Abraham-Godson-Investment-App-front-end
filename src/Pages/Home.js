@@ -5,7 +5,7 @@ const Home = () => {
   return (
   <>
   <DashboardLayout>
-    <div className='bg-red-300'>
+    <div className=''>
       Home
     </div>
   </DashboardLayout>

@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import logo from "../Images/logo1.png";
 
 const Sidebar = () => {
+  const[isOpen ,setIsOpen] = useState(false);
+  const toggle = () => setIsOpen (!isOpen);
   return (
-    <div className="sidebar px-4 py-5 flex flex-col justify-between">
+    <div className="sidebar px-4 py-8 flex flex-col justify-between">
       <div>
         <div className="flex items-center gap-x-7">
           <i className="ri-menu-line text-xl font-bold cursor-pointer"></i>
@@ -12,7 +14,7 @@ const Sidebar = () => {
         </div>
 
         {/*  */}
-        <div className="mt-10">
+        <div className="mt-12">
           <NavLink to="/" className="sidebar_link">
             <i className="ri-home-smile-line"></i> <span>Home</span>
           </NavLink>
