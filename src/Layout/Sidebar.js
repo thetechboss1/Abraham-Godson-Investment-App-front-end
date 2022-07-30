@@ -1,41 +1,73 @@
-import React, { useState } from "react";
+import React from "react";
 import { NavLink } from "react-router-dom";
-import logo from "../Images/logo1.png";
+import Tooltip from "@mui/material/Tooltip";
 
-const Sidebar = () => {
-  const[isOpen ,setIsOpen] = useState(false);
-  const toggle = () => setIsOpen (!isOpen);
+const Sidebar = ({ isOpen, setIsOpen }) => {
+  const toggle = () => setIsOpen(!isOpen);
+
   return (
-    <div className="sidebar px-4 py-8 flex flex-col justify-between">
+    <div
+      className="sidebar px-4 py-8 flex  flex-col justify-between overflow-hidden transition-all"
+      style={{ width: isOpen ? "240px" : "63px" }}
+    >
       <div>
         <div className="flex items-center gap-x-7">
-          <i className="ri-menu-line text-xl font-bold cursor-pointer"></i>
-          <h4 className="font-bold text-xl">Abraham Godson</h4>
+          <Tooltip title={isOpen ? "Close sidebar": "Open sidebar"} placement="right-start">
+            <i
+              onClick={toggle}
+              className="ri-menu-line text-xl font-bold cursor-pointer"
+            ></i>
+          </Tooltip>
+
+          <h4 className={isOpen ? "font-bold text-xl" : "hidden"}>
+            Abraham Godson
+          </h4>
         </div>
 
-        {/*  */}
         <div className="mt-12">
           <NavLink to="/" className="sidebar_link">
-            <i className="ri-home-smile-line"></i> <span>Home</span>
+            <Tooltip title="Home" placement="right-start">
+              <i className="ri-home-smile-line"></i>
+            </Tooltip>
+            <span className={isOpen ? "" : "hidden"}>Home</span>
+          </NavLink>
+
+          <NavLink to="/" className="sidebar_link">
+            <Tooltip title="Upline" placement="right-start">
+              <i className="ri-vip-crown-line"></i>
+            </Tooltip>
+
+            <span className={isOpen ? "" : "hidden"}>Upline</span>
           </NavLink>
           <NavLink to="/" className="sidebar_link">
-            <i className="ri-building-3-line"></i> <span>Properties</span>
+            <Tooltip title="Downline" placement="right-start">
+              <i className="ri-award-line"></i>
+            </Tooltip>
+
+            <span className={isOpen ? "" : "hidden"}>Downline</span>
           </NavLink>
           <NavLink to="/" className="sidebar_link">
-            <i className="ri-vip-crown-line"></i> <span>My Upline</span>
+            <Tooltip title="Properties" placement="right-start">
+              <i className="ri-building-3-line"></i>
+            </Tooltip>
+            <span className={isOpen ? "" : "hidden"}>Properties</span>
           </NavLink>
           <NavLink to="/" className="sidebar_link">
-            <i className="ri-award-line"></i> <span>My Downline</span>
-          </NavLink>
-          <NavLink to="/" className="sidebar_link">
-            <i className="ri-shield-user-line"></i> <span>Account</span>
+            <Tooltip title="Account" placement="right-start">
+              <i className="ri-shield-user-line"></i>
+            </Tooltip>
+
+            <span className={isOpen ? "" : "hidden"}>Account</span>
           </NavLink>
         </div>
       </div>
 
-      <div className="flex items-center gap-x-7 cursor-pointer">
-        <i className="ri-logout-circle-r-line text-xl font-medium"></i>
-        <span className="text-base">Logout</span>
+      <div className="flex items-center gap-x-7 cursor-pointer justify-start">
+        <Tooltip title="Logout" placement="right-start">
+          <i className="ri-logout-circle-r-line text-xl font-medium"></i>
+        </Tooltip>
+
+        <span className={isOpen ? "text-base" : "hidden"}>Logout</span>
       </div>
     </div>
   );

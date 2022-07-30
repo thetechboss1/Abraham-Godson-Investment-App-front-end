@@ -8,8 +8,9 @@
 
 :root {
   --primary: #02aeee;
-  --secondary: #FF6103;
+  --secondary: #ff6103;
   --neutral: #dee4f0;
+  --accent: #424a57;
 }
 
 html {
@@ -22,7 +23,15 @@ body {
 }
 
 .Container {
-  @apply container w-full mx-auto md:px-6 lg:px-12 px-5;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 768px) {
+  .Container {
+    padding-left: 2.7rem;
+    padding-right: 2.7rem;
+  }
 }
 
 /*== Auth section ===*/
@@ -47,11 +56,10 @@ body {
 }
 
 /*== Sidebar menu ==*/
-.sidebarWrap{
+.sidebarWrap {
   background: var(--primary);
   color: #fff;
   height: 100vh;
-  width: 240px;
   transition: all 0.5s;
   position: fixed;
   display: flex;
@@ -63,5 +71,12 @@ body {
 }
 
 .sidebar_link i {
-   @apply text-xl font-medium;
+  @apply text-xl font-medium;
+}
+
+
+@media(max-width: 768px){
+     .sidebarWrap {
+       display: none;
+     }
 }
