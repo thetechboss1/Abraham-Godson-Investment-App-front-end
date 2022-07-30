@@ -1,22 +1,35 @@
 import React from "react";
+import HomeCard from "../Components/HomeCard";
+import PageToper from "../Components/PageToper";
 import DashboardLayout from "../Layout/DashboardLayout";
 
 const Home = () => {
   return (
     <>
       <DashboardLayout>
-        <div className="Container pt-8">
-          <div className="flex justify-between items-center">
-            <div>
-              <h1 className="font-extrabold text-black text-xl md:text-2xl capitalize">
-                Onyekachi Smile
-              </h1>
-              <span className="text-gray-600 text-sm">
-                Hello, Welcome back 🖐
-              </span>
-            </div>
+        <div className="Container">
+          <PageToper title=" Onyekachi Smile" desc=" Hello, Welcome back 🖐" />
 
-            <i className="ri-user-line text-xl bg-primary h-10 w-10 flex justify-center items-center rounded-full text-white cursor-pointer hover:shadow-lg"></i>
+          <div className="grid gap-6 grid-cols-3 mt-10">
+            <HomeCard
+              title="Total Property Sold"
+              bg="rgb(121, 19, 229)"
+              number="20"
+              icon=" ri-building-3-line"
+            />
+            <HomeCard
+              title="My Referrals "
+              bg="rgb(34, 34, 34)"
+              icon="ri-line-chart-line"
+              number="100"
+            />
+
+            <HomeCard
+              title="My Downline"
+              bg="rgb(13, 96, 216)"
+              number="50"
+              icon="ri-award-line"
+            />
           </div>
         </div>
       </DashboardLayout>

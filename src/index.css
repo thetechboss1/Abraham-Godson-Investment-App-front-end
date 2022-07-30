@@ -98,6 +98,12 @@ body {
   @apply text-secondary;
 }
 
+/*== Home page ==*/
+.homeCard {
+  /* background-color: rgb(34, 34, 34); */
+    @apply flex items-center gap-x-7 rounded-md text-gray-200 px-5 py-7;
+}
+
 
 
 /*=== Media query ===*/
