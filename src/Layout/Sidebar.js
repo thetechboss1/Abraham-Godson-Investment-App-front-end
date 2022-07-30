@@ -12,7 +12,10 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
     >
       <div>
         <div className="flex items-center gap-x-7">
-          <Tooltip title={isOpen ? "Close sidebar": "Open sidebar"} placement="right-start">
+          <Tooltip
+            title={isOpen ? "Close sidebar" : "Open sidebar"}
+            placement="right-start"
+          >
             <i
               onClick={toggle}
               className="ri-menu-line text-xl font-bold cursor-pointer"
@@ -24,6 +27,38 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
           </h4>
         </div>
 
+        {/* Admin view */}
+        <div className="mt-12 hidden">
+          <NavLink to="/" className="sidebar_link">
+            <Tooltip title="Home" placement="right-start">
+              <i className="ri-home-smile-line"></i>
+            </Tooltip>
+            <span className={isOpen ? "" : "hidden"}>Home</span>
+          </NavLink>
+          <NavLink to="/users" className="sidebar_link">
+            <Tooltip title="Account" placement="right-start">
+              <i className="ri-map-pin-user-line"></i>
+            </Tooltip>
+
+            <span className={isOpen ? "" : "hidden"}>Users</span>
+          </NavLink>
+          <NavLink to="/admin-properties" className="sidebar_link">
+            <Tooltip title="Properties" placement="right-start">
+              <i className="ri-building-3-line"></i>
+            </Tooltip>
+            <span className={isOpen ? "" : "hidden"}>Properties</span>
+          </NavLink>
+
+          <NavLink to="/admin-account" className="sidebar_link">
+            <Tooltip title="Account" placement="right-start">
+              <i className="ri-shield-user-line"></i>
+            </Tooltip>
+
+            <span className={isOpen ? "" : "hidden"}>Account</span>
+          </NavLink>
+        </div>
+
+        {/* Normal user view*/}
         <div className="mt-12">
           <NavLink to="/" className="sidebar_link">
             <Tooltip title="Home" placement="right-start">
@@ -31,28 +66,27 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
             </Tooltip>
             <span className={isOpen ? "" : "hidden"}>Home</span>
           </NavLink>
-
-          <NavLink to="/" className="sidebar_link">
+          <NavLink to="/upline" className="sidebar_link">
             <Tooltip title="Upline" placement="right-start">
               <i className="ri-vip-crown-line"></i>
             </Tooltip>
 
             <span className={isOpen ? "" : "hidden"}>Upline</span>
           </NavLink>
-          <NavLink to="/" className="sidebar_link">
+          <NavLink to="/downline" className="sidebar_link">
             <Tooltip title="Downline" placement="right-start">
               <i className="ri-award-line"></i>
             </Tooltip>
 
             <span className={isOpen ? "" : "hidden"}>Downline</span>
           </NavLink>
-          <NavLink to="/" className="sidebar_link">
+          <NavLink to="/properties" className="sidebar_link">
             <Tooltip title="Properties" placement="right-start">
               <i className="ri-building-3-line"></i>
             </Tooltip>
             <span className={isOpen ? "" : "hidden"}>Properties</span>
           </NavLink>
-          <NavLink to="/" className="sidebar_link">
+          <NavLink to="/account" className="sidebar_link">
             <Tooltip title="Account" placement="right-start">
               <i className="ri-shield-user-line"></i>
             </Tooltip>

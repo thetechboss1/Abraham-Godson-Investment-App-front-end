@@ -67,16 +67,40 @@ body {
 }
 
 .sidebar_link {
-  @apply flex items-center gap-x-7 text-base my-7 hover:text-secondary;
+  @apply flex items-center gap-x-7 text-base my-7;
 }
 
 .sidebar_link i {
   @apply text-xl font-medium;
 }
 
+.sidebar_link span::after {
+  content: "";
+  width: 0%;
+  height: 2px;
+  display: block;
+  background-color: #fff;
+  margin-top: 7px;
+  transition: all 0.3s;
+}
 
+.sidebar_link:hover span::after,
+.sidebar_link.active span::after {
+  width: 100%;
+  transition: all 0.3s;
+}
+
+
+
+/*=== Media query ===*/
 @media(max-width: 768px){
      .sidebarWrap {
        display: none;
      }
+}
+
+@media(min-width: 769px){
+  .topbar {
+    display: none;
+  }
 }
