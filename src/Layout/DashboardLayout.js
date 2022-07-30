@@ -1,10 +1,14 @@
 import React, { useState } from "react";
 import Sidebar from "./Sidebar";
+import Topbar from "./Topbar";
 
 const DashboardLayout = ({ children }) => {
   const [isOpen, setIsOpen] = useState(true);
   return (
     <>
+    <div className="topbar">
+      <Topbar/>
+    </div>
       <div className="flex w-full relative">
         <div className="sidebarWrap lg:flex hidden">
           <Sidebar isOpen={isOpen} setIsOpen={setIsOpen} />
