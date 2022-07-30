@@ -11,7 +11,8 @@ module.exports = {
       colors: {
         primary: "var(--primary)",
         secondary: "var(--secondary)",
-        neutral: "var(--neutral)"
+        neutral: "var(--neutral)",
+        accent: "var(--accent)",
       }
     },
   },
