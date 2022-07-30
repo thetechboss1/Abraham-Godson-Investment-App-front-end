@@ -90,6 +90,14 @@ body {
   transition: all 0.3s;
 }
 
+.sidebar_link_mobile {
+  @apply flex items-center gap-x-7 cursor-pointer text-base hover:text-secondary;
+}
+
+.sidebar_link_mobile.active {
+  @apply text-secondary;
+}
+
 
 
 /*=== Media query ===*/
