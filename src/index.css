@@ -34,6 +34,25 @@ body {
   }
 }
 
+.button {
+  @apply border border-secondary rounded font-medium bg-secondary text-white transition ease-in-out duration-300 text-base tracking-wider hover:opacity-70;
+  padding: 6px 13px;
+}
+
+.transparentButton {
+  @apply border border-slate-400 hover:border-slate-800 rounded font-medium bg-transparent text-accent transition ease-in-out duration-500 text-sm tracking-wider;
+  padding: 6px 8.5px;
+}
+
+.button:disabled,
+.button:disabled:hover,
+.button:disabled:active {
+  background-color: #ccc;
+  color: #292929;
+  border-color: #ccc;
+  cursor: not-allowed;
+}
+
 /*== Auth section ===*/
 .auth_page {
   @apply w-full h-screen flex items-center justify-center px-5 bg-neutral overflow-auto;
@@ -100,20 +119,34 @@ body {
 
 /*== Home page ==*/
 .homeCard {
-  /* background-color: rgb(34, 34, 34); */
-    @apply flex items-center gap-x-7 rounded-md text-gray-200 px-5 py-7;
+  @apply flex items-center gap-x-7 rounded-md text-gray-200 px-5 py-7;
 }
 
+/*=== Account page  ===*/
+.form-control {
+  @apply mb-4;
+}
 
+.form-control label {
+  @apply block pb-1 text-sm text-accent;
+}
+
+.form-control input,
+.form-control select {
+  @apply w-full rounded p-2 focus:outline-none text-sm border;
+}
+.form-control textarea {
+  @apply w-full rounded p-2 focus:outline-none text-sm border h-28 resize-none;
+}
 
 /*=== Media query ===*/
-@media(max-width: 768px){
-     .sidebarWrap {
-       display: none;
-     }
+@media (max-width: 768px) {
+  .sidebarWrap {
+    display: none;
+  }
 }
 
-@media(min-width: 769px){
+@media (min-width: 769px) {
   .topbar {
     display: none;
   }

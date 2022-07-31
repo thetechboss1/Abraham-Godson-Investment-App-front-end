@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const PageToper = ({ title, desc }) => {
   return (
-    <div className="flex justify-between items-center pt-8">
+    <div className="flex justify-between items-center pt-8 mb-10">
       <div>
         <h1 className="font-extrabold text-black text-xl md:text-2xl capitalize">
           {title}

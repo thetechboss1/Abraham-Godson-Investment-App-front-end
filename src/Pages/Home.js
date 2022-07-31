@@ -7,10 +7,10 @@ const Home = () => {
   return (
     <>
       <DashboardLayout>
-        <div className="Container">
+        <div className="Container mb-10">
           <PageToper title=" Onyekachi Smile" desc=" Hello, Welcome back 🖐" />
 
-          <div className="grid gap-6 grid-cols-3 mt-10">
+          <div className="grid gap-6 grid-cols-3">
             <HomeCard
               title="Total Property Sold"
               bg="rgb(121, 19, 229)"
