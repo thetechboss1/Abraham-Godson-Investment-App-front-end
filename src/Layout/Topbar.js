@@ -36,7 +36,7 @@ const Topbar = () => {
             </div>
             
             {/* Normal user view */}
-            <div className="mt-14 hidden">
+            <div className="mt-14">
               <div className="flex gap-5 flex-col text-accent font-medium">
                 <NavLink to="/" className="sidebar_link_mobile">
                   <i className="ri-home-smile-line text-base"></i>
@@ -59,7 +59,7 @@ const Topbar = () => {
             </div>
 
             {/* Admin view */}
-            <div className="mt-14">
+            <div className="mt-14 hidden">
               <div className="flex gap-5 flex-col text-accent font-medium">
                 <NavLink to="/" className="sidebar_link_mobile">
                   <i className="ri-home-smile-line text-base"></i>
