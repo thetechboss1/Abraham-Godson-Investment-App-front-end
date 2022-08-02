@@ -4,6 +4,7 @@ import EditAccount from "../Components/EditAccount";
 import PageToper from "../Components/PageToper";
 import DashboardLayout from "../Layout/DashboardLayout";
 import avatar from "../Images/avatar.png";
+import { Link } from "react-router-dom";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -84,8 +85,8 @@ const Account = () => {
               My Downline
             </h5>
                 <div className="flex items-center justify-around">
-                <button className="button">1st Generation</button>
-               <button className="button">2nd Generation</button>
+                <Link to="/downline" className="button">1st Generation</Link>
+               <Link to="/downline" className="button">2nd Generation</Link>
                 </div>
           </div>
         </div>
