@@ -63,12 +63,9 @@ const House = () => {
                   </div>
                 </div>
                 <div>
-                  <span>Area</span>
+                  <span>Location</span>
                   <div>
-                    <i className="fas fa-vector-square"></i>
-                    <span>
-                      3500<span>Sq Ft</span>
-                    </span>
+                     <h5 className="text-sm font-medium">Ebeju Lekki</h5>
                   </div>
                 </div>
               </div>

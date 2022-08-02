@@ -6,13 +6,13 @@ const ShareProperty = ({ handleClose, open }) => {
   return (
     <>
       <Modal open={open} onClose={handleClose}>
-        <div className="CModal" style={{ maxWidth: 500 }}>
+        <div className="CModal" style={{ maxWidth: 450 }}>
           <div className="flex items-center justify-between w-full mb-7">
             <h5 className="text-lg font-semibold text-accent">
               Share Property via
             </h5>
             <i
-              class="fas fa-times cursor-pointer text-xl"
+              className="fas fa-times cursor-pointer text-xl"
               onClick={handleClose}
             ></i>
           </div>
@@ -22,7 +22,6 @@ const ShareProperty = ({ handleClose, open }) => {
             <i className={`ri-whatsapp-line text-3xl bg-green-500 ${styleButton }`}></i>
             <i className={`ri-linkedin-fill text-3xl bg-blue-500 ${styleButton }`}></i>
             <i className={`ri-telegram-line text-3xl bg-blue-400 ${styleButton }`}></i>
-            <i className={`ri-file-copy-line text-3xl bg-secondary ${styleButton }`}></i>
           </div>
         </div>
       </Modal>

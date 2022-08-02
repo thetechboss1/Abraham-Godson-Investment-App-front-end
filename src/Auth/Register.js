@@ -28,9 +28,15 @@ const Register = () => {
                 <input type="email" placeholder="johndoe@gmail" />
               </div>
 
-              <div className="form-group">
-                <label>Phone number</label>
-                <input type="tel" placeholder="Enter phone" />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div className="form-group">
+                  <label>Phone number</label>
+                  <input type="tel" placeholder="Enter your phone number" />
+                </div>
+                <div className="form-group">
+                <label>Referral phone</label>
+                <input type="tel" placeholder="referral phone number" />
+              </div>
               </div>
               <div className="form-group mt-4">
                 <label>Password</label>

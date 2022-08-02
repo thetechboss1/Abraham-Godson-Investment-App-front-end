@@ -4,7 +4,6 @@ import EditAccount from "../Components/EditAccount";
 import PageToper from "../Components/PageToper";
 import DashboardLayout from "../Layout/DashboardLayout";
 import avatar from "../Images/avatar.png";
-import { Link } from "react-router-dom";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -32,7 +31,7 @@ const Account = () => {
               Godswill Omenuko
             </h5>
             <div className="flex justify-center items-center gap-5 text-xs text-accent mt-3 mb-4">
-              <span>Alvin Grey Associate</span>
+              <span>Abraham Godson Realtors</span>
               <span className="flex items-center">
                 <i className="ri-map-pin-fill text-secondary pr-2 text-sm"></i>
                 <span>Lagos, Nigeria</span>
@@ -44,13 +43,10 @@ const Account = () => {
               <span>Rating</span>
             </div>
             <div className="lg:px-5">
-              <button type="button" className="button w-full">
-                Share my profile
-              </button>
               <button
                 onClick={() => setOpenFullDialog(true)}
                 type="button"
-                className="transparentButton w-full mt-6"
+                className="transparentButton w-full mt-3"
               >
                 Edit Profile
               </button>
@@ -84,32 +80,13 @@ const Account = () => {
                 </div>
               </div>
             </div>
-            <h5 className="text-base pt-5 pb-3 font-medium text-gray-600">
+            <h5 className="text-base pt-10 pb-3 font-medium text-gray-600">
               My Downline
             </h5>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-              {[1, 2, 3].map(() => (
-                <div className="rounded-md px-4 py-3 border  bg-gray-100 cursor-pointer shadow-sm shadow-secondary hover:shadow-primary">
-                  <div className="flex items-center justify-between gap-3">
-                    <div>
-                      <img src={avatar} alt="avatar" className="h-16" />
-                    </div>
-                    <div>
-                      <h5 className="font-medium text-sm pb-1">
-                        Reuben Arinze
-                      </h5>
-                      <p className="text-accent text-sm">Lagos, Nigeria</p>
-                    </div>
-                  </div>
+                <div className="flex items-center justify-around">
+                <button className="button">1st Generation</button>
+               <button className="button">2nd Generation</button>
                 </div>
-              ))}
-              <div className="flex items-center justify-center">
-                <Link to="/downline" className="button flex items-center gap-2">
-                  <span>See More</span>{" "}
-                  <i className="ri-arrow-right-line text-base font-semibold"></i>
-                </Link>
-              </div>
-            </div>
           </div>
         </div>
       </div>

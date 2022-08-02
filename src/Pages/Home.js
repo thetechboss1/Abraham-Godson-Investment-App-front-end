@@ -10,7 +10,7 @@ const Home = () => {
         <div className="Container mb-10">
           <PageToper title=" Onyekachi Smile" desc=" Hello, Welcome back 🖐" />
 
-          <div className="grid gap-6 grid-cols-3">
+          <div className="grid gap-6 grid-cols-1 md:grid-cols-2">
             <HomeCard
               title="Total Property Sold"
               bg="rgb(121, 19, 229)"
@@ -25,10 +25,16 @@ const Home = () => {
             />
 
             <HomeCard
-              title="My Downline"
+              title="Paid Commission"
               bg="rgb(13, 96, 216)"
               number="50"
-              icon="ri-award-line"
+              icon="ri-bank-card-line"
+            />
+             <HomeCard
+              title="Unpaid Commission"
+              bg="#ff6103"
+              number="50"
+              icon="ri-refund-2-fill"
             />
           </div>
         </div>
