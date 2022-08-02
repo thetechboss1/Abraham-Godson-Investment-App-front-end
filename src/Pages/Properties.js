@@ -1,9 +1,36 @@
-import React from 'react'
+import React, { useState } from "react";
+import PageToper from "../Components/PageToper";
+import DashboardLayout from "../Layout/DashboardLayout";
+import House from "./House";
+import Land from "./Land";
 
 const Properties = () => {
+  const [switchProperty, setSwitchProperty] = useState(true);
   return (
-    <div>Properties</div>
-  )
-}
+    <DashboardLayout>
+      <div className="Container mb-10">
+        <PageToper title="Properties" desc="Listed Properties" />
+        <div>
+          <div className="flex items-center gap-4 mb-4">
+            <button
+              className={switchProperty ? "button" : "transparentButton"}
+              onClick={() => setSwitchProperty(true)}
+            >
+              House
+            </button>
+            <button
+              className={switchProperty ? "transparentButton" : "button"}
+              onClick={() => setSwitchProperty(false)}
+            >
+              Land
+            </button>
+          </div>
 
-export default Properties
+          {switchProperty ? <House /> : <Land />}
+        </div>
+      </div>
+    </DashboardLayout>
+  );
+};
+
+export default Properties;

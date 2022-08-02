@@ -66,13 +66,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
             </Tooltip>
             <span className={isOpen ? "" : "hidden"}>Home</span>
           </NavLink>
-          <NavLink to="/upline" className="sidebar_link">
-            <Tooltip title="Upline" placement="right-start">
-              <i className="ri-vip-crown-line"></i>
-            </Tooltip>
-
-            <span className={isOpen ? "" : "hidden"}>Upline</span>
-          </NavLink>
+         
           <NavLink to="/downline" className="sidebar_link">
             <Tooltip title="Downline" placement="right-start">
               <i className="ri-award-line"></i>

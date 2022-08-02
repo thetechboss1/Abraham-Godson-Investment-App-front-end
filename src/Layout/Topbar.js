@@ -42,10 +42,7 @@ const Topbar = () => {
                   <i className="ri-home-smile-line text-base"></i>
                   <span>Home</span>
                 </NavLink>
-                <NavLink to="/upline" className="sidebar_link_mobile">
-                  <i className="ri-vip-crown-line text-base"></i>
-                  <span>Upline</span>
-                </NavLink>
+               
                 <NavLink to="/downline" className="sidebar_link_mobile">
                   <i className="ri-award-line text-base"></i>
                   <span>Downline</span>
