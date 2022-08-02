@@ -29,8 +29,8 @@ body {
 
 @media (min-width: 768px) {
   .Container {
-    padding-left: 2.3rem;
-    padding-right: 2.3rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
   }
 }
 
@@ -220,18 +220,6 @@ body {
   position: relative;
 }
 
-/* .propertyWrap .box:not(:last-of-type) .bottom:before {
-  content: "Hot";
-  background-color: #ea723d;
-  color: white;
-  font-size: 11px;
-  padding: 4px 7px;
-  position: absolute;
-  left: 20px;
-  top: -40px;
-  z-index: 1;
-} */
-
 .propertyWrap .box .bottom > p {
   margin: 15px 0;
   font-size: 13px;
@@ -268,4 +256,17 @@ body {
   color: #777;
   font-weight: normal;
   margin-left: 5px;
+}
+
+
+/*=== General modal style ===*/
+.CModal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  padding: 15px 25px 25px 25px;
+  border-radius: 10px;
+  width: 90%;
 }
