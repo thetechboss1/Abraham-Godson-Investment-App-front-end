@@ -29,8 +29,8 @@ body {
 
 @media (min-width: 768px) {
   .Container {
-    padding-left: 2.7rem;
-    padding-right: 2.7rem;
+    padding-left: 2.3rem;
+    padding-right: 2.3rem;
   }
 }
 
@@ -152,36 +152,11 @@ body {
   }
 }
 
-
 /*=== Properties ====*/
 
 .propertyWrap .box {
-  @apply border shadow-sm bg-gray-100 w-full relative;
+  @apply border bg-gray-100 w-full relative;
 }
-
-/* .propertyWrap .box:first-of-type:before {
-  content: "Featured";
-  background-color: #ea723d;
-  color: white;
-  font-size: 13px;
-  padding: 4px 10px;
-  position: absolute;
-  top: 0;
-  left: 0;
-  transform: translateY(-50%);
-  z-index: 1;
-} */
-
-/* .propertyWrap .box:first-of-type:after {
-  content: "";
-  border-width: 12px;
-  border-style: solid;
-  border-color: transparent transparent transparent #ea723d;
-  position: absolute;
-  left: 72px;
-  top: 0;
-  transform: translateY(-50%);
-} */
 
 .propertyWrap .box .top {
   position: relative;
@@ -200,7 +175,7 @@ body {
   opacity: 0;
 }
 
-.propertyWrap .box .top:hover:before {
+.propertyWrap .box:hover .top:before {
   opacity: 1;
 }
 
@@ -219,7 +194,7 @@ body {
   opacity: 0;
 }
 
-.propertyWrap .box .top:hover:after {
+.propertyWrap .box:hover .top:after {
   opacity: 1;
 }
 
@@ -245,7 +220,7 @@ body {
   position: relative;
 }
 
-.propertyWrap .box:not(:last-of-type) .bottom:before {
+/* .propertyWrap .box:not(:last-of-type) .bottom:before {
   content: "Hot";
   background-color: #ea723d;
   color: white;
@@ -255,8 +230,7 @@ body {
   left: 20px;
   top: -40px;
   z-index: 1;
-}
-
+} */
 
 .propertyWrap .box .bottom > p {
   margin: 15px 0;
@@ -268,7 +242,6 @@ body {
 .propertyWrap .box .bottom .advants {
   display: flex;
 }
-
 
 .propertyWrap .box .bottom .advants > div > span {
   font-size: 12px;
@@ -296,19 +269,3 @@ body {
   font-weight: normal;
   margin-left: 5px;
 }
-
-/* .propertyWrap .box .bottom .price {
-  margin-top: 20px;
-} */
-
-/* .propertyWrap .box .bottom .price span:first-of-type {
-  display: block;
-  font-size: 13px;
-  font-weight: bold;
-  margin-bottom: 5px;
-} */
-
-/* .propertyWrap .box .bottom .price span:last-of-type {
-  color: #3eaba1;
-  font-size: 22px;
-} */

@@ -8,7 +8,6 @@ const HomeCard = ({ title, icon, number, bg }) => {
       <div>
         <h5 className="font-medium pb-4">{title}</h5>
         <span className="font-medium text-xl block">{number}</span>
-        {/* <span className="font-medium text-xl">House: 14</span> */}
       </div>
     </div>
   );
