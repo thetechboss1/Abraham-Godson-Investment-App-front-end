@@ -11,7 +11,6 @@ const House = () => {
   const [openShare, setOpenShare] = useState(false);
   const [openFullDialog, setOpenFullDialog] = useState(false);
   return (
-    
     <>
       {/* House details */}
       <Dialog fullScreen open={openFullDialog} TransitionComponent={Transition}>
@@ -59,21 +58,21 @@ const House = () => {
             </div>
             <div className="bottom">
               <h3 className="text-lg font-medium pb-5 pt-1">
-                Villa In Alexandria
+              2-Bed Apartment | The Orchid 
               </h3>
 
               <div className="advants flex justify-between">
                 <div>
-                  <span>Bedrooms</span>
+                  <span>Bedroom</span>
                   <div>
-                    <i className="fas fa-th-large"></i>
+                    <i className="ri-hotel-bed-line text-xl"></i>
                     <span>3</span>
                   </div>
                 </div>
                 <div>
-                  <span>Bathrooms</span>
+                  <span>Bathroom</span>
                   <div>
-                    <i className="fas fa-shower"></i>
+                    <i className="fas fa-shower text-lg"></i>
                     <span>2</span>
                   </div>
                 </div>
