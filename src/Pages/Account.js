@@ -1,11 +1,12 @@
 import { Dialog, Slide } from "@mui/material";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import EditAccount from "../Components/EditAccount";
 import PageToper from "../Components/PageToper";
 import DashboardLayout from "../Layout/DashboardLayout";
 import avatar from "../Images/avatar.png";
 import { Link } from "react-router-dom";
-import Copy from "./Copy";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -13,14 +14,22 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const Account = () => {
   const [openFullDialog, setOpenFullDialog] = useState(false);
+  const textAreaRef = useRef(null);
 
-
+  function copyToClipboard(e) {
+    textAreaRef.current.select();
+    document.execCommand("copy");
+    e.target.focus();
+    notify();
+  }
+  const notify = () => toast.success("Copied!");
   return (
     <DashboardLayout>
       {/* edit dialog */}
+      <ToastContainer />
       <Dialog fullScreen open={openFullDialog} TransitionComponent={Transition}>
         <DashboardLayout>
-          <Copy close={() => setOpenFullDialog(false)} />
+          <EditAccount close={() => setOpenFullDialog(false)} />
         </DashboardLayout>
       </Dialog>
       <div className="Container">
@@ -59,10 +68,19 @@ const Account = () => {
                 <h5 className="text-base pt-5 pb-2 font-medium text-gray-600">
                   My Referral code
                 </h5>
-                <button className="flex items-center text-accent gap-5 rounded-md bg-gray-100 w-full py-2 px-3">
-                  <span>https://googleapis.dev/</span>
-                  <i className="ri-file-copy-line"></i>
-                </button>
+
+                <div className="flex items-center bg-gray-100 px-2">
+                  <input
+                    type="text"
+                    ref={textAreaRef}
+                    value="https://alvingrey.com/account/register/refeitx1"
+                    className="focus:outline-none w-full bg-gray-100 py-2 text-sm"
+                  />
+                  <i
+                    className="ri-file-copy-line hover:text-primary text-lg cursor-pointer"
+                    onClick={copyToClipboard}
+                  ></i>
+                </div>
               </div>
             </div>
           </div>
@@ -87,10 +105,14 @@ const Account = () => {
             <h5 className="text-base pt-10 pb-3 font-medium text-gray-600">
               My Downline
             </h5>
-                <div className="flex items-center justify-around">
-                <Link to="/downline" className="button">1st Generation</Link>
-               <Link to="/downline" className="button">2nd Generation</Link>
-                </div>
+            <div className="flex items-center justify-around">
+              <Link to="/downline" className="button">
+                1st Generation
+              </Link>
+              <Link to="/downline" className="button">
+                2nd Generation
+              </Link>
+            </div>
           </div>
         </div>
       </div>

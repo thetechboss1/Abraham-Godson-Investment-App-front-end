@@ -1,22 +1,35 @@
-import React, { useState } from "react";
-import { ToastContainer, toast } from 'react-toastify';
-  import 'react-toastify/dist/ReactToastify.css';
+import React, { useRef,} from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Copy = () => {
-  const [copyText, setCopyText] = useState("");
-  const handleCopy = () => {
-    setCopyText(test);
-    navigator.clipboard.writeText(copyText);
-  };
+  const textAreaRef = useRef(null);
 
- 
+  function copyToClipboard(e) {
+    textAreaRef.current.select();
+    document.execCommand("copy");
+    e.target.focus();
+    notify();
+  }
 
-  const test = "its working1234";
+  const notify = () => toast("Wow so easy!");
 
   return (
     <div>
-      <p>{test}</p>
-      <button onClick={handleCopy}>Copy</button>
+      <ToastContainer />
+
+      <div>
+        <button onClick={copyToClipboard}>Copy</button> <br />
+        {copySuccess}
+      </div>
+      <form>
+        <input
+          type="text"
+          ref={textAreaRef}
+          value="Some text to nnn"
+          className="focus:outline-none"
+        />
+      </form>
     </div>
   );
 };
