@@ -5,6 +5,7 @@ import PageToper from "../Components/PageToper";
 import DashboardLayout from "../Layout/DashboardLayout";
 import avatar from "../Images/avatar.png";
 import { Link } from "react-router-dom";
+import Copy from "./Copy";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -12,12 +13,14 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const Account = () => {
   const [openFullDialog, setOpenFullDialog] = useState(false);
+
+
   return (
     <DashboardLayout>
       {/* edit dialog */}
       <Dialog fullScreen open={openFullDialog} TransitionComponent={Transition}>
         <DashboardLayout>
-          <EditAccount close={() => setOpenFullDialog(false)} />
+          <Copy close={() => setOpenFullDialog(false)} />
         </DashboardLayout>
       </Dialog>
       <div className="Container">
