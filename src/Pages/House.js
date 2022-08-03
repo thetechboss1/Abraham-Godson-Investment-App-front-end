@@ -1,12 +1,27 @@
 import React, { useState } from "react";
 import ShareProperty from "../Components/ShareProperty";
+import { Dialog, Slide } from "@mui/material";
+import HouseDetails from "./HouseDetails";
+import DashboardLayout from "../Layout/DashboardLayout";
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 const House = () => {
   const [openShare, setOpenShare] = useState(false);
-
+  const [openFullDialog, setOpenFullDialog] = useState(false);
   return (
+    
     <>
-      <form className="flex items-center justify-end  md:-mt-16" >
+      {/* House details */}
+      <Dialog fullScreen open={openFullDialog} TransitionComponent={Transition}>
+      <DashboardLayout>
+        <HouseDetails close={() => setOpenFullDialog(false)} />
+      </DashboardLayout>
+    </Dialog>
+
+    {/* sear bar */}
+      <form className="flex items-center justify-end md:-mt-16" >
         <div className="relative w-full md:w-56">
           <div className="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
             <svg
@@ -35,7 +50,7 @@ const House = () => {
       <div className="propertyWrap mt-7 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-5 gap-y-7">
         {[1, 2, 3, 4, 5].map(() => (
           <div className="box rounded cursor-pointer">
-            <div className="top rounded-tr">
+            <div className="top rounded-tr" onClick={() => setOpenFullDialog(true)}>
               <img
                 src="https://cdn.pixabay.com/photo/2014/07/31/00/30/vw-beetle-405876__340.jpg"
                 alt=""
@@ -65,7 +80,7 @@ const House = () => {
                 <div>
                   <span>Location</span>
                   <div>
-                     <h5 className="text-sm font-medium">Ebeju Lekki</h5>
+                     <h5 className="text-sm font-medium">Ebeju Lekki, Lagos</h5>
                   </div>
                 </div>
               </div>
