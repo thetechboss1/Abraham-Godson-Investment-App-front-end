@@ -9,7 +9,7 @@ const Downline = () => {
   const [switchGen, setSwitchGen] = useState(true);
   return (
     <DashboardLayout>
-      <div className="Container  mb-10">
+      <div className="Container">
         <PageToper title="My Downline" desc="List of realtors under me" />
 
         <div>

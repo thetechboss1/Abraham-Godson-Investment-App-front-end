@@ -20,7 +20,7 @@ const Account = () => {
           <EditAccount close={() => setOpenFullDialog(false)} />
         </DashboardLayout>
       </Dialog>
-      <div className="Container mb-10">
+      <div className="Container">
         <PageToper title="My Account" desc="Godswill Omenuko Onyekachi" />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">

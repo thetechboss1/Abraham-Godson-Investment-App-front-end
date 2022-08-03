@@ -5,7 +5,7 @@ import Topbar from "./Topbar";
 const DashboardLayout = ({ children }) => {
   const [isOpen, setIsOpen] = useState(true);
   return (
-    <>
+    <div className="pb-10">
     <div className="topbar">
       <Topbar/>
     </div>
@@ -17,7 +17,7 @@ const DashboardLayout = ({ children }) => {
           {children}
         </main>
       </div>
-    </>
+    </div>
   );
 };
 

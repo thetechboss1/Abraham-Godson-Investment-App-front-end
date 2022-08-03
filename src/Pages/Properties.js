@@ -8,7 +8,7 @@ const Properties = () => {
   const [switchProperty, setSwitchProperty] = useState(true);
   return (
     <DashboardLayout>
-      <div className="Container mb-10">
+      <div className="Container">
         <PageToper title="Properties" desc="Listed Properties" />
         <div>
           <div className="flex items-center gap-4 mb-4">

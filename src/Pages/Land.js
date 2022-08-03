@@ -1,10 +1,24 @@
 import React, { useState } from "react";
 import ShareProperty from "../Components/ShareProperty";
+import { Dialog, Slide } from "@mui/material";
+import DashboardLayout from "../Layout/DashboardLayout";
+import LandDetails from "./LandDetails";
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 const Land = () => {
   const [openShare, setOpenShare] = useState(false);
+  const [openFullDialog, setOpenFullDialog] = useState(false);
   return (
     <div>
+      {/* House details */}
+      <Dialog fullScreen open={openFullDialog} TransitionComponent={Transition}>
+        <DashboardLayout>
+          <LandDetails close={() => setOpenFullDialog(false)} />
+        </DashboardLayout>
+      </Dialog>
       {/* sear bar */}
       <form className="flex items-center justify-end md:-mt-16">
         <div className="relative w-full md:w-56">
@@ -35,9 +49,9 @@ const Land = () => {
       <div className="propertyWrap mt-7 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-5 gap-y-7">
         {[1, 2, 3, 4, 5].map(() => (
           <div className="box rounded cursor-pointer">
-            <div className="top rounded-tr">
+            <div className="top rounded-tr" onClick={() => setOpenFullDialog(true)}>
               <img
-                src="https://cdn.pixabay.com/photo/2014/07/31/00/30/vw-beetle-405876__340.jpg"
+                src="https://images.unsplash.com/photo-1592595896551-12b371d546d5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cmVhbCUyMGVzdGF0ZXxlbnwwfHwwfHw%3D&w=1000&q=80"
                 alt=""
                 className="rounded-tr"
               />
