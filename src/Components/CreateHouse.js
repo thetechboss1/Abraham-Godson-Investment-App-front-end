@@ -1,8 +1,25 @@
+import React from "react";
 import { Modal } from "@mui/material";
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import React from "react";
+import * as Yup from "yup";
 
 const CreateHouse = ({ handleClose, open }) => {
+  const validate = Yup.string().required("Field is Required!");
+
+  const initialValues = {
+    name: "",
+  };
+
+  const onSubmit = (values, onSubmitProps) => {
+    console.log("Form data", values);
+    onSubmitProps.setSubmitting(false);
+    onSubmitProps.resetForm();
+  };
+
+  const validationSchema = Yup.object({
+    name: validate,
+  });
+
   return (
     <Modal open={open} onClose={handleClose}>
       <div className="CModal" style={{ maxWidth: 500 }}>
