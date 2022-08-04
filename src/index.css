@@ -267,6 +267,7 @@ body {
   padding: 15px 25px 25px 25px;
   border-radius: 10px;
   width: 90%;
+  /* margin: 20px 0; */
 }
 
 .css-i9fmh8-MuiBackdrop-root-MuiModal-backdrop {
@@ -289,4 +290,12 @@ body {
 
 .list_property_table td {
   @apply text-sm;
+}
+
+.form-control label {
+  @apply block pl-1 font-medium text-base;
+}
+
+.errorMsg {
+  @apply text-xs text-red-500 block pt-1 pl-1;
 }

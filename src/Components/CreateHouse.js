@@ -5,9 +5,19 @@ import * as Yup from "yup";
 
 const CreateHouse = ({ handleClose, open }) => {
   const validate = Yup.string().required("Field is Required!");
+  const validateNumber = Yup.number()
+    .typeError("You must specify a number")
+    .min(0, "Min value 0.")
+    .required("Field is Required!");
 
   const initialValues = {
     name: "",
+    location: "",
+    price: "",
+    bedroom: "",
+    bathroom: "",
+    picture: "",
+    description: "",
   };
 
   const onSubmit = (values, onSubmitProps) => {
@@ -18,14 +28,20 @@ const CreateHouse = ({ handleClose, open }) => {
 
   const validationSchema = Yup.object({
     name: validate,
+    location: validate,
+    price: validateNumber,
+    bedroom: validateNumber,
+    bathroom: validateNumber,
+    picture: validate,
+    description: validate,
   });
 
   return (
     <Modal open={open} onClose={handleClose}>
-      <div className="CModal" style={{ maxWidth: 500 }}>
-        <div className="flex items-center justify-between w-full mb-7">
-          <h5 className="text-lg font-semibold text-accent">
-            Share Property via
+      <div className="CModal" style={{ maxWidth: 750 }}>
+        <div className="flex justify-between items-center mb-7">
+          <h5 className="font-semibold text-accent text-lg">
+            Create New Property
           </h5>
           <i
             className="fas fa-times cursor-pointer text-xl"
@@ -38,19 +54,124 @@ const CreateHouse = ({ handleClose, open }) => {
           onSubmit={onSubmit}
           validateOnMount
         >
-          <Form>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              <div>
-                <label>Name</label>
-                <Field type="text" name="name" placeholder="Enter name" />
-                <ErrorMessage
-                  name="name"
-                  component="span"
-                  className="errorMsg"
-                />
-              </div>
-            </div>
-          </Form>
+          {(formik) => {
+            return (
+              <Form>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-5">
+                  <div className="form-control">
+                    <label>Name :</label>
+                    <Field
+                      type="text"
+                      name="name"
+                      placeholder="Enter property name"
+                    />
+                    <ErrorMessage
+                      name="name"
+                      component="span"
+                      className="errorMsg"
+                    />
+                  </div>
+                  <div className="form-control">
+                    <label>Location :</label>
+                    <Field
+                      type="text"
+                      name="location"
+                      placeholder="Enter property location"
+                    />
+                    <ErrorMessage
+                      name="location"
+                      component="span"
+                      className="errorMsg"
+                    />
+                  </div>
+                  <div className="form-control">
+                    <label>Price :</label>
+                    <Field
+                      type="text"
+                      name="price"
+                      placeholder="Enter property price"
+                    />
+                    <ErrorMessage
+                      name="price"
+                      component="span"
+                      className="errorMsg"
+                    />
+                  </div>
+                  <div className="form-control">
+                    <label>Bedroom :</label>
+                    <Field
+                      type="text"
+                      name="bedroom"
+                      placeholder="Enter property bedroom"
+                    />
+                    <ErrorMessage
+                      name="bedroom"
+                      component="span"
+                      className="errorMsg"
+                    />
+                  </div>
+                  <div className="form-control">
+                    <label>Bathroom :</label>
+                    <Field
+                      type="text"
+                      name="bathroom"
+                      placeholder="Enter property bathroom"
+                    />
+                    <ErrorMessage
+                      name="bathroom"
+                      component="span"
+                      className="errorMsg"
+                    />
+                  </div>
+
+                  <div className="form-control">
+                    <label>Upload picture :</label>
+                    <Field
+                      type="file"
+                      name="picture"
+                      placeholder="Enter property bathroom"
+                    />
+                    <ErrorMessage
+                      name="picture"
+                      component="span"
+                      className="errorMsg"
+                    />
+                  </div>
+                  <div className="control-control">
+                    <label>Description :</label>
+                    <Field
+                      as="textarea"
+                      name="description"
+                      placeholder="Enter description"
+                      rows={4}
+                      className="w-full border resize-x-none px-1 pt-1 focus:outline-none rounded placeholder:text-sm"
+                    />
+                    <ErrorMessage
+                      name="description"
+                      component="span"
+                      className="errorMsg"
+                    />
+                  </div>
+                  <div className="flex items-center justify-around mt-5">
+                    <button
+                      onClick={handleClose}
+                      type="button"
+                      className="transparentButton"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      disabled={!formik.isValid || formik.isSubmitting}
+                      type="submit"
+                      className="button"
+                    >
+                      Submit
+                    </button>
+                  </div>
+                </div>
+              </Form>
+            );
+          }}
         </Formik>
       </div>
     </Modal>
