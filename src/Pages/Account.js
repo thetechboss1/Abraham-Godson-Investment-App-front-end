@@ -74,7 +74,7 @@ const Account = () => {
                     type="text"
                     ref={textAreaRef}
                     value="https://alvingrey.com/account/register/refeitx1"
-                    className="focus:outline-none w-full bg-gray-100 py-2 text-sm"
+                    className="focus:outline-none w-full bg-gray-100 py-2 text-sm rounded-md"
                   />
                   <i
                     className="ri-file-copy-line hover:text-primary text-lg cursor-pointer"
