@@ -1,6 +1,6 @@
 import React from "react";
 import { Modal } from "@mui/material";
-import { ErrorMessage, Field, Form, Formik } from "formik";
+import { ErrorMessage, Field, FieldArray, Form, Formik } from "formik";
 import * as Yup from "yup";
 
 const CreateHouse = ({ handleClose, open }) => {
@@ -18,6 +18,7 @@ const CreateHouse = ({ handleClose, open }) => {
     bathroom: "",
     picture: "",
     description: "",
+    amenities: [""],
   };
 
   const onSubmit = (values, onSubmitProps) => {
@@ -152,22 +153,63 @@ const CreateHouse = ({ handleClose, open }) => {
                       className="errorMsg"
                     />
                   </div>
-                  <div className="flex items-center justify-around mt-5">
-                    <button
-                      onClick={handleClose}
-                      type="button"
-                      className="transparentButton"
-                    >
-                      Cancel
-                    </button>
-                    <button
-                      disabled={!formik.isValid || formik.isSubmitting}
-                      type="submit"
-                      className="button"
-                    >
-                      Submit
-                    </button>
+                  <div className="form-control h-36 overflow-y-auto scrollBar">
+                    <label>Amenities</label>
+                    <FieldArray name="amenities">
+                      {(fieldArrayProps) => {
+                        const { push, remove, form } = fieldArrayProps;
+                        const { values } = form;
+                        const { amenities } = values;
+                        return (
+                          <div>
+                            {amenities.map((amenities, index) => (
+                              <div
+                                key={index}
+                                className="flex items-center gap-1 mb-2"
+                              >
+                                <Field
+                                  name={`amenities[${index}]`}
+                                  placeholder="Add amenities"
+                                />
+                                {index > 0 && (
+                                  <button
+                                    className="transparentButton"
+                                    type="button"
+                                    onClick={() => remove(index)}
+                                  >
+                                    -
+                                  </button>
+                                )}
+                                <button
+                                  className="transparentButton"
+                                  type="button"
+                                  onClick={() => push("")}
+                                >
+                                  +
+                                </button>
+                              </div>
+                            ))}
+                          </div>
+                        );
+                      }}
+                    </FieldArray>
                   </div>
+                </div>
+                <div className="flex items-center justify-around mt-5">
+                  <button
+                    onClick={handleClose}
+                    type="button"
+                    className="transparentButton"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    disabled={!formik.isValid || formik.isSubmitting}
+                    type="submit"
+                    className="button"
+                  >
+                    Submit
+                  </button>
                 </div>
               </Form>
             );

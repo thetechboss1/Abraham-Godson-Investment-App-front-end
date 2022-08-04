@@ -37,7 +37,10 @@ const ListHouse = () => {
               <td>2</td>
               <td>3</td>
               <td className="flex items-center gap-3 justify-center">
-                <i className="ri-eye-line cursor-pointer hover:text-primary text-lg"></i>
+                <i
+                  onClick={() => setDescModal(true)}
+                  className="ri-eye-line cursor-pointer hover:text-primary text-lg"
+                ></i>
                 <i className="ri-pencil-fill cursor-pointer hover:text-primary text-lg"></i>
                 <i className="ri-delete-bin-6-line cursor-pointer hover:text-primary text-lg"></i>
               </td>
@@ -48,15 +51,33 @@ const ListHouse = () => {
 
       {/* description modal */}
       <Modal open={descModal} onClose={() => setDescModal(false)}>
-        <div className="CModal" style={{ maxWidth: 500 }}>
+        <div className="CModal" style={{ maxWidth: 600 }}>
           <div className="flex justify-between items-center mb-7">
             <h5 className="font-semibold text-accent text-lg">
-              Create New Property
+              2-Bed Apartment | The Orchid
             </h5>
             <i
               className="fas fa-times cursor-pointer text-xl"
               onClick={() => setDescModal(false)}
             ></i>
+          </div>
+
+          <div>
+            <h5 className="font-medium pb-2">Description: </h5>
+            <p className="text-justify text-sm">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              Temporibus vitae deleniti sunt officia vel dolorem esse, at
+              nostrum blanditiis eum mollitia corrupti consequuntur laboriosam
+              quod sed ut dignissimos aliquam eveniet.
+            </p>
+
+            <ul className="list-disc pl-4 text-sm mt-2">
+              <li>Elevator</li>
+              <li>Spa</li>
+              <li>Pool</li>
+              <li>Gym</li>
+              <li>24-hour</li>
+            </ul>
           </div>
         </div>
       </Modal>
