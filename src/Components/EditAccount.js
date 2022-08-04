@@ -4,10 +4,7 @@ import PageToper from "./PageToper";
 import avatar from "../Images/avatar.png";
 
 const EditAccount = ({ close }) => {
-
-  const initialValues = {
-
-  }
+  const initialValues = {};
 
   return (
     <div className="Container">

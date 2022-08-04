@@ -28,29 +28,29 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
         </div>
 
         {/* Admin view */}
-        <div className="mt-12 hidden">
-          <NavLink to="/" className="sidebar_link">
+        <div className="mt-12">
+          <NavLink to="/admin-dashboard" className="sidebar_link">
             <Tooltip title="Home" placement="right-start">
               <i className="ri-home-smile-line"></i>
             </Tooltip>
             <span className={isOpen ? "" : "hidden"}>Home</span>
           </NavLink>
-          <NavLink to="/users" className="sidebar_link">
+          <NavLink to="/all-users" className="sidebar_link">
             <Tooltip title="Account" placement="right-start">
               <i className="ri-map-pin-user-line"></i>
             </Tooltip>
 
-            <span className={isOpen ? "" : "hidden"}>Users</span>
+            <span className={isOpen ? "" : "hidden"}>Realtors</span>
           </NavLink>
           <NavLink to="/admin-properties" className="sidebar_link">
-            <Tooltip title="Properties" placement="right-start">
+            <Tooltip title="properties" placement="right-start">
               <i className="ri-building-3-line"></i>
             </Tooltip>
             <span className={isOpen ? "" : "hidden"}>Properties</span>
           </NavLink>
 
           <NavLink to="/admin-account" className="sidebar_link">
-            <Tooltip title="Account" placement="right-start">
+            <Tooltip title="admin-account" placement="right-start">
               <i className="ri-shield-user-line"></i>
             </Tooltip>
 
@@ -59,7 +59,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
         </div>
 
         {/* Normal user view*/}
-        <div className="mt-12">
+        <div className="mt-12 hidden">
           <NavLink to="/" className="sidebar_link">
             <Tooltip title="Home" placement="right-start">
               <i className="ri-home-smile-line"></i>
