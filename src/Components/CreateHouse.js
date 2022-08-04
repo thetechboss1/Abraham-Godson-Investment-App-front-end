@@ -153,7 +153,7 @@ const CreateHouse = ({ handleClose, open }) => {
                       className="errorMsg"
                     />
                   </div>
-                  <div className="form-control h-36 overflow-y-auto scrollBar">
+                  <div className="form-control">
                     <label>Amenities</label>
                     <FieldArray name="amenities">
                       {(fieldArrayProps) => {

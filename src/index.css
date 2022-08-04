@@ -267,8 +267,8 @@ body {
   padding: 15px 25px 25px 25px;
   border-radius: 10px;
   width: 90%;
-  /* margin: 20px 0; */
-  overflow-y: auto
+  overflow-y: auto;
+  height: 85%
 }
 
 .css-i9fmh8-MuiBackdrop-root-MuiModal-backdrop {
