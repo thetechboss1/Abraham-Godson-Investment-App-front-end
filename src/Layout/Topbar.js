@@ -14,7 +14,7 @@ const Topbar = () => {
 
   return (
     <>
-      <div className="bg-primary">
+      <div className="bg-primary w-full">
         <div className="Container flex justify-between items-center text-white py-2">
           <h4 className="font-bold text-lg">Abraham Godson</h4>
           <i

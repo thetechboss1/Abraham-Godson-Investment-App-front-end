@@ -257,7 +257,6 @@ body {
   margin-left: 5px;
 }
 
-
 /*=== General modal style ===*/
 .CModal {
   position: absolute;
@@ -272,4 +271,22 @@ body {
 
 .css-i9fmh8-MuiBackdrop-root-MuiModal-backdrop {
   background: rgba(0, 0, 0, 0.3) !important;
+}
+
+/*=== List Property ====*/
+.list_property_table {
+  @apply w-full table-auto border-collapse border border-slate-400 text-center overflow-x-auto;
+}
+
+.list_property_table th,
+.list_property_table td {
+  @apply border border-slate-300 p-2;
+}
+
+.list_property_table th {
+  @apply text-base;
+}
+
+.list_property_table td {
+  @apply text-sm;
 }
