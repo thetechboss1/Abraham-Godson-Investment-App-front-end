@@ -1,11 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
+import CreateHouse from "../Components/CreateHouse";
 
 const ListHouse = () => {
+  const [addModal, setAddModal] = useState(false);
+
   return (
     <div>
       <div className="-mt-14 flex justify-end">
-        <button className="button">Add +</button>
+        <button onClick={() => setAddModal(true)} className="button">
+          Add +
+        </button>
       </div>
+      <CreateHouse open={addModal} handleClose={() => setAddModal(false)} />
       <table className="list_property_table mt-10">
         <thead className="bg-gray-200">
           <tr>
