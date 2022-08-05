@@ -11,7 +11,7 @@ const AdminDashboard = () => {
 
         <div className="grid gap-6 grid-cols-1 md:grid-cols-3">
           <HomeCard
-            title="All Users"
+            title="All Realtors"
             bg="rgb(121, 19, 229)"
             number="1030"
             icon="ri-shield-user-line"

@@ -13,7 +13,7 @@ const ListHouse = () => {
         </button>
       </div>
       <CreateHouse open={addModal} handleClose={() => setAddModal(false)} />
-      <table className="list_property_table mt-10">
+      <table className="general_table mt-10">
         <thead className="bg-gray-200">
           <tr>
             <th>S/N</th>
@@ -41,8 +41,14 @@ const ListHouse = () => {
                   onClick={() => setDescModal(true)}
                   className="ri-eye-line cursor-pointer hover:text-primary text-lg"
                 ></i>
-                <i className="ri-pencil-fill cursor-pointer hover:text-primary text-lg"></i>
-                <i className="ri-delete-bin-6-line cursor-pointer hover:text-primary text-lg"></i>
+                <i
+                  onClick={() => setAddModal(true)}
+                  className="ri-pencil-fill cursor-pointer hover:text-primary text-lg"
+                ></i>
+                <i
+                  onClick={() => alert("Delete Item")}
+                  className="ri-delete-bin-6-line cursor-pointer hover:text-primary text-lg"
+                ></i>
               </td>
             </tr>
           ))}
@@ -51,7 +57,7 @@ const ListHouse = () => {
 
       {/* description modal */}
       <Modal open={descModal} onClose={() => setDescModal(false)}>
-        <div className="CModal" style={{ maxWidth: 600 }}>
+        <div className="CModal" style={{ maxWidth: 600, height: "85%" }}>
           <div className="flex justify-between items-center mb-7">
             <h5 className="font-semibold text-accent text-lg">
               2-Bed Apartment | The Orchid
@@ -63,7 +69,15 @@ const ListHouse = () => {
           </div>
 
           <div>
-            <h5 className="font-medium pb-2">Description: </h5>
+            <img
+              src="https://cdn.pixabay.com/photo/2014/07/31/00/30/vw-beetle-405876__340.jpg"
+              alt=""
+              className="rounded w-full h-72"
+            />
+          </div>
+
+          <div>
+            <h5 className="font-medium pt-3 pb-1">Description: </h5>
             <p className="text-justify text-sm">
               Lorem ipsum dolor sit amet consectetur adipisicing elit.
               Temporibus vitae deleniti sunt officia vel dolorem esse, at
@@ -71,7 +85,8 @@ const ListHouse = () => {
               quod sed ut dignissimos aliquam eveniet.
             </p>
 
-            <ul className="list-disc pl-4 text-sm mt-2">
+            <h5 className="font-medium pt-2 pb-1">Amenities: </h5>
+            <ul className="list-disc pl-4 text-sm">
               <li>Elevator</li>
               <li>Spa</li>
               <li>Pool</li>

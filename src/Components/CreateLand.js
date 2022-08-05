@@ -3,7 +3,7 @@ import { Modal } from "@mui/material";
 import { ErrorMessage, Field, FieldArray, Form, Formik } from "formik";
 import * as Yup from "yup";
 
-const CreateHouse = ({ handleClose, open }) => {
+const CreateLand = ({ handleClose, open }) => {
   const validate = Yup.string().required("Field is Required!");
   const validateNumber = Yup.number()
     .typeError("You must specify a number")
@@ -14,9 +14,9 @@ const CreateHouse = ({ handleClose, open }) => {
     name: "",
     location: "",
     price: "",
-    bedroom: "",
-    bathroom: "",
-    house_picture: "",
+    plot_size: "",
+    land_title: "",
+    land_picture: "",
     description: "",
     amenities: [""],
   };
@@ -33,7 +33,7 @@ const CreateHouse = ({ handleClose, open }) => {
     price: validateNumber,
     bedroom: validateNumber,
     bathroom: validateNumber,
-    house_picture: validate,
+    land_picture: validate,
     description: validate,
   });
 
@@ -99,27 +99,27 @@ const CreateHouse = ({ handleClose, open }) => {
                     />
                   </div>
                   <div className="form-control">
-                    <label>Bedroom :</label>
+                    <label>Plot size :</label>
                     <Field
                       type="text"
-                      name="bedroom"
-                      placeholder="Enter property bedroom"
+                      name="plot_size"
+                      placeholder="Enter plot size"
                     />
                     <ErrorMessage
-                      name="bedroom"
+                      name="plot_size"
                       component="span"
                       className="errorMsg"
                     />
                   </div>
                   <div className="form-control">
-                    <label>Bathroom :</label>
+                    <label>Land Title :</label>
                     <Field
                       type="text"
-                      name="bathroom"
-                      placeholder="Enter property bathroom"
+                      name="land_title"
+                      placeholder="Enter land title/document"
                     />
                     <ErrorMessage
-                      name="bathroom"
+                      name="land_title"
                       component="span"
                       className="errorMsg"
                     />
@@ -129,11 +129,11 @@ const CreateHouse = ({ handleClose, open }) => {
                     <label>Upload picture :</label>
                     <Field
                       type="file"
-                      name="house_picture"
+                      name="land_picture"
                       placeholder="Enter property bathroom"
                     />
                     <ErrorMessage
-                      name="house_picture"
+                      name="land_picture"
                       component="span"
                       className="errorMsg"
                     />
@@ -220,4 +220,4 @@ const CreateHouse = ({ handleClose, open }) => {
   );
 };
 
-export default CreateHouse;
+export default CreateLand;
