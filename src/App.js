@@ -9,6 +9,7 @@ import AdminDashboard from "./Pages/AdminDashboard";
 import AdminAccount from "./Pages/AdminAccount";
 import AllUsers from "./Pages/AllRealtors";
 import AdminProperties from "./Pages/AdminProperties";
+import SalesRecord from "./Pages/SalesRecord";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <Route path="admin-account" element={<AdminAccount/>}/>
         <Route path="all-users" element={<AllUsers/>}/>
         <Route path="admin-properties" element={<AdminProperties/>}/>
+        <Route path="/sales-records" element={<SalesRecord/>}/>
      </Routes>
   
     </>

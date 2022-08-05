@@ -42,11 +42,20 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
 
             <span className={isOpen ? "" : "hidden"}>Realtors</span>
           </NavLink>
+
           <NavLink to="/admin-properties" className="sidebar_link">
             <Tooltip title="properties" placement="right-start">
               <i className="ri-building-3-line"></i>
             </Tooltip>
             <span className={isOpen ? "" : "hidden"}>Properties</span>
+          </NavLink>
+
+          <NavLink to="/sales-records" className="sidebar_link">
+            <Tooltip title="Sales-records" placement="right-start">
+              <i className="ri-map-pin-user-line"></i>
+            </Tooltip>
+
+            <span className={isOpen ? "" : "hidden"}>Sales Records</span>
           </NavLink>
 
           <NavLink to="/admin-account" className="sidebar_link">
@@ -66,7 +75,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
             </Tooltip>
             <span className={isOpen ? "" : "hidden"}>Home</span>
           </NavLink>
-         
+
           <NavLink to="/downline" className="sidebar_link">
             <Tooltip title="Downline" placement="right-start">
               <i className="ri-award-line"></i>

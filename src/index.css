@@ -285,7 +285,7 @@ body {
 }
 
 .general_table th {
-  @apply text-base;
+  @apply text-sm;
 }
 
 .general_table td {

@@ -18,6 +18,7 @@ const CreateLand = ({ handleClose, open }) => {
     land_title: "",
     land_picture: "",
     description: "",
+    initial_deposit: "",
     amenities: [""],
   };
 
@@ -35,11 +36,15 @@ const CreateLand = ({ handleClose, open }) => {
     bathroom: validateNumber,
     land_picture: validate,
     description: validate,
+    initial_deposit: validate,
   });
 
   return (
     <Modal open={open} onClose={handleClose}>
-      <div className="CModal scrollBar" style={{ maxWidth: 750, height: "85%"}}>
+      <div
+        className="CModal scrollBar"
+        style={{ maxWidth: 750, height: "85%" }}
+      >
         <div className="flex justify-between items-center mb-7">
           <h5 className="font-semibold text-accent text-lg">
             Create New Property
@@ -92,8 +97,22 @@ const CreateLand = ({ handleClose, open }) => {
                       name="price"
                       placeholder="Enter property price"
                     />
+
                     <ErrorMessage
                       name="price"
+                      component="span"
+                      className="errorMsg"
+                    />
+                  </div>
+                  <div className="form-control">
+                    <label>Initial deposit :</label>
+                    <Field
+                      type="text"
+                      name="initial_deposit"
+                      placeholder="Enter property min deposit"
+                    />
+                    <ErrorMessage
+                      name="initial_deposit"
                       component="span"
                       className="errorMsg"
                     />
@@ -125,19 +144,6 @@ const CreateLand = ({ handleClose, open }) => {
                     />
                   </div>
 
-                  <div className="form-control">
-                    <label>Upload picture :</label>
-                    <Field
-                      type="file"
-                      name="land_picture"
-                      placeholder="Enter property bathroom"
-                    />
-                    <ErrorMessage
-                      name="land_picture"
-                      component="span"
-                      className="errorMsg"
-                    />
-                  </div>
                   <div className="control-control">
                     <label>Description :</label>
                     <Field
@@ -153,49 +159,65 @@ const CreateLand = ({ handleClose, open }) => {
                       className="errorMsg"
                     />
                   </div>
-                  <div className="form-control">
-                    <label>Amenities</label>
-                    <FieldArray name="amenities">
-                      {(fieldArrayProps) => {
-                        const { push, remove, form } = fieldArrayProps;
-                        const { values } = form;
-                        const { amenities } = values;
-                        return (
-                          <div>
-                            {amenities.map((amenities, index) => (
-                              <div
-                                key={index}
-                                className="flex items-center gap-1 mb-2"
-                              >
-                                <Field
-                                  name={`amenities[${index}]`}
-                                  placeholder="Add amenities"
-                                />
-                                {index > 0 && (
+
+                  <div>
+                    <div className="form-control">
+                      <label>Upload picture :</label>
+                      <Field
+                        type="file"
+                        name="land_picture"
+                        placeholder="Enter property bathroom"
+                      />
+                      <ErrorMessage
+                        name="land_picture"
+                        component="span"
+                        className="errorMsg"
+                      />
+                    </div>
+                    <div className="form-control">
+                      <label>Amenities</label>
+                      <FieldArray name="amenities">
+                        {(fieldArrayProps) => {
+                          const { push, remove, form } = fieldArrayProps;
+                          const { values } = form;
+                          const { amenities } = values;
+                          return (
+                            <div>
+                              {amenities.map((amenities, index) => (
+                                <div
+                                  key={index}
+                                  className="flex items-center gap-1 mb-2"
+                                >
+                                  <Field
+                                    name={`amenities[${index}]`}
+                                    placeholder="Add amenities"
+                                  />
+                                  {index > 0 && (
+                                    <button
+                                      className="transparentButton"
+                                      type="button"
+                                      onClick={() => remove(index)}
+                                    >
+                                      -
+                                    </button>
+                                  )}
                                   <button
                                     className="transparentButton"
                                     type="button"
-                                    onClick={() => remove(index)}
+                                    onClick={() => push("")}
                                   >
-                                    -
+                                    +
                                   </button>
-                                )}
-                                <button
-                                  className="transparentButton"
-                                  type="button"
-                                  onClick={() => push("")}
-                                >
-                                  +
-                                </button>
-                              </div>
-                            ))}
-                          </div>
-                        );
-                      }}
-                    </FieldArray>
+                                </div>
+                              ))}
+                            </div>
+                          );
+                        }}
+                      </FieldArray>
+                    </div>
                   </div>
                 </div>
-                <div className="flex items-center justify-around mt-5">
+                <div className="flex items-center gap-5 mt-2">
                   <button
                     onClick={handleClose}
                     type="button"

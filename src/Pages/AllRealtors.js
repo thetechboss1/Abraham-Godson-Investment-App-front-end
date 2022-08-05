@@ -32,6 +32,11 @@ const AllRealtors = () => {
                 <th>Email</th>
                 <th>Phone number</th>
                 <th>Referral Phone</th>
+                <th>Acc name</th>
+                <th>Acc number</th>
+                <th>Bank name</th>
+                <th>Sales</th>
+                <th>Downline</th>
 
                 <th>Action</th>
               </tr>
@@ -44,6 +49,11 @@ const AllRealtors = () => {
                   <td>reuben@gmail.com</td>
                   <td>09057893278</td>
                   <td>08056234565</td>
+                  <td>Godswill smile</td>
+                  <td>0129379930</td>
+                  <td>First bank</td>
+                  <td>10</td>
+                  <td>2</td>
 
                   <td className="flex items-center gap-3 justify-center">
                     {/* <i

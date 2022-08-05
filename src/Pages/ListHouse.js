@@ -23,6 +23,7 @@ const ListHouse = () => {
             <th>Price</th>
             <th>Bedroom</th>
             <th>Bathroom</th>
+            <th>Initial deposit</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -36,6 +37,7 @@ const ListHouse = () => {
               <td>₦30,000,000.00</td>
               <td>2</td>
               <td>3</td>
+              <td>₦5,000,000.00</td>
               <td className="flex items-center gap-3 justify-center">
                 <i
                   onClick={() => setDescModal(true)}
