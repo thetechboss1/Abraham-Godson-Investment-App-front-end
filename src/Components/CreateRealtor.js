@@ -1,36 +1,46 @@
 import { Modal } from "@mui/material";
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import React from "react";
+import { useState } from "react";
+import * as Yup from "yup";
 
 const CreateRealtor = ({ open, handleClose }) => {
- 
-    const initialValues = {
-        name: "",
-        email: "",
-        phone: "",
-        referral_phone: "",
-        password: "",
-      };
-    
-      const onSubmit = (values, onSubmitProps) => {
-        console.log("Form data", values);
-        onSubmitProps.setSubmitting(false);
-        onSubmitProps.resetForm();
-      };
-    
-      const validationSchema = Yup.object({
-        // name: validate,
-        // location: validate,
-        // price: validateNumber,
-        // bedroom: validateNumber,
-        // bathroom: validateNumber,
-        // land_picture: validate,
-        // description: validate,
-      });
-    
+    const [showPassword, setShowPassword] = useState(false);
+    // handle view password toggle
+    const toggle = () => {
+      setShowPassword(!showPassword);
+    };
+
+  const initialValues = {
+    name: "",
+    email: "",
+    phone: "",
+    referral_phone: "",
+    password: "",
+  };
+
+  const onSubmit = (values, onSubmitProps) => {
+    console.log("Form data", values);
+    onSubmitProps.setSubmitting(false);
+    onSubmitProps.resetForm();
+  };
+
+  const validationSchema = Yup.object({
+    name: Yup.string().required("Field is Required!"),
+    email: Yup.string()
+      .email("Invalid email format")
+      .required("Field is Required!"),
+    phone: Yup.string().required("Field is Required!"),
+    password: Yup.string()
+      .required("Field is Required!")
+      .min(8, "Password must not be lass than 8 characters"),
+  });
+
   return (
     <Modal open={open} onClose={handleClose}>
-      <div className="CModal" style={{ maxWidth: 400 }}>
+      <div
+        className="CModal scrollBar"
+        style={{ maxWidth: 400, height: "85%" }}
+      >
         <div className="flex justify-between items-center mb-7">
           <h5 className="font-semibold text-accent text-lg">Create Realtor</h5>
           <i
@@ -57,13 +67,57 @@ const CreateRealtor = ({ open, handleClose }) => {
             </div>
             <div className="form-control">
               <label>Email :</label>
-              <Field
-                type="text"
+              <Field type="text" name="email" placeholder="Enter email" />
+              <ErrorMessage
                 name="email"
-                placeholder="Enter enter"
+                component="span"
+                className="errorMsg"
               />
-              <ErrorMessage name="email" component="span" className="errorMsg" />
             </div>
+            <div className="form-control">
+              <label>Phone :</label>
+              <Field type="tel" name="phone" placeholder="Enter phone number" />
+              <ErrorMessage
+                name="phone"
+                component="span"
+                className="errorMsg"
+              />
+            </div>
+            <div className="form-control">
+              <label>Referral Phone :</label>
+              <Field
+                type="tel"
+                name="referral_phone"
+                placeholder="Enter referral phone number"
+              />
+            </div>
+            <div className="form-control">
+              <label>Password :</label>
+               <div className="flex border rounded-md items-center">
+               <Field
+               type={showPassword === false ? "password" : "text"}
+                name="password"
+                placeholder="Enter referral phone number"
+              />
+               {showPassword ? (
+                    <i
+                      className="ri-eye-off-fill pr-3 text-xl cursor-pointer"
+                      onClick={toggle}
+                    ></i>
+                  ) : (
+                    <i
+                      className="ri-eye-fill pr-3 text-xl cursor-pointer"
+                      onClick={toggle}
+                    ></i>
+                  )}
+               </div>
+              <ErrorMessage
+                name="password"
+                component="span"
+                className="errorMsg"
+              />
+            </div>
+            <button className="button">Create account</button>
           </Form>
         </Formik>
       </div>
