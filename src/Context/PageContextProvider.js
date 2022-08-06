@@ -1,5 +1,5 @@
 import { Backdrop, CircularProgress } from "@mui/material";
-import React, { useState, useEffect, createContext } from "react";
+import React, { useState, createContext } from "react";
 export const PageContext = createContext();
 
 const PageContextProvider = (props) => {
