@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Autocomplete, Modal, TextField } from "@mui/material";
-import { Field, Form, Formik } from "formik";
+import { Field, Form, Formik, useFormik } from "formik";
 import * as Yup from "yup";
 
 const realtors = ["Ushenna Eze", "Godswill Smile", "John Hope"];
@@ -21,15 +21,19 @@ const CreateSalesRecord = ({ open, handleClose }) => {
     property: propertiesInputValue,
   };
 
-  console.log(propertiesInputValue);
-
-  const onSubmit = (values, onSubmitProps) => {
-    console.log("Form data", values);
-    onSubmitProps.setSubmitting(false);
-    onSubmitProps.resetForm();
-  };
+//   console.log(propertiesInputValue);
 
   const validationSchema = Yup.object({});
+
+  const onSubmit = (values) => {
+    console.log("Form data", values);
+  };
+
+  const formik = useFormik({
+    initialValues,
+    onSubmit,
+    validationSchema,
+  });
 
   return (
     <Modal open={open} onClose={handleClose}>
@@ -43,49 +47,59 @@ const CreateSalesRecord = ({ open, handleClose }) => {
             onClick={handleClose}
           ></i>
         </div>
-        <Formik
+        {/* <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
           onSubmit={onSubmit}
           validateOnMount
-        >
-          <Form>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-              <div className="form-control">
-                <label>Property</label>
-                <Autocomplete
-                  inputValue={propertiesInputValue}
-                  onInputChange={(event, newInputValue) => {
+        > */}
+        <form onSubmit={formik.handleSubmit}>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+            <div className="form-control">
+              <label>Property</label>
+              <Autocomplete
+                inputValue={propertiesInputValue}
+                onInputChange={(event, newInputValue) => {
+                  setPropertiesInputValue(newInputValue);
+                }}
+                id="Realtors"
+                options={property}
+                renderInput={(params) => (
+                  <TextField {...params} label="Select property" />
+                )}
+              />
+              <input
+                name="property"
+                type="text"
+                className=""
+                onChange={(event, newInputValue) => {
                     setPropertiesInputValue(newInputValue);
                   }}
-                  id="Realtors"
-                  options={property}
-                  renderInput={(params) => (
-                    <TextField {...params} label="Select property" />
-                  )}
-                />
-                <Field name="property" type="text" className="hidden"/>
-              </div>
-              <div className="form-control">
-                <label>Realtor</label>
-                <Autocomplete
-                  inputValue={realtorsInputValue}
-                  onInputChange={(event, newInputValue) => {
-                    setRealtorsInputValue(newInputValue);
-                  }}
-                  id="Realtors"
-                  options={realtors}
-                  renderInput={(params) => (
-                    <TextField {...params} label="Select realtor" />
-                  )}
-                />
-              </div>
-
-              <div></div>
+                value={propertiesInputValue}
+              />
             </div>
-            <button type="submit" className="button">Submit</button>
-          </Form>
-        </Formik>
+            {/* <div className="form-control">
+              <label>Realtor</label>
+              <Autocomplete
+                inputValue={realtorsInputValue}
+                onInputChange={(event, newInputValue) => {
+                  setRealtorsInputValue(newInputValue);
+                }}
+                id="Realtors"
+                options={realtors}
+                renderInput={(params) => (
+                  <TextField {...params} label="Select realtor" />
+                )}
+              />
+            </div> */}
+
+            <div></div>
+          </div>
+          <button type="submit" className="button">
+            Submit
+          </button>
+        </form>
+        {/* </Formik> */}
       </div>
     </Modal>
   );
