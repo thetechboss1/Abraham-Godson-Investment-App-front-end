@@ -29,7 +29,7 @@ const HouseDetails = ({ close }) => {
             />
           </div>
           <div>
-            <h3 className="font-semibold text-xl">₦30,000,000.00</h3>
+            <h3 className="font-semibold text-lg md:text-xl">₦30,000,000.00</h3>
             <h6 className=" border-b-2 inline-block my-2 pb-1 font-medium">Initial deposit:  <span className="text-accent">₦1,000,000.00</span></h6>
             <p className="text-sm text-justify">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus eos

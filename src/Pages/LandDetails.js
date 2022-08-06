@@ -29,8 +29,16 @@ const LandDetails = ({ close }) => {
             />
           </div>
           <div>
-            <h3 className="font-semibold text-xl">₦20,000,000.00</h3>
-            <h4 className="font-medium py-2 text-accent">Land title: Deep of Rectification</h4>
+            <h3 className="font-semibold text-lg md:text-xl">₦20,000,000.00</h3>
+            <h6 className=" border-b-2 inline-block mt-1 pb-1 font-medium">
+              Initial deposit:{" "}
+              <span className="text-accent">₦1,000,000.00</span>
+            </h6>
+            <h4 className="font-medium py-2">
+              Land title:{" "}
+              <span className="text-accent">Deep of Rectification</span>
+            </h4>
+
             <p className="text-sm text-justify">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus eos
               reiciendis atque amet placeat, magnam delectus, rerum voluptatibus

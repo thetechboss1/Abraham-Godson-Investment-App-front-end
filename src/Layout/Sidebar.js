@@ -28,7 +28,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
         </div>
 
         {/* Admin view */}
-        <div className="mt-12 hidden">
+        <div className="mt-12">
           <NavLink to="/admin-dashboard" className="sidebar_link">
             <Tooltip title="Home" placement="right-start">
               <i className="ri-home-smile-line"></i>
@@ -68,7 +68,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
         </div>
 
         {/* Normal user view*/}
-        <div className="mt-12">
+        <div className="mt-12 hidden">
           <NavLink to="/" className="sidebar_link">
             <Tooltip title="Home" placement="right-start">
               <i className="ri-home-smile-line"></i>
