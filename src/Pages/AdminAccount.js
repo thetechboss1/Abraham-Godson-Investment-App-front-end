@@ -19,7 +19,12 @@ const AdminAccount = () => {
           <div>
             <div>
               <div className="flex justify-end gap-4 mb-3">
-                <button className="button">Edit Profile</button>
+                <button
+                  className="button"
+                  onClick={() => setEditProfileModal(true)}
+                >
+                  Edit Profile
+                </button>
                 <button className="button" onClick={() => setResetPModal(true)}>
                   Reset password
                 </button>
@@ -75,6 +80,38 @@ const AdminAccount = () => {
             <button className="button" type="submit">
               Submit
             </button>
+          </div>
+        </Modal>
+
+        {/* Edit profile modal */}
+        <Modal
+          open={editProfileModal}
+          onClose={() => setEditProfileModal(false)}
+        >
+          <div className="CModal" style={{ maxWidth: 400 }}>
+            <div className="flex justify-between items-center mb-7">
+              <h5 className="font-semibold text-accent text-lg">
+                Edit Profile
+              </h5>
+              <i
+                className="fas fa-times cursor-pointer text-xl"
+                onClick={() => setEditProfileModal(false)}
+              ></i>
+            </div>
+
+            <form>
+              <div className="form-control">
+                <label>Full name</label>
+                <input type="text" />
+              </div>
+              <div className="form-control">
+                <label>Email</label>
+                <input type="email" />
+              </div>
+              <button className="button" type="submit">
+                Save Changes
+              </button>
+            </form>
           </div>
         </Modal>
       </div>
