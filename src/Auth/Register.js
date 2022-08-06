@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import { PageContext } from "../Context/PageContextProvider";
 import logo from "../Images/logo1.png";
 import showcase from "../Images/showcase.jpg";
 
+
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
-
+  const { setOpenBackDrop } = useContext(PageContext);
+  
   // handle toggle
   const toggle = () => {
     setShowPassword(!showPassword);
@@ -20,7 +23,7 @@ const Register = () => {
             </div>
             <form>
               <div className="form-group">
-                <label>Full name</label>
+                <label>Full name </label>
                 <input type="text" placeholder="Full name" />
               </div>
               <div className="form-group my-4">
