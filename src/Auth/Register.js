@@ -8,7 +8,7 @@ import * as Yup from "yup";
 import { url } from "../Api/index";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import axios from "axios"
+import axios from "axios";
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const { setOpenBackDrop } = useContext(PageContext);
@@ -32,52 +32,37 @@ const Register = () => {
     email: validate.email("Invalid email format"),
     phone: validate.min(11, "Incomplete phone number"),
     password: validate.min(8, "Password must not be lass than 8 characters"),
-    // refphone: validate.min(11, "Incomplete phone number"),
+    refphone: validate.min(11, "Incomplete phone number"),
   });
 
-  const onSubmit = async (values, onSubmitProps) => {
+  const onSubmit = (values, onSubmitProps) => {
+    console.log(values);
     setOpenBackDrop(true);
-    const theData = await fetch(`${url}/user/register`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+    axios({
+      url: `${url}/user/register`,
+      method: "post",
+      data: {
+        fullname: values.fullname,
+        email: values.email,
+        phone: values.phone,
+        password: values.password,
       },
-
-      body: JSON.stringify(values),
-    });
-    const checkData = await theData;
-    console.log(checkData)
-    if (checkData.status === 201) {
-      setOpenBackDrop(false);
-      toast.success(checkData.statusText);
-      navigate("/login");
-    } else {
-      setOpenBackDrop(false);
-      toast.error(checkData.statusText);
-    }
+    })
+      .then((result) => {
+        console.log(result);
+        setOpenBackDrop(false);
+        toast.success(result.data.message);
+        if (result.status) {
+          navigate("/login");
+        }
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message);
+        setOpenBackDrop(false);
+      });
 
     onSubmitProps.resetForm();
   };
-
-  const onSubmit2  = (values, onSubmitProps)=>{
-    console.log(values)
-    axios({
-      url:`${url}/user/register`,
-      method:"post",
-      data:{
-        fullname:values.fullname, 
-        email:values.email,
-        phone:values.phone,
-        password:values.password,
-      }
-    })
-    .then((result)=>{
-      console.log(result)
-    })
-    .catch((err)=>{
-      console.log(err.response.data)
-    })
-  }
 
   return (
     <>
@@ -93,7 +78,7 @@ const Register = () => {
                 initialValues={initialValues}
                 validationSchema={validationSchema}
                 // onSubmit={onSubmit}
-                onSubmit={onSubmit2}
+                onSubmit={onSubmit}
                 validateOnMount
               >
                 <Form>
