@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { PageContext } from "../Context/PageContextProvider";
 import logo from "../Images/logo1.png";
 import showcase from "../Images/showcase.jpg";
@@ -13,7 +13,7 @@ const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const { setOpenBackDrop } = useContext(PageContext);
   const validate = Yup.string().required("Field is Required!");
-
+  const navigate = useNavigate();
   // handle toggle
   const toggle = () => {
     setShowPassword(!showPassword);
@@ -49,6 +49,7 @@ const Register = () => {
     if (checkData.status === 201) {
       setOpenBackDrop(false);
       toast.success(checkData.statusText);
+      navigate("/login");
     } else {
       setOpenBackDrop(false);
       toast.error(checkData.statusText);
