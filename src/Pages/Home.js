@@ -1,14 +1,36 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { url } from "../Api";
 import HomeCard from "../Components/HomeCard";
 import PageToper from "../Components/PageToper";
 import DashboardLayout from "../Layout/DashboardLayout";
 
 const Home = () => {
+  const userToken = JSON.parse(localStorage.getItem("user_info"));
+
+  const [userName, setUserName] = useState("");
+    useEffect(() => {
+      axios
+        .get(`${url}/user/profile`, {
+          headers: {
+            Accept: "application/json",
+            Authorization: `bearer ${userToken.token}`,
+          },
+        })
+        .then((response) => {
+          setUserName(response.data.user.fullname);
+        })
+  
+        .catch((err) => {
+          console.log(err);
+        });
+    }, [userToken.token]);
+
   return (
     <>
       <DashboardLayout>
         <div className="Container mb-10">
-          <PageToper title=" Onyekachi Smile" desc=" Hello, Welcome back 🖐" />
+          <PageToper title={userName} desc=" Hello, Welcome back 🖐" />
 
           <div className="grid gap-6 grid-cols-1 md:grid-cols-2">
             <HomeCard

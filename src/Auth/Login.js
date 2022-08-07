@@ -1,17 +1,18 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../Images/logo1.png";
 import showcase from "../Images/showcase.jpg";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 import { PageContext } from "../Context/PageContextProvider";
 import { url } from "../Api/index";
 import * as Yup from "yup";
+import axios from "axios";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const { setOpenBackDrop } = useContext(PageContext);
+  const navigate = useNavigate();
   // handle toggle
   const toggle = () => {
     setShowPassword(!showPassword);
@@ -29,32 +30,32 @@ const Login = () => {
     password: Yup.string().required("Field is Required!"),
   });
 
-  const onSubmit = async (values, onSubmitProps) => {
+  const onSubmit = (values, onSubmitProps) => {
     setOpenBackDrop(true);
-    const theData = await fetch(`${url}/user/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+    axios({
+      url: `${url}/user/login`,
+      method: "post",
+      data: {
+        email: values.email,
+        password: values.password,
       },
-
-      body: JSON.stringify(values),
-    });
-    const checkData = await theData;
-    console.log(checkData);
-    if (checkData.status === 200) {
-      setOpenBackDrop(false);
-      toast.success(checkData.statusText);
-    } else {
-      setOpenBackDrop(false);
-      toast.error(checkData.statusText);
-    }
+    })
+      .then((result) => {
+        setOpenBackDrop(false);
+        // toast.success(result.data.message);
+        localStorage.setItem("user_info", JSON.stringify(result.data));
+        navigate("/");
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message);
+        setOpenBackDrop(false);
+      });
 
     onSubmitProps.resetForm();
   };
 
   return (
     <>
-      <ToastContainer />
       <div className="auth_page">
         <div className="bg-white shadow-md rounded-md grid grid-cols-1 md:grid-cols-2 ">
           <div className="p-5 flex items-center">

@@ -13,11 +13,15 @@ import SalesRecord from "./Pages/SalesRecord";
 import PageContextProvider from "./Context/PageContextProvider";
 
 function App() {
+  const userRole = JSON.parse(localStorage.getItem("user_info"));
   return (
     <PageContextProvider>
       <Routes>
         {/* normal user routes */}
-        <Route path="/" element={<Home />} />
+        <Route
+          path="/"
+          element={userRole.role === "user" ? <Home /> : <AdminDashboard />}
+        />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/account" element={<Account />} />
@@ -25,7 +29,7 @@ function App() {
         <Route path="/properties" element={<Properties />} />
 
         {/* Admin routes */}
-        <Route path="admin-dashboard" element={<AdminDashboard />} />
+        {/* <Route path="admin-dashboard" element={<AdminDashboard />} /> */}
         <Route path="admin-account" element={<AdminAccount />} />
         <Route path="all-users" element={<AllUsers />} />
         <Route path="admin-properties" element={<AdminProperties />} />

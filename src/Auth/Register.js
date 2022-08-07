@@ -6,8 +6,7 @@ import showcase from "../Images/showcase.jpg";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import { url } from "../Api/index";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 import axios from "axios";
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -66,7 +65,6 @@ const Register = () => {
 
   return (
     <>
-      <ToastContainer />
       <div className="auth_page">
         <div className="bg-white shadow-md rounded-md grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-0">
           <div className="px-4 py-5 flex items-center">
@@ -77,7 +75,6 @@ const Register = () => {
               <Formik
                 initialValues={initialValues}
                 validationSchema={validationSchema}
-                // onSubmit={onSubmit}
                 onSubmit={onSubmit}
                 validateOnMount
               >

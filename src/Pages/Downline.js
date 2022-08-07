@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { url } from "../Api";
 import PageToper from "../Components/PageToper";
 import DashboardLayout from "../Layout/DashboardLayout";
 
@@ -6,7 +8,29 @@ import FirstGen from "./FirstGen";
 import SecondGen from "./SecondGen";
 
 const Downline = () => {
+  const userToken = JSON.parse(localStorage.getItem("user_info"));
+
   const [switchGen, setSwitchGen] = useState(true);
+  const [myDownline, setmyDownline] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(`${url}/user/refferalData`, {
+        headers: {
+          Accept: "application/json",
+          Authorization: `bearer ${userToken.token}`,
+        },
+      })
+      .then((response) => {
+        console.log(response);
+        // setmyDownline(response.data.user.fullname);
+      })
+
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [userToken]);
+
   return (
     <DashboardLayout>
       <div className="Container">

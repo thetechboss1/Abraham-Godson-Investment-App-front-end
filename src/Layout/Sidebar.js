@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import Tooltip from "@mui/material/Tooltip";
 
 const Sidebar = ({ isOpen, setIsOpen }) => {
   const toggle = () => setIsOpen(!isOpen);
+
+  const userRole = JSON.parse(localStorage.getItem("user_info"));
 
   return (
     <div
@@ -28,7 +30,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
         </div>
 
         {/* Admin view */}
-        <div className="mt-12">
+        <div className={userRole.role === "user" ? "mt-12 hidden" : "mt-12"}>
           <NavLink to="/admin-dashboard" className="sidebar_link">
             <Tooltip title="Home" placement="right-start">
               <i className="ri-home-smile-line"></i>
@@ -68,7 +70,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
         </div>
 
         {/* Normal user view*/}
-        <div className="mt-12 hidden">
+        <div className={userRole.role === "admin" ? "mt-12 hidden" : "mt-12"}>
           <NavLink to="/" className="sidebar_link">
             <Tooltip title="Home" placement="right-start">
               <i className="ri-home-smile-line"></i>

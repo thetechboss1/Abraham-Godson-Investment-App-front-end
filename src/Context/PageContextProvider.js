@@ -1,11 +1,14 @@
 import { Backdrop, CircularProgress } from "@mui/material";
 import React, { useState, createContext } from "react";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 export const PageContext = createContext();
 
 const PageContextProvider = (props) => {
   const [openBackDrop, setOpenBackDrop] = useState(false);
   return (
     <>
+      <ToastContainer />
       {/* backdrop */}
       <Backdrop
         sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}

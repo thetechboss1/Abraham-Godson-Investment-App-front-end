@@ -1,5 +1,5 @@
 import { Dialog, Slide } from "@mui/material";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import EditAccount from "../Components/EditAccount";
 import PageToper from "../Components/PageToper";
 import DashboardLayout from "../Layout/DashboardLayout";
@@ -7,6 +7,8 @@ import avatar from "../Images/avatar.png";
 import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { url } from "../Api";
+import axios from "axios";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -23,6 +25,7 @@ const Account = () => {
     notify();
   }
   const notify = () => toast.success("Copied!");
+
   return (
     <DashboardLayout>
       {/* edit dialog */}
