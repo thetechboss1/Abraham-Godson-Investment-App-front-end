@@ -8,7 +8,7 @@ import * as Yup from "yup";
 import { url } from "../Api/index";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import axios from "axios"
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const { setOpenBackDrop } = useContext(PageContext);
@@ -46,6 +46,7 @@ const Register = () => {
       body: JSON.stringify(values),
     });
     const checkData = await theData;
+    console.log(checkData)
     if (checkData.status === 201) {
       setOpenBackDrop(false);
       toast.success(checkData.statusText);
@@ -57,6 +58,26 @@ const Register = () => {
 
     onSubmitProps.resetForm();
   };
+
+  const newReg  = (values, onSubmitProps)=>{
+    console.log(values)
+    axios({
+      url:`${url}/user/register`,
+      method:"post",
+      data:{
+        fullname:values.fullname, 
+        email:values.email,
+        phone:values.phone,
+        password:values.password,
+      }
+    })
+    .then((result)=>{
+      console.log(result)
+    })
+    .catch((err)=>{
+      console.log(err.response.data)
+    })
+  }
 
   return (
     <>
@@ -71,7 +92,8 @@ const Register = () => {
               <Formik
                 initialValues={initialValues}
                 validationSchema={validationSchema}
-                onSubmit={onSubmit}
+                // onSubmit={onSubmit}
+                onSubmit={newReg}
                 validateOnMount
               >
                 <Form>
