@@ -59,7 +59,7 @@ const Register = () => {
     onSubmitProps.resetForm();
   };
 
-  const newReg  = (values, onSubmitProps)=>{
+  const onSubmit2  = (values, onSubmitProps)=>{
     console.log(values)
     axios({
       url:`${url}/user/register`,
@@ -93,7 +93,7 @@ const Register = () => {
                 initialValues={initialValues}
                 validationSchema={validationSchema}
                 // onSubmit={onSubmit}
-                onSubmit={newReg}
+                onSubmit={onSubmit2}
                 validateOnMount
               >
                 <Form>
