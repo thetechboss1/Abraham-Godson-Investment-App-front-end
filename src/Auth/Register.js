@@ -35,17 +35,12 @@ const Register = () => {
   });
 
   const onSubmit = (values, onSubmitProps) => {
-    console.log(values);
+    // console.log(values);
     setOpenBackDrop(true);
     axios({
       url: `${url}/user/register`,
       method: "post",
-      data: {
-        fullname: values.fullname,
-        email: values.email,
-        phone: values.phone,
-        password: values.password,
-      },
+      data: values,
     })
       .then((result) => {
         console.log(result);

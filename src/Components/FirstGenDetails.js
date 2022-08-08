@@ -1,10 +1,10 @@
 import React from "react";
 import PageToper from "./PageToper";
 
-const FirstGenDetails = ({ close }) => {
+const FirstGenDetails = ({ close, info }) => {
   return (
     <div className="Container">
-      <PageToper title="Reuben Arinze - Profile" desc="Ebeju Lekki, Lagos" />
+      <PageToper title={`${info.fullname} - Profile`} desc={info.location} />
       <div className="mb-6 flex justify-between items-center">
         <button className="button flex items-center gap-2" onClick={close}>
           <span>My Downline</span>
@@ -25,7 +25,7 @@ const FirstGenDetails = ({ close }) => {
           <label>Full name</label>
           <input
             type="text"
-            placeholder="Reuben Arinze"
+            placeholder={info.fullname}
             disabled
             className="placeholder:text-black"
           />
@@ -34,7 +34,7 @@ const FirstGenDetails = ({ close }) => {
           <label>Email</label>
           <input
             type="text"
-            placeholder="reuben@gmail.com"
+            placeholder={info.email}
             disabled
             className="placeholder:text-black"
           />
@@ -43,7 +43,7 @@ const FirstGenDetails = ({ close }) => {
           <label>Phone number</label>
           <input
             type="text"
-            placeholder="09067459078"
+            placeholder={info.phone}
             disabled
             className="placeholder:text-black"
           />
@@ -52,20 +52,12 @@ const FirstGenDetails = ({ close }) => {
           <label>Property sold</label>
           <input
             type="text"
-            placeholder="20"
+            placeholder="0"
             disabled
             className="placeholder:text-black"
           />
         </div>
-        <div className="form-control">
-          <label>Downline status</label>
-          <input
-            type="text"
-            placeholder="First Generation"
-            disabled
-            className="placeholder:text-black"
-          />
-        </div>
+        
          </div>
       </div>
     </div>

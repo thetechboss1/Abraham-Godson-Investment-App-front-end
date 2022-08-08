@@ -1,5 +1,4 @@
 import { Backdrop, CircularProgress } from "@mui/material";
-import axios from "axios";
 import React, { useState, createContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
@@ -8,17 +7,18 @@ import { url } from "../Api";
 export const PageContext = createContext();
 
 const PageContextProvider = (props) => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [openBackDrop, setOpenBackDrop] = useState(false);
   const userInfo = JSON.parse(localStorage.getItem("user_info"));
 
-    useEffect(() => {
-    if (!userInfo) {
-      navigate("/login")
-    }
-       
-    }, [])
-    
+  // useEffect(() => {
+  //   if (userInfo) {
+  //     navigate("/");
+  //   } else {
+  //     navigate("/login");
+  //   }
+  // }, []);
+
   return (
     <>
       <ToastContainer />

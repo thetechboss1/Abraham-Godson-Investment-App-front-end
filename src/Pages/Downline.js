@@ -14,6 +14,8 @@ const Downline = () => {
   const [myDownlineFirstGen, setMyDownlineFirstGen] = useState([]);
   const [myDownlineSecondGen, setMyDownlineSecondGen] = useState([]);
   
+// console.log("second",myDownlineSecondGen.length);
+
   useEffect(() => {
     axios
       .get(`${url}/user/refferalData`, {
@@ -24,7 +26,8 @@ const Downline = () => {
       })
       .then((response) => {
         console.log(response);
-        // setmyDownline(response.data.user.fullname);
+        setMyDownlineFirstGen(response.data.data.firstlv);
+        setMyDownlineSecondGen(response.data.data.secondlv);
       })
 
       .catch((err) => {
@@ -53,7 +56,11 @@ const Downline = () => {
             </button>
           </div>
 
-          {switchGen ? <FirstGen /> : <SecondGen />}
+          {switchGen ? (
+            <FirstGen myDownlineFirstGen={myDownlineFirstGen} />
+          ) : (
+            <SecondGen myDownlineSecondGen={myDownlineSecondGen} />
+          )}
         </div>
       </div>
     </DashboardLayout>
