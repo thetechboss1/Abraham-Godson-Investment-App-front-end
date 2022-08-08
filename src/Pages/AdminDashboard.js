@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import HomeCard from "../Components/HomeCard";
 import PageToper from "../Components/PageToper";
+import { AccountContext } from "../Context/AccountContextProvider";
 import DashboardLayout from "../Layout/DashboardLayout";
 
 const AdminDashboard = () => {
+  const {userAccount} = useContext(AccountContext)
   return (
     <DashboardLayout>
       <div className="Container">
-        <PageToper title="Admin" desc=" Hello, Welcome back 🖐" adminAccount />
+        <PageToper title={`${userAccount.fullname} (Admin)`} desc=" Hello, Welcome back 🖐" adminAccount />
 
         <div className="grid gap-6 grid-cols-1 md:grid-cols-3">
           <HomeCard

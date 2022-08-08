@@ -11,8 +11,9 @@ const Downline = () => {
   const userToken = JSON.parse(localStorage.getItem("user_info"));
 
   const [switchGen, setSwitchGen] = useState(true);
-  const [myDownline, setmyDownline] = useState([]);
-
+  const [myDownlineFirstGen, setMyDownlineFirstGen] = useState([]);
+  const [myDownlineSecondGen, setMyDownlineSecondGen] = useState([]);
+  
   useEffect(() => {
     axios
       .get(`${url}/user/refferalData`, {

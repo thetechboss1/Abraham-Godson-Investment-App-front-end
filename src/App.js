@@ -33,7 +33,7 @@ function App() {
               </AccountContextProvider>
             ) : (
               <AccountContextProvider>
-                <AdminAccount />
+                <AdminDashboard/>
               </AccountContextProvider>
             )
           }
