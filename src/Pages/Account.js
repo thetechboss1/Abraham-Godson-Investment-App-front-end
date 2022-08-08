@@ -16,7 +16,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 const Account = () => {
-  const {userAccount} = useContext(AccountContext)
+  const { userAccount } = useContext(AccountContext);
 
   const [openFullDialog, setOpenFullDialog] = useState(false);
   const textAreaRef = useRef(null);
@@ -28,8 +28,6 @@ const Account = () => {
     notify();
   }
   const notify = () => toast.success("Copied!");
-
-
 
   return (
     <DashboardLayout>
@@ -49,7 +47,7 @@ const Account = () => {
               <img src={avatar} alt="avatar" className="h-20 md:h-40" />
             </div>
             <h5 className="text-center font-semibold pt-3 md:text-2xl text-xl text-gray-600">
-             {userAccount.fullname}
+              {userAccount.fullname}
             </h5>
             <div className="flex justify-center items-center gap-5 text-xs text-accent mt-3 mb-4">
               <span>Abraham Godson Realtors</span>
@@ -58,7 +56,7 @@ const Account = () => {
                 <span>{userAccount.location}</span>
               </span>
             </div>
-          
+
             <div className="lg:px-5">
               <button
                 onClick={() => setOpenFullDialog(true)}

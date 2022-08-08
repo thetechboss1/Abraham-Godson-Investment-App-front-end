@@ -33,7 +33,7 @@ function App() {
               </AccountContextProvider>
             ) : (
               <AccountContextProvider>
-                <AdminDashboard/>
+                <AdminDashboard />
               </AccountContextProvider>
             )
           }
@@ -44,9 +44,15 @@ function App() {
         <Route
           path="/account"
           element={
-            <AccountContextProvider>
-              <Account />
-            </AccountContextProvider>
+            userRole && userRole.role === "user" ? (
+              <AccountContextProvider>
+                <Account />
+              </AccountContextProvider>
+            ) : (
+              <AccountContextProvider>
+                <AdminAccount />
+              </AccountContextProvider>
+            )
           }
         />
         <Route path="/downline" element={<Downline />} />

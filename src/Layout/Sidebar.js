@@ -71,7 +71,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
             <span className={isOpen ? "" : "hidden"}>Sales Records</span>
           </NavLink>
 
-          <NavLink to="/admin-account" className="sidebar_link">
+          <NavLink to="/account" className="sidebar_link">
             <Tooltip title="admin-account" placement="right-start">
               <i className="ri-shield-user-line"></i>
             </Tooltip>

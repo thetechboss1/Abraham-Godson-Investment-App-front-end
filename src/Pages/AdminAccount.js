@@ -12,7 +12,7 @@ const AdminAccount = () => {
     <DashboardLayout>
       <div className="Container">
         <PageToper
-          title="My Account (Admin)"
+          title="Account (Admin)"
           desc={userAccount.fullname}
           adminAccount
         />
