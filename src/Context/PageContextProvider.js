@@ -1,11 +1,15 @@
 import { Backdrop, CircularProgress } from "@mui/material";
-import React, { useState, createContext } from "react";
+import axios from "axios";
+import React, { useState, createContext, useEffect } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { url } from "../Api";
 export const PageContext = createContext();
 
 const PageContextProvider = (props) => {
   const [openBackDrop, setOpenBackDrop] = useState(false);
+  const userInfo = JSON.parse(localStorage.getItem("user_info"));
+
   return (
     <>
       <ToastContainer />

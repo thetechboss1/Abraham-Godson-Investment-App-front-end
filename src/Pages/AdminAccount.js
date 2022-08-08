@@ -1,18 +1,19 @@
 import { Modal } from "@mui/material";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import PageToper from "../Components/PageToper";
+import { AccountContext } from "../Context/AccountContextProvider";
 import DashboardLayout from "../Layout/DashboardLayout";
 
 const AdminAccount = () => {
   const [resetPModal, setResetPModal] = useState(false);
   const [editProfileModal, setEditProfileModal] = useState(false);
-
+  const {userAccount} = useContext(AccountContext)
   return (
     <DashboardLayout>
       <div className="Container">
         <PageToper
           title="My Account (Admin)"
-          desc="Godswill Admin"
+          desc={userAccount.fullname}
           adminAccount
         />
         <div className="grid grid-cols-1 md:grid-cols-2">
@@ -33,7 +34,7 @@ const AdminAccount = () => {
                 <label>Full name</label>
                 <input
                   type="text"
-                  placeholder="Admin Hope"
+                  placeholder={userAccount.fullname}
                   disabled={true}
                   className="placeholder:text-black"
                 />
@@ -42,7 +43,7 @@ const AdminAccount = () => {
                 <label>Email</label>
                 <input
                   type="text"
-                  placeholder="hope@gmail.com"
+                  placeholder={userAccount.email}
                   disabled={true}
                   className="placeholder:text-black"
                 />

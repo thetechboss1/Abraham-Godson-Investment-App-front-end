@@ -10,16 +10,30 @@ const CreateHouse = ({ handleClose, open }) => {
     .min(0, "Min value 0.")
     .required("Field is Required!");
 
+  // const initialValues = {
+  //   name: "",
+  //   location: "",
+  //   price: "",
+  //   initial_deposit: "",
+  //   bedroom: "",
+  //   bathroom: "",
+  //   house_picture: "",
+  //   description: "",
+  //   amenities: [""],
+  // };
+
   const initialValues = {
     name: "",
     location: "",
     price: "",
-    initial_deposit: "",
-    bedroom: "",
-    bathroom: "",
-    house_picture: "",
+    initialDeposit: "",
+    details: {
+      bedroom: "",
+      bathroom: "",
+    },
+    image: "",
     description: "",
-    amenities: [""],
+    otherDetails: [""],
   };
 
   const onSubmit = (values, onSubmitProps) => {
@@ -32,11 +46,13 @@ const CreateHouse = ({ handleClose, open }) => {
     name: validate,
     location: validate,
     price: validateNumber,
-    bedroom: validateNumber,
-    bathroom: validateNumber,
-    house_picture: validate,
+    details: {
+      bedroom: validateNumber,
+      bathroom: validateNumber,
+    },
+    image: validate,
     description: validate,
-    initial_deposit: validate,
+    initialDeposit: validate,
   });
 
   return (
@@ -107,11 +123,11 @@ const CreateHouse = ({ handleClose, open }) => {
                     <label>Initial deposit :</label>
                     <Field
                       type="text"
-                      name="initial_deposit"
+                      name="initialDeposit"
                       placeholder="Enter property min deposit"
                     />
                     <ErrorMessage
-                      name="initial_deposit"
+                      name="initialDeposit"
                       component="span"
                       className="errorMsg"
                     />
@@ -120,11 +136,11 @@ const CreateHouse = ({ handleClose, open }) => {
                     <label>Bedroom :</label>
                     <Field
                       type="text"
-                      name="bedroom"
+                      name="details.bedroom"
                       placeholder="Enter property bedroom"
                     />
                     <ErrorMessage
-                      name="bedroom"
+                      name="details.bedroom"
                       component="span"
                       className="errorMsg"
                     />
@@ -133,11 +149,11 @@ const CreateHouse = ({ handleClose, open }) => {
                     <label>Bathroom :</label>
                     <Field
                       type="text"
-                      name="bathroom"
+                      name="details.bathroom"
                       placeholder="Enter property bathroom"
                     />
                     <ErrorMessage
-                      name="bathroom"
+                      name="details.bathroom"
                       component="span"
                       className="errorMsg"
                     />
@@ -174,20 +190,20 @@ const CreateHouse = ({ handleClose, open }) => {
                     </div>
                     <div className="form-control">
                       <label>Amenities</label>
-                      <FieldArray name="amenities">
+                      <FieldArray name="otherDetails">
                         {(fieldArrayProps) => {
                           const { push, remove, form } = fieldArrayProps;
                           const { values } = form;
-                          const { amenities } = values;
+                          const { otherDetails } = values;
                           return (
                             <div>
-                              {amenities.map((amenities, index) => (
+                              {otherDetails.map((otherDetails, index) => (
                                 <div
                                   key={index}
                                   className="flex items-center gap-1 mb-2"
                                 >
                                   <Field
-                                    name={`amenities[${index}]`}
+                                    name={`otherDetails[${index}]`}
                                     placeholder="Add amenities"
                                   />
                                   {index > 0 && (

@@ -15,11 +15,11 @@ const CreateLand = ({ handleClose, open }) => {
     location: "",
     price: "",
     plot_size: "",
-    land_title: "",
-    land_picture: "",
+    landTitle: "",
+    image: "",
     description: "",
-    initial_deposit: "",
-    amenities: [""],
+    initialDeposit: "",
+    moreDetails: [""],
   };
 
   const onSubmit = (values, onSubmitProps) => {
