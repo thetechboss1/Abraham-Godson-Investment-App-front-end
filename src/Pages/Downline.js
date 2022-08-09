@@ -13,26 +13,35 @@ const Downline = () => {
   const [switchGen, setSwitchGen] = useState(true);
   const [myDownlineFirstGen, setMyDownlineFirstGen] = useState([]);
   const [myDownlineSecondGen, setMyDownlineSecondGen] = useState([]);
-  
-// console.log("second",myDownlineSecondGen.length);
 
   useEffect(() => {
-    axios
-      .get(`${url}/user/refferalData`, {
+    // axios
+    //   .get(`${url}/user/refferalData`, {
+    //     headers: {
+    //       Accept: "application/json",
+    //       Authorization: `bearer ${userToken.token}`,
+    //     },
+    //   })
+    //   .then((response) => {
+    //     setMyDownlineFirstGen(response.data.data.firstlv);
+    //     setMyDownlineSecondGen(response.data.data.secondlv);
+    //   })
+
+    //   .catch((err) => {
+    //     console.error(err);
+    //   });
+
+    const fn = async () => {
+      let res = await axios.get(`${url}/user/refferalData`, {
         headers: {
           Accept: "application/json",
           Authorization: `bearer ${userToken.token}`,
         },
-      })
-      .then((response) => {
-        console.log("response",response);
-        setMyDownlineFirstGen(response.data.data.firstlv);
-        setMyDownlineSecondGen(response.data.data.secondlv);
-      })
-
-      .catch((err) => {
-        console.log(err);
       });
+      setMyDownlineFirstGen(res.data.data.firstlv);
+      setMyDownlineSecondGen(res.data.data.secondlv);
+    };
+    fn();
   }, [userToken]);
 
   return (

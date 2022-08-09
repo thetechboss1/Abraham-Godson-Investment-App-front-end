@@ -35,7 +35,6 @@ const Register = () => {
   });
 
   const onSubmit = (values, onSubmitProps) => {
-    // console.log(values);
     setOpenBackDrop(true);
     axios({
       url: `${url}/user/register`,

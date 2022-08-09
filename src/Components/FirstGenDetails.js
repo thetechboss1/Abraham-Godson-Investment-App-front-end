@@ -1,33 +1,34 @@
 import axios from "axios";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { url } from "../Api";
 import { PageContext } from "../Context/PageContextProvider";
 import PageToper from "./PageToper";
 
-const FirstGenDetails = ({ close, info }) => {
-const {userInfo} = useContext(PageContext)
+const FirstGenDetails = ({ close, info, id }) => {
+  const { userInfo } = useContext(PageContext);
+  const [fullDetails, setFullDetails] = useState({})
+
   useEffect(() => {
     axios
-      .get(`${url}/user/refferalData`, {
+      .get(`${url}/user/profile/byID/${id}`, {
         headers: {
           Accept: "application/json",
           Authorization: `bearer ${userInfo.token}`,
         },
       })
       .then((response) => {
-        console.log("response", response);
-        // setMyDownlineFirstGen(response.data.data.firstlv);
-        // setMyDownlineSecondGen(response.data.data.secondlv);
+        // setFullDetails(response.data)
+        console.log("new",response);
       })
 
       .catch((err) => {
-        console.log(err);
+        console.error("First erro",err);
       });
-  }, []);
+  }, [id]);
 
   return (
     <div className="Container">
-      <PageToper title={`${info.fullname} - Profile`} desc={info.location} />
+      {/* <PageToper title={`${info.fullname} - Profile`} desc={info.location} /> */}
       <div className="mb-6 flex justify-between items-center">
         <button className="button flex items-center gap-2" onClick={close}>
           <span>My Downline</span>
@@ -48,7 +49,7 @@ const {userInfo} = useContext(PageContext)
             <label>Full name</label>
             <input
               type="text"
-              placeholder={info.fullname}
+              // placeholder={info.fullname}
               disabled
               className="placeholder:text-black"
             />
@@ -57,7 +58,7 @@ const {userInfo} = useContext(PageContext)
             <label>Email</label>
             <input
               type="text"
-              placeholder={info.email}
+              // placeholder={info.email}
               disabled
               className="placeholder:text-black"
             />
@@ -66,7 +67,7 @@ const {userInfo} = useContext(PageContext)
             <label>Phone number</label>
             <input
               type="text"
-              placeholder={info.phone}
+              // placeholder={info.phone}
               disabled
               className="placeholder:text-black"
             />

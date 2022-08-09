@@ -18,12 +18,11 @@ const AccountContextProvider = (props) => {
         },
       })
       .then((response) => {
-        // console.log("test",response.data.user);
         setUserAccount(response.data.user);
       })
 
       .catch((err) => {
-        console.log(err);
+        console.error(err);
       });
   }, [userInfo.token]);
 

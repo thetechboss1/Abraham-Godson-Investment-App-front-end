@@ -32,7 +32,6 @@ const CreateHouse = ({ handleClose, open }) => {
   };
 
   const onSubmit = (values, onSubmitProps) => {
-    // console.log("values", values);
     setSending(true);
     axios({
       url: `${url}/user/properties`,
@@ -40,7 +39,6 @@ const CreateHouse = ({ handleClose, open }) => {
       data: values,
     })
       .then((result) => {
-        console.log(result);
         setSending(false);
       })
       .catch((err) => {

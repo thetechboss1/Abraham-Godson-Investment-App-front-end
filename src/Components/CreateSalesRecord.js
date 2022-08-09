@@ -21,12 +21,11 @@ const CreateSalesRecord = ({ open, handleClose }) => {
     property: propertiesInputValue,
   };
 
-//   console.log(propertiesInputValue);
 
   const validationSchema = Yup.object({});
 
   const onSubmit = (values) => {
-    console.log("Form data", values);
+
   };
 
   const formik = useFormik({

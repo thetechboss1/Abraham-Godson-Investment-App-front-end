@@ -9,8 +9,6 @@ import { toast } from "react-toastify";
 
 const EditAccount = ({ close }) => {
   const { userAccount, userInfo } = useContext(AccountContext);
-  // console.log(userAccount);
-
   const profileInitialValues = {
     fullname: userAccount.fullname,
     email: userAccount.email,
@@ -24,7 +22,6 @@ const EditAccount = ({ close }) => {
   };
 
   const profileOnSubmit = (values) => {
-    console.log(values);
     axios
       .patch(
         `${url}/user/profile/update/personal
@@ -38,12 +35,11 @@ const EditAccount = ({ close }) => {
         }
       )
       .then((response) => {
-        console.log("response", response);
         toast.success(response.data.message);
       })
 
       .catch((err) => {
-        console.log(err);
+        console.error(err);
       });
   };
 

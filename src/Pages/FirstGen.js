@@ -10,10 +10,25 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const FirstGen = ({ myDownlineFirstGen }) => {
   const [openFullDialog, setOpenFullDialog] = useState(false);
+  const [getId, setGetId] = useState("")
+  const openDetails = (id) => {
+    setGetId(id)
+    setOpenFullDialog(true);
+  };
+
 
 
   return (
     <>
+      <Dialog fullScreen open={openFullDialog} TransitionComponent={Transition}>
+        <DashboardLayout>
+          <FirstGenDetails
+            id={getId}
+            close={() => setOpenFullDialog(false)}
+          />
+        </DashboardLayout>
+      </Dialog>
+
       <div>
         {myDownlineFirstGen.length === 0 ? (
           <div>
@@ -26,7 +41,7 @@ const FirstGen = ({ myDownlineFirstGen }) => {
                 <>
                   <div
                     key={index}
-                    onClick={() => setOpenFullDialog(true)}
+                    onClick={() => openDetails(info._id)}
                     className="rounded-md px-4 py-3 border  bg-gray-100 cursor-pointer shadow-sm shadow-secondary hover:shadow-primary"
                   >
                     <div className="flex items-center justify-between">
@@ -42,18 +57,6 @@ const FirstGen = ({ myDownlineFirstGen }) => {
                     </div>
                   </div>
                   {/* full detail */}
-                  <Dialog
-                    fullScreen
-                    open={openFullDialog}
-                    TransitionComponent={Transition}
-                  >
-                    <DashboardLayout>
-                      <FirstGenDetails
-                        info={myDownlineFirstGen[index]}
-                        close={() => setOpenFullDialog(false)}
-                      />
-                    </DashboardLayout>
-                  </Dialog>
                 </>
               );
             })}

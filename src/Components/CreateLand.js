@@ -26,7 +26,7 @@ const CreateLand = ({ handleClose, open }) => {
   };
 
   const onSubmit = (values, onSubmitProps) => {
-    console.log("Form data", values);
+
     onSubmitProps.setSubmitting(false);
     onSubmitProps.resetForm();
   };
