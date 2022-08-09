@@ -10,22 +10,17 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const FirstGen = ({ myDownlineFirstGen }) => {
   const [openFullDialog, setOpenFullDialog] = useState(false);
-  const [getId, setGetId] = useState("")
+  const [getId, setGetId] = useState("");
   const openDetails = (id) => {
-    setGetId(id)
+    setGetId(id);
     setOpenFullDialog(true);
   };
-
-
 
   return (
     <>
       <Dialog fullScreen open={openFullDialog} TransitionComponent={Transition}>
         <DashboardLayout>
-          <FirstGenDetails
-            id={getId}
-            close={() => setOpenFullDialog(false)}
-          />
+          <FirstGenDetails id={getId} close={() => setOpenFullDialog(false)} />
         </DashboardLayout>
       </Dialog>
 
@@ -44,7 +39,7 @@ const FirstGen = ({ myDownlineFirstGen }) => {
                     onClick={() => openDetails(info._id)}
                     className="rounded-md px-4 py-3 border  bg-gray-100 cursor-pointer shadow-sm shadow-secondary hover:shadow-primary"
                   >
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-10">
                       <div>
                         <img src={avatar} alt="avatar" className="h-16" />
                       </div>
@@ -52,11 +47,12 @@ const FirstGen = ({ myDownlineFirstGen }) => {
                         <h5 className="font-medium text-base pb-1">
                           {info.fullname}
                         </h5>
-                        <p className="text-accent text-sm">{info.location}</p>
+                        <p className="text-accent text-sm">
+                          {info.email}
+                        </p>
                       </div>
                     </div>
                   </div>
-                  {/* full detail */}
                 </>
               );
             })}

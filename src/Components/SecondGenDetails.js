@@ -1,10 +1,36 @@
-import React from "react";
+import axios from "axios";
+import React, { useContext, useEffect, useState } from "react";
+import { url } from "../Api";
+import { PageContext } from "../Context/PageContextProvider";
 import PageToper from "./PageToper";
 
-const SecondGenDetails = ({ close }) => {
+const SecondGenDetails = ({ close, id }) => {
+  const { userInfo } = useContext(PageContext);
+  const [fullDetails, setFullDetails] = useState({});
+
+  useEffect(() => {
+    axios
+      .get(`${url}/user/profile/byID/${id}`, {
+        headers: {
+          Accept: "application/json",
+          Authorization: `bearer ${userInfo.token}`,
+        },
+      })
+      .then((response) => {
+        setFullDetails(response.data.user);
+      })
+
+      .catch((err) => {
+        console.error(err);
+      });
+  }, [id]);
+
   return (
     <div className="Container">
-      <PageToper title="Emmanuel smith - Profile" desc="Abuja park, Abuja" />
+      <PageToper
+        title={`${fullDetails.fullname} - Profile`}
+        desc={fullDetails.location}
+      />
       <div className="mb-6 flex justify-between items-center">
         <button className="button flex items-center gap-2" onClick={close}>
           <span>My Downline</span>
@@ -20,53 +46,44 @@ const SecondGenDetails = ({ close }) => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2">
-         <div>
-         <div className="form-control">
-          <label>Full name</label>
-          <input
-            type="text"
-            placeholder="Reuben Arinze"
-            disabled
-            className="placeholder:text-black"
-          />
+        <div>
+          <div className="form-control">
+            <label>Full name</label>
+            <input
+              type="text"
+              placeholder={fullDetails.fullname}
+              disabled
+              className="placeholder:text-black"
+            />
+          </div>
+          <div className="form-control">
+            <label>Address</label>
+            <input
+              type="text"
+              placeholder={fullDetails.houseAdress}
+              disabled
+              className="placeholder:text-black"
+            />
+          </div>
+          <div className="form-control">
+            <label>Phone number</label>
+            <input
+              type="text"
+              placeholder={fullDetails.phone}
+              disabled
+              className="placeholder:text-black"
+            />
+          </div>
+          <div className="form-control">
+            <label>Property sold</label>
+            <input
+              type="text"
+              placeholder="0"
+              disabled
+              className="placeholder:text-black"
+            />
+          </div>
         </div>
-        <div className="form-control">
-          <label>Email</label>
-          <input
-            type="text"
-            placeholder="reuben@gmail.com"
-            disabled
-            className="placeholder:text-black"
-          />
-        </div>
-        <div className="form-control">
-          <label>Phone number</label>
-          <input
-            type="text"
-            placeholder="09067459078"
-            disabled
-            className="placeholder:text-black"
-          />
-        </div>
-        <div className="form-control">
-          <label>Property sold</label>
-          <input
-            type="text"
-            placeholder="20"
-            disabled
-            className="placeholder:text-black"
-          />
-        </div>
-        <div className="form-control">
-          <label>Downline status</label>
-          <input
-            type="text"
-            placeholder="Second Generation"
-            disabled
-            className="placeholder:text-black"
-          />
-        </div>
-         </div>
       </div>
     </div>
   );

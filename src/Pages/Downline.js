@@ -15,22 +15,6 @@ const Downline = () => {
   const [myDownlineSecondGen, setMyDownlineSecondGen] = useState([]);
 
   useEffect(() => {
-    // axios
-    //   .get(`${url}/user/refferalData`, {
-    //     headers: {
-    //       Accept: "application/json",
-    //       Authorization: `bearer ${userToken.token}`,
-    //     },
-    //   })
-    //   .then((response) => {
-    //     setMyDownlineFirstGen(response.data.data.firstlv);
-    //     setMyDownlineSecondGen(response.data.data.secondlv);
-    //   })
-
-    //   .catch((err) => {
-    //     console.error(err);
-    //   });
-
     const fn = async () => {
       let res = await axios.get(`${url}/user/refferalData`, {
         headers: {

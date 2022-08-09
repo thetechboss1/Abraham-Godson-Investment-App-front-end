@@ -1,6 +1,6 @@
 import { Dialog, Slide } from "@mui/material";
 import React, { useContext, useEffect, useRef, useState } from "react";
-import EditAccount from "../Components/EditAccount";
+import EditAccount from "../Components/AccountSettings/EditAccount";
 import PageToper from "../Components/PageToper";
 import DashboardLayout from "../Layout/DashboardLayout";
 import avatar from "../Images/avatar.png";
@@ -17,8 +17,8 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const Account = () => {
   const { userAccount, userInfo } = useContext(AccountContext);
-
   const [openFullDialog, setOpenFullDialog] = useState(false);
+  const [getUpline, setGetUpline] = useState({})
   const textAreaRef = useRef(null);
 
   function copyToClipboard(e) {
@@ -29,6 +29,18 @@ const Account = () => {
   }
   const notify = () => toast.success("Copied!");
 
+  useEffect(() => {
+    const fn = async () => {
+      let res = await axios.get(`${url}/user/refferalData`, {
+        headers: {
+          Accept: "application/json",
+          Authorization: `bearer ${userInfo.token}`,
+        },
+      });
+      setGetUpline(res.data.upline);
+    };
+    fn();
+  }, [userInfo.token]);
 
   return (
     <DashboardLayout>
@@ -53,8 +65,8 @@ const Account = () => {
             <div className="flex justify-center items-center gap-5 text-xs text-accent mt-3 mb-4">
               <span>Abraham Godson Realtors</span>
               <span className="flex items-center">
-                <i className="ri-map-pin-fill text-secondary pr-2 text-sm"></i>
-                <span>{userAccount.location}</span>
+                <i className="ri-phone-fill text-secondary pr-2 text-sm"></i>
+                <span>{userAccount.phone}</span>
               </span>
             </div>
 
@@ -97,8 +109,8 @@ const Account = () => {
                   <img src={avatar} alt="avatar" className="h-16" />
                 </div>
                 <div>
-                  <h5 className="font-medium text-base pb-1">Reuben Arinze</h5>
-                  <p className="text-accent text-sm">Lagos, Nigeria</p>
+                  <h5 className="font-medium text-base pb-1">{getUpline && getUpline.fullname}</h5>
+                  <p className="text-accent text-sm">{getUpline && getUpline.email}</p>
                 </div>
                 <div>
                   <i class="ri-shield-check-fill text-2xl text-secondary"></i>

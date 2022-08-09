@@ -10,9 +10,7 @@ import AdminAccount from "./Pages/AdminAccount";
 import AllUsers from "./Pages/AllRealtors";
 import AdminProperties from "./Pages/AdminProperties";
 import SalesRecord from "./Pages/SalesRecord";
-import PageContextProvider, {
-  PageContext,
-} from "./Context/PageContextProvider";
+import { PageContext } from "./Context/PageContextProvider";
 import AccountContextProvider from "./Context/AccountContextProvider";
 import { useContext } from "react";
 

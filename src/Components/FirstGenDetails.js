@@ -4,9 +4,9 @@ import { url } from "../Api";
 import { PageContext } from "../Context/PageContextProvider";
 import PageToper from "./PageToper";
 
-const FirstGenDetails = ({ close, info, id }) => {
+const FirstGenDetails = ({ close, id }) => {
   const { userInfo } = useContext(PageContext);
-  const [fullDetails, setFullDetails] = useState({})
+  const [fullDetails, setFullDetails] = useState({});
 
   useEffect(() => {
     axios
@@ -17,18 +17,20 @@ const FirstGenDetails = ({ close, info, id }) => {
         },
       })
       .then((response) => {
-        // setFullDetails(response.data)
-        console.log("new",response);
+        setFullDetails(response.data.user);
       })
 
       .catch((err) => {
-        console.error("First erro",err);
+        console.error(err);
       });
-  }, [id]);
+  }, [userInfo.token, id]);
 
   return (
     <div className="Container">
-      {/* <PageToper title={`${info.fullname} - Profile`} desc={info.location} /> */}
+      <PageToper
+        title={`${fullDetails.fullname} - Profile`}
+        desc={fullDetails.location}
+      />
       <div className="mb-6 flex justify-between items-center">
         <button className="button flex items-center gap-2" onClick={close}>
           <span>My Downline</span>
@@ -49,16 +51,16 @@ const FirstGenDetails = ({ close, info, id }) => {
             <label>Full name</label>
             <input
               type="text"
-              // placeholder={info.fullname}
+              placeholder={fullDetails.fullname}
               disabled
               className="placeholder:text-black"
             />
           </div>
           <div className="form-control">
-            <label>Email</label>
+            <label>Address</label>
             <input
               type="text"
-              // placeholder={info.email}
+              placeholder={fullDetails.houseAdress}
               disabled
               className="placeholder:text-black"
             />
@@ -67,7 +69,7 @@ const FirstGenDetails = ({ close, info, id }) => {
             <label>Phone number</label>
             <input
               type="text"
-              // placeholder={info.phone}
+              placeholder={fullDetails.phone}
               disabled
               className="placeholder:text-black"
             />
