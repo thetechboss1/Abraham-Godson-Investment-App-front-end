@@ -1,14 +1,18 @@
 import { Modal } from "@mui/material";
+import axios from "axios";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useState } from "react";
+import { toast } from "react-toastify";
 import * as Yup from "yup";
+import { url } from "../Api";
 
 const CreateRealtor = ({ open, handleClose }) => {
-    const [showPassword, setShowPassword] = useState(false);
-    // handle view password toggle
-    const toggle = () => {
-      setShowPassword(!showPassword);
-    };
+  const [showPassword, setShowPassword] = useState(false);
+  const [sending, setSending] = useState(false);
+  // handle view password toggle
+  const toggle = () => {
+    setShowPassword(!showPassword);
+  };
 
   const initialValues = {
     name: "",
@@ -19,9 +23,24 @@ const CreateRealtor = ({ open, handleClose }) => {
   };
 
   const onSubmit = (values, onSubmitProps) => {
-    console.log("Form data", values);
+    // console.log(values);
+    setSending(true);
+    axios({
+      url: `${url}/user/register`,
+      method: "post",
+      data: values,
+    })
+      .then((result) => {
+        console.log(result);
+        setSending(false);
+        toast.success(result.data.message);
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message);
+        setSending(false);
+      });
     onSubmitProps.setSubmitting(false);
-    onSubmitProps.resetForm();
+    // onSubmitProps.resetForm();
   };
 
   const validationSchema = Yup.object({
@@ -93,31 +112,33 @@ const CreateRealtor = ({ open, handleClose }) => {
             </div>
             <div className="form-control">
               <label>Password :</label>
-               <div className="flex border rounded-md items-center">
-               <Field
-               type={showPassword === false ? "password" : "text"}
-                name="password"
-                placeholder="Enter referral phone number"
-              />
-               {showPassword ? (
-                    <i
-                      className="ri-eye-off-fill pr-3 text-xl cursor-pointer"
-                      onClick={toggle}
-                    ></i>
-                  ) : (
-                    <i
-                      className="ri-eye-fill pr-3 text-xl cursor-pointer"
-                      onClick={toggle}
-                    ></i>
-                  )}
-               </div>
+              <div className="flex border rounded-md items-center">
+                <Field
+                  type={showPassword === false ? "password" : "text"}
+                  name="password"
+                  placeholder="Enter referral phone number"
+                />
+                {showPassword ? (
+                  <i
+                    className="ri-eye-off-fill pr-3 text-xl cursor-pointer"
+                    onClick={toggle}
+                  ></i>
+                ) : (
+                  <i
+                    className="ri-eye-fill pr-3 text-xl cursor-pointer"
+                    onClick={toggle}
+                  ></i>
+                )}
+              </div>
               <ErrorMessage
                 name="password"
                 component="span"
                 className="errorMsg"
               />
             </div>
-            <button className="button">Create account</button>
+            <button type="submit" className="button">
+              {sending ? "Sending" : "Create account"}
+            </button>
           </Form>
         </Formik>
       </div>

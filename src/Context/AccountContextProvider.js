@@ -32,6 +32,7 @@ const AccountContextProvider = (props) => {
       <AccountContext.Provider
         value={{
           userAccount,
+          userInfo
         }}
       >
         {props.children}

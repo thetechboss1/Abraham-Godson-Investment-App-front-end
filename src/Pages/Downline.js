@@ -25,7 +25,7 @@ const Downline = () => {
         },
       })
       .then((response) => {
-        console.log(response);
+        console.log("response",response);
         setMyDownlineFirstGen(response.data.data.firstlv);
         setMyDownlineSecondGen(response.data.data.secondlv);
       })

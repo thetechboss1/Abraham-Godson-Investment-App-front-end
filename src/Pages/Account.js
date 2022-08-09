@@ -7,16 +7,16 @@ import avatar from "../Images/avatar.png";
 import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { AccountContext } from "../Context/AccountContextProvider";
 import { url } from "../Api";
 import axios from "axios";
-import { AccountContext } from "../Context/AccountContextProvider";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
 const Account = () => {
-  const { userAccount } = useContext(AccountContext);
+  const { userAccount, userInfo } = useContext(AccountContext);
 
   const [openFullDialog, setOpenFullDialog] = useState(false);
   const textAreaRef = useRef(null);
@@ -28,6 +28,7 @@ const Account = () => {
     notify();
   }
   const notify = () => toast.success("Copied!");
+
 
   return (
     <DashboardLayout>

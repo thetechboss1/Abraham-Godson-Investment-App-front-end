@@ -3,7 +3,6 @@ import FirstGenDetails from "../Components/FirstGenDetails";
 import avatar from "../Images/avatar.png";
 import DashboardLayout from "../Layout/DashboardLayout";
 import { Dialog, Slide } from "@mui/material";
-import { info } from "autoprefixer";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -11,6 +10,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const FirstGen = ({ myDownlineFirstGen }) => {
   const [openFullDialog, setOpenFullDialog] = useState(false);
+
 
   return (
     <>
@@ -21,10 +21,11 @@ const FirstGen = ({ myDownlineFirstGen }) => {
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {myDownlineFirstGen.map((info) => {
+            {myDownlineFirstGen.map((info, index) => {
               return (
                 <>
                   <div
+                    key={index}
                     onClick={() => setOpenFullDialog(true)}
                     className="rounded-md px-4 py-3 border  bg-gray-100 cursor-pointer shadow-sm shadow-secondary hover:shadow-primary"
                   >
@@ -48,7 +49,7 @@ const FirstGen = ({ myDownlineFirstGen }) => {
                   >
                     <DashboardLayout>
                       <FirstGenDetails
-                        info={info}
+                        info={myDownlineFirstGen[index]}
                         close={() => setOpenFullDialog(false)}
                       />
                     </DashboardLayout>

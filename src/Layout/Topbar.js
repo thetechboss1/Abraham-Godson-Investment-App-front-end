@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Drawer from "@mui/material/Drawer";
 import { NavLink } from "react-router-dom";
 import { Tooltip } from "@mui/material";
+import { PageContext } from "../Context/PageContextProvider";
 
 const Topbar = () => {
+  const { userInfo, logout } = useContext(PageContext);
+
   const [moduleDrawer, setModuleDrawer] = useState({
     left: false,
   });
@@ -34,15 +37,19 @@ const Topbar = () => {
                 onClick={toggleDrawer("left", false)}
               ></i>
             </div>
-            
+
             {/* Normal user view */}
-            <div className="mt-14">
+            <div
+              className={
+                userInfo && userInfo.role === "admin" ? "mt-14 hidden" : "mt-14"
+              }
+            >
               <div className="flex gap-5 flex-col text-accent font-medium">
                 <NavLink to="/" className="sidebar_link_mobile">
                   <i className="ri-home-smile-line text-base"></i>
                   <span>Home</span>
                 </NavLink>
-               
+
                 <NavLink to="/downline" className="sidebar_link_mobile">
                   <i className="ri-award-line text-base"></i>
                   <span>Downline</span>
@@ -59,28 +66,36 @@ const Topbar = () => {
             </div>
 
             {/* Admin view */}
-            <div className="mt-14 hidden">
+            <div
+              className={
+                userInfo && userInfo.role === "user" ? "mt-14 hidden" : "mt-14"
+              }
+            >
               <div className="flex gap-5 flex-col text-accent font-medium">
                 <NavLink to="/" className="sidebar_link_mobile">
                   <i className="ri-home-smile-line text-base"></i>
                   <span>Home</span>
                 </NavLink>
-                <NavLink to="/users" className="sidebar_link_mobile">
+                <NavLink to="/all-users" className="sidebar_link_mobile">
                   <i className="ri-vip-crown-line text-base"></i>
-                  <span>Users</span>
+                  <span>Realtors</span>
                 </NavLink>
+
                 <NavLink to="/admin-properties" className="sidebar_link_mobile">
                   <i className="ri-award-line text-base"></i>
                   <span>Properties</span>
                 </NavLink>
-                <NavLink to="/admin-account" className="sidebar_link_mobile">
+
+                <NavLink to="/sales-records" className="sidebar_link_mobile">
+                  <i className="ri-vip-crown-line text-base"></i>
+                  <span>Sales Records</span>
+                </NavLink>
+                <NavLink to="/account" className="sidebar_link_mobile">
                   <i className="ri-building-3-line text-base"></i>
                   <span>Account</span>
                 </NavLink>
-               
               </div>
             </div>
-
           </div>
 
           <div className="flex items-center gap-x-7 cursor-pointer justify-start">
@@ -88,7 +103,7 @@ const Topbar = () => {
               <i className="ri-logout-circle-r-line text-xl font-medium"></i>
             </Tooltip>
 
-            <span className="text-base">Logout</span>
+            <span className="text-base" onClick={logout}>Logout</span>
           </div>
         </div>
       </Drawer>

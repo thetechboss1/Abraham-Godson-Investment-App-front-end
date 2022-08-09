@@ -34,10 +34,11 @@ const SecondGen = ({ myDownlineSecondGen }) => {
                     </div>
                     <div>
                       <h5 className="font-medium text-base pb-1">
-                        {/* {info.fullname} */}
-                        Test name
+                        {info.fullname}
                       </h5>
-                      <p className="text-accent text-sm">Lagos, Nigeria</p>
+                      <p className="text-accent text-sm">
+                        {info.houseAdress === "" ? "Nigeria" : info.houseAdress}
+                      </p>
                     </div>
                   </div>
                 </div>

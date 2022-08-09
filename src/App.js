@@ -10,24 +10,24 @@ import AdminAccount from "./Pages/AdminAccount";
 import AllUsers from "./Pages/AllRealtors";
 import AdminProperties from "./Pages/AdminProperties";
 import SalesRecord from "./Pages/SalesRecord";
-import PageContextProvider from "./Context/PageContextProvider";
+import PageContextProvider, {
+  PageContext,
+} from "./Context/PageContextProvider";
 import AccountContextProvider from "./Context/AccountContextProvider";
+import { useContext } from "react";
 
 function App() {
-  const userRole = JSON.parse(localStorage.getItem("user_info"));
-  const isUser = JSON.parse(localStorage.getItem("user_info"));
-  const navigate = useNavigate();
+  const { userInfo } = useContext(PageContext);
 
   return (
-    <PageContextProvider>
+    <>
       <Routes>
         {/* normal user routes */}
-        {/* {isUser ? "" : navigate("/login")} */}
 
         <Route
           path="/"
           element={
-            userRole && userRole.role === "user" ? (
+            userInfo && userInfo.role === "user" ? (
               <AccountContextProvider>
                 <Home />
               </AccountContextProvider>
@@ -44,7 +44,7 @@ function App() {
         <Route
           path="/account"
           element={
-            userRole && userRole.role === "user" ? (
+            userInfo && userInfo.role === "user" ? (
               <AccountContextProvider>
                 <Account />
               </AccountContextProvider>
@@ -63,7 +63,7 @@ function App() {
         <Route path="admin-properties" element={<AdminProperties />} />
         <Route path="/sales-records" element={<SalesRecord />} />
       </Routes>
-    </PageContextProvider>
+    </>
   );
 }
 

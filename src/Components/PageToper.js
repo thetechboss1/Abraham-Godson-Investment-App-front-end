@@ -21,7 +21,7 @@ const PageToper = ({ title, desc, closeEdit, close, adminAccount }) => {
             Cancel
           </button>
         )}
-        <Link to={adminAccount ? "/admin-account" : "/account"}>
+        <Link to="/account">
           <i className="ri-user-line text-xl bg-secondary h-10 w-10 flex justify-center items-center rounded-full text-white cursor-pointer hover:shadow-lg"></i>
         </Link>
       </div>

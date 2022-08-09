@@ -1,21 +1,15 @@
-import React, { useEffect } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import React, { useContext } from "react";
+import { NavLink } from "react-router-dom";
 import Tooltip from "@mui/material/Tooltip";
+import { PageContext } from "../Context/PageContextProvider";
 
 const Sidebar = ({ isOpen, setIsOpen }) => {
-  const navigate = useNavigate();
+  const { logout, userInfo } = useContext(PageContext);
   const toggle = () => setIsOpen(!isOpen);
-
-  const userRole = JSON.parse(localStorage.getItem("user_info"));
-
-  const logout = () => {
-    localStorage.clear("user_info");
-    navigate("/login");
-  };
 
   return (
     <div
-      className="sidebar px-4 py-8 flex  flex-col justify-between overflow-hidden transition-all"
+      className="sidebar px-4 py-8 flex  flex-col justify-between overflow-auto transition-all"
       style={{ width: isOpen ? "240px" : "63px" }}
     >
       <div>
@@ -38,10 +32,9 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
         {/* Admin view */}
         <div
           className={
-            userRole && userRole.role === "user" ? "mt-12 hidden" : "mt-12"
+            userInfo && userInfo.role === "user" ? "mt-12 hidden" : "mt-12"
           }
         >
-          {/* <div className="mt-12"> */}
           <NavLink to="/" className="sidebar_link">
             <Tooltip title="Home" placement="right-start">
               <i className="ri-home-smile-line"></i>
@@ -83,10 +76,9 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
         {/* Normal user view*/}
         <div
           className={
-            userRole && userRole.role === "admin" ? "mt-12 hidden" : "mt-12"
+            userInfo && userInfo.role === "admin" ? "mt-12 hidden" : "mt-12"
           }
         >
-          {/* <div className="mt-12 hidden"> */}
           <NavLink to="/" className="sidebar_link">
             <Tooltip title="Home" placement="right-start">
               <i className="ri-home-smile-line"></i>

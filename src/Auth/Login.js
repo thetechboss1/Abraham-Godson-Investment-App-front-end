@@ -42,7 +42,7 @@ const Login = () => {
     })
       .then((result) => {
         setOpenBackDrop(false);
-        // toast.success(result.data.message);
+        toast.success(result.data.message);
         localStorage.setItem("user_info", JSON.stringify(result.data));
         navigate("/");
       })

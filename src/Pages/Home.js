@@ -1,6 +1,4 @@
-import axios from "axios";
-import React, { useContext, useEffect, useState } from "react";
-// import { url } from "../Api";
+import React, { useContext } from "react";
 import HomeCard from "../Components/HomeCard";
 import PageToper from "../Components/PageToper";
 import { AccountContext } from "../Context/AccountContextProvider";

@@ -43,12 +43,9 @@ const Register = () => {
       data: values,
     })
       .then((result) => {
-        console.log(result);
         setOpenBackDrop(false);
         toast.success(result.data.message);
-        if (result.status) {
-          navigate("/login");
-        }
+        navigate("/login");
       })
       .catch((err) => {
         toast.error(err.response.data.message);
