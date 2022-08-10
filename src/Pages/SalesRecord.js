@@ -1,10 +1,29 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { url } from "../Api";
 import CreateSalesRecord from "../Components/CreateSalesRecord";
 import PageToper from "../Components/PageToper";
 import DashboardLayout from "../Layout/DashboardLayout";
 
 const SalesRecord = () => {
   const [addModal, setAddModal] = useState(false);
+  const [sales, setSales] = useState([])
+  const userInfo = JSON.parse(localStorage.getItem("user_info"));
+
+  useEffect(() => {
+    axios({
+      url:`${url}/sales`,
+      method:"GET",
+      headers:{
+        authorization:`bearer ${userInfo.token}`
+      }
+    })
+    .then((response)=>{
+    let data = response.data.sales
+    setSales(data)
+    })
+  }, [])
+  
   return (
     <DashboardLayout>
       <div className="Container">
@@ -33,18 +52,18 @@ const SalesRecord = () => {
             </tr>
           </thead>
           <tbody>
-            {[1, 2, 3, 4, 5].map((idx) => (
+            {sales&&sales.map((sale,index) => (
               <tr>
-                <td>0{idx}</td>
-                <td>Villa In Alexandria</td>
-                <td>Hope Igwe</td>
-                <td>Completed</td>
-                <td>₦3,000,000.00</td>
-                <td>paid</td>
-                <td>Mr Uche</td>
-                <td>uche@gmail.com</td>
-                <td>0905689355</td>
-                <td>10/6/2022</td>
+                <td>0{index +1}</td>
+                <td>{sale.property.name}</td>
+                <td>{sale.user.fullname}</td>
+                <td>{sale.status}</td>
+                <td>₦{sale.deposit}</td>
+                <td>{sale.commissionPaid?"paid":"unpaid"}</td>
+                <td>{sale.buyerDetails.name}</td>
+                <td>{sale.buyerDetails.email}</td>
+                <td>{sale.buyerDetails.phone}</td>
+                <td>{sale.createdAt.split("T")[0]}</td>
 
                 <td className="flex items-center gap-3 justify-center">
                   <i
