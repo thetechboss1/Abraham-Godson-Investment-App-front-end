@@ -8,7 +8,6 @@ import DashboardLayout from "../Layout/DashboardLayout";
 
 const Home = () => {
   const { userAccount, userInfo } = useContext(AccountContext);
-  const [sales, setSales] = useState([]);
   const [myDownlineFirstGen, setMyDownlineFirstGen] = useState([]);
   const [summarize, setSummarize] = useState({});
 
