@@ -1,47 +1,62 @@
-import React, { useContext } from "react";
+import axios from "axios";
+import React, { useCallback, useContext, useEffect, useState } from "react";
+import { url } from "../Api";
 import HomeCard from "../Components/HomeCard";
 import PageToper from "../Components/PageToper";
 import { AccountContext } from "../Context/AccountContextProvider";
 import DashboardLayout from "../Layout/DashboardLayout";
 
 const AdminDashboard = () => {
-  const {userAccount, userInfo} = useContext(AccountContext)
-  const [realtors, setRealtors] =useState([])
-  const [properties, setProperties] =useState([])
-  const getAllData = useCallback(
-    () => {
+  const { userAccount, userInfo } = useContext(AccountContext);
+  const [realtors, setRealtors] = useState([]);
+  const [properties, setProperties] = useState([]);
+
+  const getAllData = useCallback(() => {
     //  ==== Get all realtors ===//
     const fn = async () => {
-      let res = await axios.get(`${url}/user/refferalData`, {
+      let res = await axios.get(`${url}/admin/realtors`, {
         headers: {
           Accept: "application/json",
           Authorization: `bearer ${userInfo.token}`,
         },
       });
-      setRealtors(res.data.realtors)
+      setRealtors(res.data.realtors);
     };
     fn();
-    },
-    [second],
-  )
+
+
+    //==== get all properties ====//
+    const fn1 = async () => {
+      let res = await axios.get(`${url}/properties`, {
+        headers: {
+          Accept: "application/json",
+          Authorization: `bearer ${userInfo.token}`,
+        },
+      });
+      setProperties(res.data.properties);
+    };
+    fn1();
+
+  }, [userInfo.token]);
 
   useEffect(() => {
-   
-  }, [third])
-  
-  
-
+    getAllData();
+  }, [getAllData]);
 
   return (
     <DashboardLayout>
       <div className="Container">
-        <PageToper title={`${userAccount.fullname} (Admin)`} desc=" Hello, Welcome back 🖐" adminAccount />
+        <PageToper
+          title={`${userAccount.fullname} (Admin)`}
+          desc=" Hello, Welcome back 🖐"
+          adminAccount
+        />
 
         <div className="grid gap-6 grid-cols-1 md:grid-cols-3">
           <HomeCard
             title="All Realtors"
             bg="rgb(121, 19, 229)"
-            number="1030"
+            number={realtors.length}
             icon="ri-shield-user-line"
           />
 
@@ -49,18 +64,18 @@ const AdminDashboard = () => {
             title="All Properties"
             bg="rgb(34, 34, 34)"
             icon="ri-building-3-line"
-            number="200"
+            number={properties.length}
           />
 
           <HomeCard
-            title="Houses"
+            title="House"
             bg="gray"
             number="100"
             icon="ri-shield-user-line"
           />
 
           <HomeCard
-            title="Lands"
+            title="Land"
             bg="gray"
             number="100"
             icon="ri-shield-user-line"
