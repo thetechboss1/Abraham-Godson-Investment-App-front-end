@@ -10,6 +10,7 @@ const Home = () => {
   const { userAccount, userInfo } = useContext(AccountContext);
   const [sales, setSales] = useState([]);
   const [myDownlineFirstGen, setMyDownlineFirstGen] = useState([]);
+  const [summarize, setSummarize] = useState({});
 
   const getAllData = useCallback(() => {
     //==== get downline ====
@@ -24,17 +25,17 @@ const Home = () => {
     };
     fn();
 
-    // === Get sales record ====
-    axios({
-      url: `${url}/sales`,
-      method: "GET",
-      headers: {
-        authorization: `bearer ${userInfo.token}`,
-      },
-    }).then((response) => {
-      let data = response.data.sales;
-      setSales(data);
-    });
+    //==== get all sales paid and unpaid commission ====//
+    const fn1 = async () => {
+      let res = await axios.get(`${url}/sales/mysales/stats`, {
+        headers: {
+          Accept: "application/json",
+          Authorization: `bearer ${userInfo.token}`,
+        },
+      });
+      setSummarize(res.data);
+    };
+    fn1();
   }, [userInfo.token]);
 
   useEffect(() => {
@@ -54,7 +55,7 @@ const Home = () => {
             <HomeCard
               title="Total Property Sold"
               bg="rgb(121, 19, 229)"
-              number={sales.length}
+              number={summarize.totalSale}
               icon=" ri-building-3-line"
             />
             <HomeCard
@@ -67,13 +68,13 @@ const Home = () => {
             <HomeCard
               title="Paid Commission"
               bg="rgb(13, 96, 216)"
-              number="50"
+              number={summarize.paidCommisin}
               icon="ri-bank-card-line"
             />
             <HomeCard
               title="Unpaid Commission"
               bg="#ff6103"
-              number="50"
+              number={summarize.unPaidCommisin}
               icon="ri-refund-2-fill"
             />
           </div>
