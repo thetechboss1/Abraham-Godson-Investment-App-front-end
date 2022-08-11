@@ -1,32 +1,38 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { url } from "../Api";
 import PageToper from "../Components/PageToper";
+import { PageContext } from "../Context/PageContextProvider";
 import DashboardLayout from "../Layout/DashboardLayout";
 
 import FirstGen from "./FirstGen";
 import SecondGen from "./SecondGen";
 
 const Downline = () => {
-  const userToken = JSON.parse(localStorage.getItem("user_info"));
-
+  const {userInfo} = useContext(PageContext)
+  
   const [switchGen, setSwitchGen] = useState(true);
   const [myDownlineFirstGen, setMyDownlineFirstGen] = useState([]);
   const [myDownlineSecondGen, setMyDownlineSecondGen] = useState([]);
 
-  useEffect(() => {
+  const getD = useCallback(() => {
     const fn = async () => {
       let res = await axios.get(`${url}/user/refferalData`, {
         headers: {
           Accept: "application/json",
-          Authorization: `bearer ${userToken.token}`,
+          Authorization: `bearer ${userInfo.token}`,
         },
       });
       setMyDownlineFirstGen(res.data.data.firstlv);
       setMyDownlineSecondGen(res.data.data.secondlv);
     };
     fn();
-  }, [userToken]);
+  }, [userInfo.token]);
+
+  useEffect(() => {
+    getD();
+  }, [getD]);
+
 
   return (
     <DashboardLayout>

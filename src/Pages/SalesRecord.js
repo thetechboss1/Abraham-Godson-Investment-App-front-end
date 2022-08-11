@@ -22,7 +22,7 @@ const SalesRecord = () => {
     let data = response.data.sales
     setSales(data)
     })
-  }, [])
+  }, [userInfo.token])
   
   return (
     <DashboardLayout>

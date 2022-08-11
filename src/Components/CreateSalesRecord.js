@@ -59,6 +59,7 @@ const CreateSalesRecord = ({ open, handleClose }) => {
     let data = response.data.realtors
     setRealtors(data)
     })
+
     axios({
       url:`${url}/properties`,
       method:"GET",
@@ -70,6 +71,7 @@ const CreateSalesRecord = ({ open, handleClose }) => {
     let data = response.data.properties
     setProperties(data)
     })
+    
   }, []);
   
  
@@ -153,59 +155,6 @@ const CreateSalesRecord = ({ open, handleClose }) => {
             </div>
           </div>
         </form>
-        {/* <Formik 
-          initialValues={initialValues}
-          validationSchema={validationSchema}
-          onSubmit={onSubmit}
-          validateOnMount
-        > */}
-        {/* <form onSubmit={formik.handleSubmit}>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-            <div className="form-control">
-              <label>Property</label>
-              <Autocomplete
-                inputValue={propertiesInputValue}
-                onInputChange={(event, newInputValue) => {
-                  setPropertiesInputValue(newInputValue);
-                }}
-                id="Realtors"
-                options={property}
-                renderInput={(params) => (
-                  <TextField {...params} label="Select property" />
-                )}
-              />
-              <input
-                name="property"
-                type="text"
-                className=""
-                onChange={(event, newInputValue) => {
-                    setPropertiesInputValue(newInputValue);
-                  }}
-                value={propertiesInputValue}
-              />
-            </div>
-            <div className="form-control">
-              <label>Realtor</label>
-              <Autocomplete
-                inputValue={realtorsInputValue}
-                onInputChange={(event, newInputValue) => {
-                  setRealtorsInputValue(newInputValue);
-                }}
-                id="Realtors"
-                options={realtors}
-                renderInput={(params) => (
-                  <TextField {...params} label="Select realtor" />
-                )}
-              />
-            </div> 
-
-            <div></div>
-          </div>
-          <button type="submit" className="button">
-            Submit
-          </button>
-        </form>*/}
-        {/* </Formik> */}
       </div>
     </Modal>
   );

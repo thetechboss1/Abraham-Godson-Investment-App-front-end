@@ -5,7 +5,33 @@ import { AccountContext } from "../Context/AccountContextProvider";
 import DashboardLayout from "../Layout/DashboardLayout";
 
 const AdminDashboard = () => {
-  const {userAccount} = useContext(AccountContext)
+  const {userAccount, userInfo} = useContext(AccountContext)
+  const [realtors, setRealtors] =useState([])
+  const [properties, setProperties] =useState([])
+  const getAllData = useCallback(
+    () => {
+    //  ==== Get all realtors ===//
+    const fn = async () => {
+      let res = await axios.get(`${url}/user/refferalData`, {
+        headers: {
+          Accept: "application/json",
+          Authorization: `bearer ${userInfo.token}`,
+        },
+      });
+      setRealtors(res.data.realtors)
+    };
+    fn();
+    },
+    [second],
+  )
+
+  useEffect(() => {
+   
+  }, [third])
+  
+  
+
+
   return (
     <DashboardLayout>
       <div className="Container">

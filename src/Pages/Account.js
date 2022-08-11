@@ -88,7 +88,7 @@ const Account = () => {
                   <input
                     type="text"
                     ref={textAreaRef}
-                    value={`https://alvingrey.com/account/register?ref=${userAccount.phone}`}
+                    value={`http://localhost:3000/register?ref=${userAccount.phone}`}
                     className="focus:outline-none w-full bg-gray-100 py-2 text-sm rounded-md"
                   />
                   <i
@@ -111,6 +111,7 @@ const Account = () => {
                 <div>
                   <h5 className="font-medium text-base pb-1">{getUpline && getUpline.fullname}</h5>
                   <p className="text-accent text-sm">{getUpline && getUpline.email}</p>
+                  <h5 className="font-medium text-base pb-1">{!getUpline && "No Upline"}</h5>
                 </div>
                 <div>
                   <i class="ri-shield-check-fill text-2xl text-secondary"></i>

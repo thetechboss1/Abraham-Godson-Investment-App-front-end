@@ -1,5 +1,9 @@
-import React, { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import {
+  Link,
+  useNavigate,
+  useSearchParams,
+} from "react-router-dom";
 import { PageContext } from "../Context/PageContextProvider";
 import logo from "../Images/logo1.png";
 import showcase from "../Images/showcase.jpg";
@@ -13,6 +17,17 @@ const Register = () => {
   const { setOpenBackDrop } = useContext(PageContext);
   const validate = Yup.string().required("Field is Required!");
   const navigate = useNavigate();
+
+  let [searchParams, setSearchParams] = useSearchParams();
+  const refNumber = searchParams.get("ref");
+  const [disAble, setDisable] = useState(false);
+
+  useEffect(() => {
+    if (refNumber && refNumber.length > 0) {
+      setDisable(true);
+    }
+  }, [refNumber]);
+
   // handle toggle
   const toggle = () => {
     setShowPassword(!showPassword);
@@ -22,7 +37,7 @@ const Register = () => {
     fullname: "",
     email: "",
     phone: "",
-    refphone: "",
+    refphone: refNumber,
     password: "",
   };
 
@@ -31,7 +46,7 @@ const Register = () => {
     email: validate.email("Invalid email format"),
     phone: validate.min(11, "Incomplete phone number"),
     password: validate.min(8, "Password must not be lass than 8 characters"),
-    refphone: validate.min(11, "Incomplete phone number"),
+    refphone: Yup.string().min(11, "Incomplete phone number"),
   });
 
   const onSubmit = (values, onSubmitProps) => {
@@ -117,6 +132,7 @@ const Register = () => {
                         type="tel"
                         name="refphone"
                         placeholder="referral phone number"
+                        disabled={disAble}
                       />
                       <ErrorMessage
                         name="refphone"
