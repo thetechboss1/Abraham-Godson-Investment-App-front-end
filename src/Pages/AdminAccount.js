@@ -57,7 +57,7 @@ const AdminAccount = () => {
           <div className="CModal" style={{ maxWidth: 400 }}>
             <div className="flex justify-between items-center mb-7">
               <h5 className="font-semibold text-accent text-lg">
-                Reset Password here
+                Reset Password
               </h5>
               <i
                 className="fas fa-times cursor-pointer text-xl"
