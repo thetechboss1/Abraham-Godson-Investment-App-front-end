@@ -56,9 +56,9 @@ const AdminAccount = () => {
     })
       .then((result) => {
         console.log(result);
-        // toast.success(result.message);
-        // localStorage.clear("user_info");
-        // navigate("/login");
+        toast.success(result.message);
+        localStorage.clear("user_info");
+        navigate("/login");
       })
       .catch((err) => {
         toast.error(err.message);

@@ -127,9 +127,9 @@ const Login = () => {
                   </label>
                 </div>
 
-                <span className="cursor-pointer hover:text-secondary">
+                <Link to="/forget-password" className="cursor-pointer hover:text-secondary">
                   Forget password
-                </span>
+                </Link>
               </div>
 
               <div className="text-sm mt-14 flex items-center gap-x-3 justify-center">

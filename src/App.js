@@ -13,6 +13,8 @@ import SalesRecord from "./Pages/SalesRecord";
 import { PageContext } from "./Context/PageContextProvider";
 import AccountContextProvider from "./Context/AccountContextProvider";
 import { useContext } from "react";
+import ForgetPassword from "./Auth/ForgetPassword";
+import RestPassword from "./Auth/RestPassword";
 
 function App() {
   const { userInfo } = useContext(PageContext);
@@ -21,7 +23,6 @@ function App() {
     <>
       <Routes>
         {/* normal user routes */}
-
         <Route
           path="/"
           element={
@@ -36,7 +37,6 @@ function App() {
             )
           }
         />
-
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route
@@ -55,6 +55,8 @@ function App() {
         />
         <Route path="/downline" element={<Downline />} />
         <Route path="/properties" element={<Properties />} />
+        <Route path="/forget-password" element={<ForgetPassword />} />
+        <Route path="/reset-password" element={<RestPassword />} />
 
         {/* Admin routes */}
         <Route path="/all-users" element={<AllUsers />} />
