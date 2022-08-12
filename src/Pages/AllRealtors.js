@@ -7,24 +7,22 @@ import DashboardLayout from "../Layout/DashboardLayout";
 
 const AllRealtors = () => {
   const [addModal, setAddModal] = useState(false);
-  const [realtors, setRealtors] =useState([])
-  const userInfo = JSON.parse(localStorage.getItem("user_info"))
-  console.log(userInfo.token)
+  const [realtors, setRealtors] = useState([]);
+  const userInfo = JSON.parse(localStorage.getItem("user_info"));
+
   useEffect(() => {
     axios({
-      url:`${url}/admin/realtors`,
-      method:"GET",
-      headers:{
-        authorization:`bearer ${userInfo.token}`
-      }
-    })
-    .then((response)=>{
-    let data = response.data.realtors
-    console.log(typeof data, data)
-    setRealtors(data)
-    })
-  }, [])
-  
+      url: `${url}/admin/realtors`,
+      method: "GET",
+      headers: {
+        authorization: `bearer ${userInfo.token}`,
+      },
+    }).then((response) => {
+      let data = response.data.realtors;
+      setRealtors(data);
+    });
+  }, [userInfo.token]);
+
   return (
     <DashboardLayout>
       <div className="Container">
@@ -62,27 +60,25 @@ const AllRealtors = () => {
               </tr>
             </thead>
             <tbody>
-              {realtors && realtors.map((user, index) => (
-                <tr key={index}>
-                  <td>0{index+1}</td>
-                  <td>{user.fullname}</td>
-                  <td>{user.email}</td>
-                  <td>{user.phone}</td>
-                  <td>08056234565</td>
-                  <td>{user.bankDetails.bankHolder}</td>
-                  <td>{user.bankDetails.bankAccount}</td>
-                  <td>{user.bankDetails.bankName}</td>
-                  <td>10</td>
-                  <td>2</td>
+              {realtors &&
+                realtors.map((user, index) => (
+                  <tr key={index}>
+                    <td>{index + 1}</td>
+                    <td>{user.fullname}</td>
+                    <td>{user.email}</td>
+                    <td>{user.phone}</td>
+                    <td>08056234565</td>
+                    <td>{user.bankDetails.bankHolder}</td>
+                    <td>{user.bankDetails.bankAccount}</td>
+                    <td>{user.bankDetails.bankName}</td>
+                    <td>10</td>
+                    <td>2</td>
 
-                  <td className="flex items-center gap-3 justify-center">
-                    <i
-                  className="ri-eye-line cursor-pointer hover:text-primary text-lg"
-                ></i>
-                   
-                  </td>
-                </tr>
-              ))}
+                    <td className="flex items-center gap-3 justify-center">
+                      <i className="ri-eye-line cursor-pointer hover:text-primary text-lg"></i>
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         </div>

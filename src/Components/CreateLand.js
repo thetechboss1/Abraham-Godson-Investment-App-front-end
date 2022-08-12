@@ -1,6 +1,13 @@
 import React from "react";
 import { Modal } from "@mui/material";
-import { ErrorMessage, Field, FieldArray, Form, Formik } from "formik";
+import {
+  ErrorMessage,
+  Field,
+  FieldArray,
+  Form,
+  Formik,
+  useFormik,
+} from "formik";
 import * as Yup from "yup";
 
 const CreateLand = ({ handleClose, open }) => {
@@ -15,20 +22,18 @@ const CreateLand = ({ handleClose, open }) => {
     location: "",
     price: "",
     details: {
-      plot_size: "",
+      plotSize: "",
     },
     title: "",
     image: "",
     description: "",
     initialDeposit: "",
-    moreDetails: [""],
+    moreDetails: "",
     type: "Land",
   };
 
-  const onSubmit = (values, onSubmitProps) => {
-
-    onSubmitProps.setSubmitting(false);
-    onSubmitProps.resetForm();
+  const onSubmit = (values) => {
+    console.log(values);
   };
 
   const validationSchema = Yup.object({
@@ -40,10 +45,22 @@ const CreateLand = ({ handleClose, open }) => {
     initialDeposit: validate,
     title: validate,
     details: {
-      plot_size: validate,
+      plotSize: validate,
     },
-   moreDetails: validate
-  
+    moreDetails: validate,
+  });
+
+  const {
+    handleChange,
+    handleReset,
+    handleSubmit,
+    values,
+    errors,
+    setFieldValue,
+  } = useFormik({
+    initialValues,
+    onSubmit,
+    validationSchema,
   });
 
   return (
@@ -61,181 +78,139 @@ const CreateLand = ({ handleClose, open }) => {
             onClick={handleClose}
           ></i>
         </div>
-        <Formik
-          initialValues={initialValues}
-          validationSchema={validationSchema}
-          onSubmit={onSubmit}
-          validateOnMount
-        >
-          <Form>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-5">
-              <div className="form-control">
-                <label>Name :</label>
-                <Field
-                  type="text"
-                  name="name"
-                  placeholder="Enter property name"
-                />
-                <ErrorMessage
-                  name="name"
-                  component="span"
-                  className="errorMsg"
-                />
-              </div>
-              <div className="form-control">
-                <label>Location :</label>
-                <Field
-                  type="text"
-                  name="location"
-                  placeholder="Enter property location"
-                />
-                <ErrorMessage
-                  name="location"
-                  component="span"
-                  className="errorMsg"
-                />
-              </div>
-              <div className="form-control">
-                <label>Price :</label>
-                <Field
-                  type="text"
-                  name="price"
-                  placeholder="Enter property price"
-                />
 
-                <ErrorMessage
-                  name="price"
-                  component="span"
-                  className="errorMsg"
-                />
-              </div>
-              <div className="form-control">
-                <label>Initial deposit :</label>
-                <Field
-                  type="text"
-                  name="initialDeposit"
-                  placeholder="Enter property min deposit"
-                />
-                <ErrorMessage
-                  name="initialDeposit"
-                  component="span"
-                  className="errorMsg"
-                />
-              </div>
-              <div className="form-control">
-                <label>Plot size :</label>
-                <Field
-                  type="text"
-                  name="plot_size"
-                  placeholder="Enter plot size"
-                />
-                <ErrorMessage
-                  name="details.plot_size"
-                  component="span"
-                  className="errorMsg"
-                />
-              </div>
-              <div className="form-control">
-                <label>Land Title :</label>
-                <Field
-                  type="text"
-                  name="title"
-                  placeholder="Enter land title/document"
-                />
-                <ErrorMessage
-                  name="title"
-                  component="span"
-                  className="errorMsg"
-                />
-              </div>
-
-              <div className="control-control">
-                <label>Description :</label>
-                <Field
-                  as="textarea"
-                  name="description"
-                  placeholder="Enter description"
-                  rows={4}
-                  className="w-full border resize-x-none px-1 pt-1 focus:outline-none rounded placeholder:text-sm"
-                />
-                <ErrorMessage
-                  name="description"
-                  component="span"
-                  className="errorMsg"
-                />
-              </div>
-
-              <div>
-                <div className="form-control">
-                  <label>Upload picture :</label>
-                  <Field
-                    type="file"
-                    name="image"
-                    placeholder="Enter property bathroom"
-                  />
-                  <ErrorMessage
-                    name="image"
-                    component="span"
-                    className="errorMsg"
-                  />
-                </div>
-                <div className="form-control">
-                  <label>Amenities</label>
-                  <FieldArray name="moreDetails">
-                    {(fieldArrayProps) => {
-                      const { push, remove, form } = fieldArrayProps;
-                      const { values } = form;
-                      const { moreDetails } = values;
-                      return (
-                        <div>
-                          {moreDetails.map((moreDetails, index) => (
-                            <div
-                              key={index}
-                              className="flex items-center gap-1 mb-2"
-                            >
-                              <Field
-                                name={`moreDetails[${index}]`}
-                                placeholder="Add amenities"
-                              />
-                              {index > 0 && (
-                                <button
-                                  className="transparentButton"
-                                  type="button"
-                                  onClick={() => remove(index)}
-                                >
-                                  -
-                                </button>
-                              )}
-                              <button
-                                className="transparentButton"
-                                type="button"
-                                onClick={() => push("")}
-                              >
-                                +
-                              </button>
-                            </div>
-                          ))}
-                        </div>
-                      );
-                    }}
-                  </FieldArray>
-                </div>
-              </div>
+        <form onSubmit={handleSubmit}>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-5">
+            <div className="form-control">
+              <label>Name :</label>
+              <input
+                type="text"
+                name="name"
+                placeholder="Enter property name"
+                onChange={handleChange}
+                value={values.name}
+              />
+              {errors.name ? <p className="errorMsg">{errors.name}</p> : null}
             </div>
-            <div className="flex items-center gap-5 mt-2">
-              <button
-                onClick={handleClose}
-                type="button"
-                className="transparentButton"
-              >
-                Cancel
-              </button>
-              <button type="submit" className="button">
-                Submit
-              </button>
+            <div className="form-control">
+              <label>Location :</label>
+              <input
+                type="text"
+                name="location"
+                placeholder="Enter property location"
+                onChange={handleChange}
+                value={values.location}
+              />
+              {errors.location ? (
+                <p className="errorMsg">{errors.location}</p>
+              ) : null}
             </div>
-          </Form>
-        </Formik>
+            <div className="form-control">
+              <label>Price :</label>
+              <input
+                type="text"
+                name="price"
+                placeholder="Enter property price"
+                onChange={handleChange}
+                value={values.price}
+              />
+              {errors.price ? <p className="errorMsg">{errors.price}</p> : null}
+            </div>
+
+            <div className="form-control">
+              <label>Initial deposit :</label>
+              <input
+                type="text"
+                name="initialDeposit"
+                placeholder="Enter property price"
+                onChange={handleChange}
+                value={values.initialDeposit}
+              />
+              {errors.initialDeposit ? (
+                <p className="errorMsg">{errors.initialDeposit}</p>
+              ) : null}
+            </div>
+
+            <div className="form-control">
+              <label>Plot size :</label>
+              <input
+                type="text"
+                name="details.plotSize"
+                placeholder="Enter property plot size"
+                onChange={handleChange}
+                value={values.details.plotSize}
+                required
+              />
+            </div>
+            <div className="form-control">
+              <label>Land title :</label>
+              <input
+                type="text"
+                name="title"
+                placeholder="Enter land title"
+                onChange={handleChange}
+                value={values.title}
+              />
+              {errors.title ? <p className="errorMsg">{errors.title}</p> : null}
+            </div>
+            <div className="form-control">
+              <label>Upload picture :</label>
+              <input
+                type="file"
+                name="image"
+                placeholder="Enter property picture"
+                onChange={(event) => {
+                  let reader = new FileReader();
+                  reader.onload = () => {
+                    if (reader.readyState === 2) {
+                      setFieldValue("image", reader.result);
+                    }
+                  };
+                  reader.readAsDataURL(event.target.files[0]);
+                }}
+              />
+              {errors.image ? <p className="errorMsg">{errors.image}</p> : null}
+            </div>
+            <div className="form-control">
+              <label>Description :</label>
+              <textarea
+                name="description"
+                placeholder="Enter description"
+                onChange={handleChange}
+                value={values.description}
+              />
+
+              {errors.description ? (
+                <p className="errorMsg">{errors.description}</p>
+              ) : null}
+            </div>
+            <div className="form-control -mt-16">
+              <label>Amenities :</label>
+              <textarea
+                name="moreDetails"
+                placeholder="Enter amenities and separate them with comma,"
+                onChange={handleChange}
+                value={values.moreDetails}
+              />
+
+              {errors.moreDetails ? (
+                <p className="errorMsg">{errors.moreDetails}</p>
+              ) : null}
+            </div>
+          </div>
+          <div className="flex items-center gap-5 mt-2">
+            <button
+              onClick={handleClose}
+              type="button"
+              className="transparentButton"
+            >
+              Cancel
+            </button>
+            <button type="submit" className="button">
+              Submit
+            </button>
+          </div>
+        </form>
       </div>
     </Modal>
   );

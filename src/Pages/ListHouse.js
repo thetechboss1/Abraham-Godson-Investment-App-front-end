@@ -26,11 +26,11 @@ const ListHouse = () => {
       setProperties(house);
     };
     fn1();
-  }, []);
+  }, [userInfo.token]);
 
   useEffect(() => {
     getProperties();
-  }, []);
+  }, [getProperties]);
 
   return (
     <div>
@@ -70,8 +70,8 @@ const ListHouse = () => {
                     <td>{item.location}</td>
                     <td>{item.description}</td>
                     <td>{item.price}</td>
-                    <td>{item.moreDetails[0]}</td>
-                    <td>{item.moreDetails[1]}</td>
+                    <td>2</td>
+                    <td>3</td>
                     <td>{item.intialDeposit}</td>
                     <td className="flex items-center gap-3 justify-center">
                       <i
@@ -91,7 +91,7 @@ const ListHouse = () => {
                   {/* description modal */}
                   <Modal open={descModal} onClose={() => setDescModal(false)}>
                     <div
-                      className="CModal"
+                      className="CModal scrollBar"
                       style={{ maxWidth: 600, height: "85%" }}
                     >
                       <div className="flex justify-between items-center mb-7">

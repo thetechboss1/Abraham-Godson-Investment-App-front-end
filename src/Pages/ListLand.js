@@ -1,10 +1,40 @@
 import { Modal } from "@mui/material";
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useCallback, useContext, useEffect, useState } from "react";
+import { url } from "../Api";
+import { PageContext } from "../Context/PageContextProvider";
 import CreateLand from "../Components/CreateLand";
 
 const ListLand = () => {
   const [addModal, setAddModal] = useState(false);
   const [descModal, setDescModal] = useState(false);
+
+  const { userInfo } = useContext(PageContext);
+  const [properties, setProperties] = useState([]);
+
+  const getProperties = useCallback(() => {
+    const fn1 = async () => {
+      let res = await axios.get(`${url}/properties`, {
+        headers: {
+          Accept: "application/json",
+          Authorization: `bearer ${userInfo.token}`,
+        },
+      });
+      let data = res.data.properties;
+      let house = data.filter((property) => {
+        return property.type === "land";
+      });
+      setProperties(house);
+    };
+    fn1();
+  }, [userInfo.token]);
+
+  useEffect(() => {
+    getProperties();
+  }, [getProperties]);
+
+  console.log(properties);
+
   return (
     <div>
       <div className="-mt-14 flex justify-end">
@@ -27,75 +57,77 @@ const ListLand = () => {
           </tr>
         </thead>
         <tbody>
-          {[1, 2, 3, 4, 5].map((idx) => (
-            <tr>
-              <td>0{idx}</td>
-              <td>Villa In Alexandria</td>
-              <td>Ebeju Lekki, Lagos</td>
-              <td>Lorem, ipsum dolor sit amet.</td>
-              <td>₦30,000,000.00</td>
-              <td>3500Sq Ft</td>
-              <td>Deep of Rectification</td>
-              <td className="flex items-center gap-3 justify-center">
-                <i
-                  onClick={() => setDescModal(true)}
-                  className="ri-eye-line cursor-pointer hover:text-primary text-lg"
-                ></i>
-                <i
-                  onClick={() => setAddModal(true)}
-                  className="ri-pencil-fill cursor-pointer hover:text-primary text-lg"
-                ></i>
-                <i
-                  onClick={() => alert("Delete Item")}
-                  className="ri-delete-bin-6-line cursor-pointer hover:text-primary text-lg"
-                ></i>
-              </td>
-            </tr>
-          ))}
+          {properties.map((item, index) => {
+            return (
+              <>
+                <tr>
+                  <td>{index + 1}</td>
+                  <td>{item.name}</td>
+                  <td>{item.location}</td>
+                  <td>{item.description}</td>
+                  <td>{item.price}</td>
+                  <td>500 sq</td>
+                  <td>{item.title}</td>
+                  <td className="flex items-center gap-3 justify-center">
+                    <i
+                      onClick={() => setDescModal(true)}
+                      className="ri-eye-line cursor-pointer hover:text-primary text-lg"
+                    ></i>
+                    <i
+                      onClick={() => setAddModal(true)}
+                      className="ri-pencil-fill cursor-pointer hover:text-primary text-lg"
+                    ></i>
+                    <i
+                      onClick={() => alert("Delete Item")}
+                      className="ri-delete-bin-6-line cursor-pointer hover:text-primary text-lg"
+                    ></i>
+                  </td>
+                </tr>
+
+                {/* description modal */}
+                <Modal open={descModal} onClose={() => setDescModal(false)}>
+                  <div
+                    className="CModal"
+                    style={{ maxWidth: 600, height: "85%" }}
+                  >
+                    <div className="flex justify-between items-center mb-7">
+                      <h5 className="font-semibold text-accent text-lg">
+                        {item.name}
+                      </h5>
+                      <i
+                        className="fas fa-times cursor-pointer text-xl"
+                        onClick={() => setDescModal(false)}
+                      ></i>
+                    </div>
+
+                    <div>
+                      <img
+                        src={item.image}
+                        alt={item.name}
+                        className="rounded w-full h-72"
+                      />
+                    </div>
+
+                    <div>
+                      <h5 className="font-medium pt-3 pb-1">Description: </h5>
+                      <p className="text-justify text-sm">{item.description}</p>
+
+                      <h5 className="font-medium pt-2 pb-1">Amenities: </h5>
+                      <ul className="list-disc pl-4 text-sm">
+                        <li>Elevator</li>
+                        <li>Spa</li>
+                        <li>Pool</li>
+                        <li>Gym</li>
+                        <li>24-hour</li>
+                      </ul>
+                    </div>
+                  </div>
+                </Modal>
+              </>
+            );
+          })}
         </tbody>
       </table>
-
-      {/* description modal */}
-      <Modal open={descModal} onClose={() => setDescModal(false)}>
-        <div className="CModal" style={{ maxWidth: 600, height: "85%" }}>
-          <div className="flex justify-between items-center mb-7">
-            <h5 className="font-semibold text-accent text-lg">
-              Villa In Alexandria
-            </h5>
-            <i
-              className="fas fa-times cursor-pointer text-xl"
-              onClick={() => setDescModal(false)}
-            ></i>
-          </div>
-
-          <div>
-            <img
-              src="https://images.unsplash.com/photo-1592595896551-12b371d546d5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cmVhbCUyMGVzdGF0ZXxlbnwwfHwwfHw%3D&w=1000&q=80"
-              alt=""
-              className="rounded w-full h-72"
-            />
-          </div>
-
-          <div>
-            <h5 className="font-medium pt-3 pb-1">Description: </h5>
-            <p className="text-justify text-sm">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Temporibus vitae deleniti sunt officia vel dolorem esse, at
-              nostrum blanditiis eum mollitia corrupti consequuntur laboriosam
-              quod sed ut dignissimos aliquam eveniet.
-            </p>
-
-            <h5 className="font-medium pt-2 pb-1">Amenities: </h5>
-            <ul className="list-disc pl-4 text-sm">
-              <li>Elevator</li>
-              <li>Spa</li>
-              <li>Pool</li>
-              <li>Gym</li>
-              <li>24-hour</li>
-            </ul>
-          </div>
-        </div>
-      </Modal>
     </div>
   );
 };
