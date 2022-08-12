@@ -1,10 +1,30 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { url } from "../Api";
 import CreateRealtor from "../Components/CreateRealtor";
 import PageToper from "../Components/PageToper";
 import DashboardLayout from "../Layout/DashboardLayout";
 
 const AllRealtors = () => {
   const [addModal, setAddModal] = useState(false);
+  const [realtors, setRealtors] =useState([])
+  const userInfo = JSON.parse(localStorage.getItem("user_info"))
+  console.log(userInfo.token)
+  useEffect(() => {
+    axios({
+      url:`${url}/admin/realtors`,
+      method:"GET",
+      headers:{
+        authorization:`bearer ${userInfo.token}`
+      }
+    })
+    .then((response)=>{
+    let data = response.data.realtors
+    console.log(typeof data, data)
+    setRealtors(data)
+    })
+  }, [])
+  
   return (
     <DashboardLayout>
       <div className="Container">
@@ -42,16 +62,16 @@ const AllRealtors = () => {
               </tr>
             </thead>
             <tbody>
-              {[1, 2, 3, 4, 5].map((idx) => (
-                <tr>
-                  <td>0{idx}</td>
-                  <td>Reuben Arinze</td>
-                  <td>reuben@gmail.com</td>
-                  <td>09057893278</td>
+              {realtors && realtors.map((user, index) => (
+                <tr key={index}>
+                  <td>0{index+1}</td>
+                  <td>{user.fullname}</td>
+                  <td>{user.email}</td>
+                  <td>{user.phone}</td>
                   <td>08056234565</td>
-                  <td>Godswill smile</td>
-                  <td>0129379930</td>
-                  <td>First bank</td>
+                  <td>{user.bankDetails.bankHolder}</td>
+                  <td>{user.bankDetails.bankAccount}</td>
+                  <td>{user.bankDetails.bankName}</td>
                   <td>10</td>
                   <td>2</td>
 

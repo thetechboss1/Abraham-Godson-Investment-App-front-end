@@ -10,6 +10,10 @@ const AdminDashboard = () => {
   const { userAccount, userInfo } = useContext(AccountContext);
   const [realtors, setRealtors] = useState([]);
   const [properties, setProperties] = useState([]);
+  const [houselen, setHouselen] =useState(0)
+  const [landlen, setLandlen] =useState(0)
+  const [paidlen, setPaidlen] =useState(0)
+  const [unpaidlen, setUnpaidlen] =useState(0)
 
   const getAllData = useCallback(() => {
     //  ==== Get all realtors ===//
@@ -39,8 +43,55 @@ const AdminDashboard = () => {
 
   }, [userInfo.token]);
 
+  const getProperty = ()=>{
+    axios({
+      url:`${url}/properties`,
+      method:"get",
+      headers:{
+        Authorization:`bearer ${userInfo.token}`
+      }
+    })
+    .then((result) => {
+      let data = result.data.properties
+      let land = data.filter((property)=>{
+        return property.type==="land"
+      })
+      setLandlen(land.length)
+      let house = data.filter((property)=>{
+        return property.type==="house"
+      })
+      setHouselen(house.length)
+    }).catch((err) => {
+      
+    });
+  }
+  const getSales = ()=>{
+    axios({
+      url:`${url}/sales`,
+      method:"get",
+      headers:{
+        Authorization:`bearer ${userInfo.token}`
+      }
+    })
+    .then((result) => {
+      let data = result.data.sales
+      console.log(data)
+      let paid = data.filter((sale)=>{
+        return sale.commissionPaid===true
+      })  
+      setPaidlen(paid.length)
+      let unpaid = data.filter((sales)=>{
+        return sales.commissionPaid===false
+      })
+      setUnpaidlen(unpaid.length)
+    }).catch((err) => {
+      
+    });
+  }
   useEffect(() => {
     getAllData();
+    getProperty();
+    getSales()
   }, [getAllData]);
 
   return (
@@ -70,27 +121,27 @@ const AdminDashboard = () => {
           <HomeCard
             title="House"
             bg="gray"
-            number="100"
+            number={houselen}
             icon="ri-shield-user-line"
           />
 
           <HomeCard
             title="Land"
             bg="gray"
-            number="100"
+            number={landlen}
             icon="ri-shield-user-line"
           />
 
           <HomeCard
             title="Paid Commission"
             bg="rgb(13, 96, 216)"
-            number="50"
+            number={paidlen}
             icon="ri-bank-card-line"
           />
           <HomeCard
             title="Unpaid Commission"
             bg="#ff6103"
-            number="50"
+            number={unpaidlen}
             icon="ri-refund-2-fill"
           />
         </div>
