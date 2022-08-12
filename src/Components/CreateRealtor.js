@@ -23,7 +23,6 @@ const CreateRealtor = ({ open, handleClose }) => {
   };
 
   const onSubmit = (values, onSubmitProps) => {
-
     setSending(true);
     axios({
       url: `${url}/user/register`,
@@ -32,13 +31,14 @@ const CreateRealtor = ({ open, handleClose }) => {
     })
       .then((result) => {
         setSending(false);
-        toast.success(result.data.message);
+        // toast.success(result.data.message);
+        // console.log(result);
       })
       .catch((err) => {
-        toast.error(err.response.data.message);
+        // console.log(err);
+        // toast.error(err.response.data.message);
         setSending(false);
       });
-    onSubmitProps.setSubmitting(false);
     // onSubmitProps.resetForm();
   };
 

@@ -72,7 +72,6 @@ const AdminDashboard = () => {
     })
       .then((result) => {
         let data = result.data.sales;
-        console.log(data);
         let paid = data.filter((sale) => {
           return sale.commissionPaid === true;
         });

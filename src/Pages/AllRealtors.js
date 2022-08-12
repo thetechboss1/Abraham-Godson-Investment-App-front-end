@@ -58,7 +58,7 @@ const AllRealtors = () => {
                 <th>Sales</th>
                 <th>Downline</th>
 
-                <th>Action</th>
+                <th>View</th>
               </tr>
             </thead>
             <tbody>
@@ -76,18 +76,10 @@ const AllRealtors = () => {
                   <td>2</td>
 
                   <td className="flex items-center gap-3 justify-center">
-                    {/* <i
-                  onClick={() => setDescModal(true)}
-                  className="ri-eye-line cursor-pointer hover:text-primary text-lg"
-                ></i> */}
                     <i
-                      // onClick={() => setAddModal(true)}
-                      className="ri-pencil-fill cursor-pointer hover:text-primary text-lg"
-                    ></i>
-                    {/* <i
-                      onClick={() => alert("Delete Item")}
-                      className="ri-delete-bin-6-line cursor-pointer hover:text-primary text-lg"
-                    ></i> */}
+                  className="ri-eye-line cursor-pointer hover:text-primary text-lg"
+                ></i>
+                   
                   </td>
                 </tr>
               ))}
