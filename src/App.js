@@ -1,5 +1,5 @@
 import Login from "./Auth/Login";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Register from "./Auth/Register";
 import Home from "./Pages/Home";
 import Account from "./Pages/Account";
@@ -57,8 +57,8 @@ function App() {
         <Route path="/properties" element={<Properties />} />
 
         {/* Admin routes */}
-        <Route path="all-users" element={<AllUsers />} />
-        <Route path="admin-properties" element={<AdminProperties />} />
+        <Route path="/all-users" element={<AllUsers />} />
+        <Route path="/admin-properties" element={<AdminProperties />} />
         <Route path="/sales-records" element={<SalesRecord />} />
       </Routes>
     </>

@@ -1,13 +1,72 @@
-import { Modal } from "@mui/material";
 import React, { useContext, useState } from "react";
+import { Modal } from "@mui/material";
+import { ErrorMessage, Field, Form, Formik } from "formik";
+import * as Yup from "yup";
 import PageToper from "../Components/PageToper";
 import { AccountContext } from "../Context/AccountContextProvider";
 import DashboardLayout from "../Layout/DashboardLayout";
+import { toast } from "react-toastify";
+import axios from "axios";
+import { url } from "../Api";
+import { useNavigate } from "react-router-dom";
 
 const AdminAccount = () => {
   const [resetPModal, setResetPModal] = useState(false);
   const [editProfileModal, setEditProfileModal] = useState(false);
-  const {userAccount} = useContext(AccountContext)
+  const { userAccount, userInfo } = useContext(AccountContext);
+  const navigate = useNavigate();
+  const validate = Yup.string().required("Field is required!");
+
+  const submitProfile = (values) => {
+    axios
+      .patch(
+        `${url}/admin/change/details
+`,
+        values,
+        {
+          headers: {
+            Accept: "application/json",
+            Authorization: `bearer ${userInfo.token}`,
+          },
+        }
+      )
+      .then((response) => {
+        toast.success(response.data.message);
+      })
+
+      .catch((err) => {
+        toast.error(err.message);
+      });
+  };
+
+  const onSubmitReset = (values, onSubmitProps) => {
+    // setOpenBackDrop(true);
+    axios({
+      url: `${url}/admin/change/password`,
+      method: "post",
+      headers: {
+        Accept: "application/json",
+        Authorization: `bearer ${userInfo.token}`,
+      },
+      data: {
+        password: values.password,
+        newPassword: values.newPassword,
+      },
+     
+    })
+      .then((result) => {
+        console.log(result);
+        // toast.success(result.message);
+        // localStorage.clear("user_info");
+        // navigate("/login");
+      })
+      .catch((err) => {
+        toast.error(err.message);
+      });
+
+    onSubmitProps.resetForm();
+  };
+
   return (
     <DashboardLayout>
       <div className="Container">
@@ -36,7 +95,7 @@ const AdminAccount = () => {
                   type="text"
                   placeholder={userAccount.fullname}
                   disabled={true}
-                  className="placeholder:text-black"
+                  className="placeholder:text-black bg-gray-100"
                 />
               </div>
               <div className="form-control">
@@ -45,7 +104,7 @@ const AdminAccount = () => {
                   type="text"
                   placeholder={userAccount.email}
                   disabled={true}
-                  className="placeholder:text-black"
+                  className="placeholder:text-black bg-gray-100"
                 />
               </div>
             </div>
@@ -64,23 +123,70 @@ const AdminAccount = () => {
                 onClick={() => setResetPModal(false)}
               ></i>
             </div>
-            <form>
-              <div className="form-control">
-                <label>Old Password</label>
-                <input type="password" placeholder="Enter old password" />
-              </div>
-              <div className="form-control">
-                <label>New Password</label>
-                <input type="password" placeholder="Enter new password" />
-              </div>
-              <div className="form-control">
-                <label>Confirm Password</label>
-                <input type="password" placeholder="Confirm password" />
-              </div>
-            </form>
-            <button className="button" type="submit">
-              Submit
-            </button>
+            <Formik
+              initialValues={{
+                password: "",
+                newPassword: "",
+                confirmPassword: "",
+              }}
+              validationSchema={Yup.object({
+                password: validate,
+                newPassword: validate.min(
+                  8,
+                  "Password must not be lass than 8 characters"
+                ),
+                confirmPassword: Yup.string().oneOf(
+                  [Yup.ref("newPassword"), null],
+                  "Passwords must match"
+                ).required("Field is required!"),
+              })}
+              onSubmit={onSubmitReset}
+            >
+              <Form>
+                <div className="form-control">
+                  <label>Old Password</label>
+                  <Field
+                    type="password"
+                    name="password"
+                    placeholder="Enter old password"
+                  />
+                  <ErrorMessage
+                    name="password"
+                    component="span"
+                    className="errorMsg"
+                  />
+                </div>
+                <div className="form-control">
+                  <label>New Password</label>
+                  <Field
+                    type="password"
+                    name="newPassword"
+                    placeholder="Enter new password"
+                  />
+                  <ErrorMessage
+                    name="newPassword"
+                    component="span"
+                    className="errorMsg"
+                  />
+                </div>
+                <div className="form-control">
+                  <label>Confirm Password</label>
+                  <Field
+                    type="password"
+                    name="confirmPassword"
+                    placeholder="Confirm password"
+                  />
+                  <ErrorMessage
+                    name="confirmPassword"
+                    component="span"
+                    className="errorMsg"
+                  />
+                </div>
+                <button className="button" type="submit">
+                  Submit
+                </button>
+              </Form>
+            </Formik>
           </div>
         </Modal>
 
@@ -99,20 +205,41 @@ const AdminAccount = () => {
                 onClick={() => setEditProfileModal(false)}
               ></i>
             </div>
-
-            <form>
-              <div className="form-control">
-                <label>Full name</label>
-                <input type="text" />
-              </div>
-              <div className="form-control">
-                <label>Email</label>
-                <input type="email" />
-              </div>
-              <button className="button" type="submit">
-                Save Changes
-              </button>
-            </form>
+            <Formik
+              initialValues={{
+                fullname: userAccount.fullname,
+                email: userAccount.email,
+              }}
+              validationSchema={Yup.object({
+                fullname: validate,
+                email: validate.email("Invalid email format"),
+              })}
+              onSubmit={submitProfile}
+            >
+              <Form>
+                <div className="form-control">
+                  <label>Full name</label>
+                  <Field type="text" name="fullname" />
+                  <ErrorMessage
+                    component="span"
+                    className="errorMsg"
+                    name="fullname"
+                  />
+                </div>
+                <div className="form-control">
+                  <label>Email</label>
+                  <Field type="email" name="email" />
+                  <ErrorMessage
+                    component="span"
+                    name="email"
+                    className="errorMsg"
+                  />
+                </div>
+                <button className="button" type="submit">
+                  Save Changes
+                </button>
+              </Form>
+            </Formik>
           </div>
         </Modal>
       </div>
