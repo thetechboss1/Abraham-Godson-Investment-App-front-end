@@ -1,11 +1,36 @@
-import React from "react";
+import axios from "axios";
+import React, { useContext, useEffect, useState } from "react";
+import { url } from "../Api";
 import PageToper from "../Components/PageToper";
+import { PageContext } from "../Context/PageContextProvider";
 
-const HouseDetails = ({ close }) => {
+const HouseDetails = ({ close, id }) => {
+  const { userInfo } = useContext(PageContext);
+  const [fullDetails, setFullDetails] = useState({});
+
+  useEffect(() => {
+    axios
+      .get(`${url}/properties/${id}`, {
+        headers: {
+          Accept: "application/json",
+          Authorization: `bearer ${userInfo.token}`,
+        },
+      })
+      .then((response) => {
+        setFullDetails(response.data.property);
+      })
+
+      .catch((err) => {
+        console.error("err", err);
+      });
+  }, [userInfo.token, id]);
+
+  console.log(fullDetails.price);
+
   return (
     <>
       <div className="Container pb-10">
-        <PageToper title="2-Bed Apartment | The Orchid" desc="Ebeju Lekki, Lagos" />
+        <PageToper title={fullDetails.name} desc={fullDetails.location} />
         <div className="mb-6 flex justify-between items-center">
           <button className="button flex items-center gap-2" onClick={close}>
             <span>All Properties</span>
@@ -23,23 +48,29 @@ const HouseDetails = ({ close }) => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           <div>
             <img
-              src="https://cdn.pixabay.com/photo/2014/07/31/00/30/vw-beetle-405876__340.jpg"
-              alt="villa"
+              src={fullDetails.image}
+              alt={fullDetails.name}
               className="rounded w-full"
             />
           </div>
           <div>
-            <h3 className="font-semibold text-lg md:text-xl">₦30,000,000.00</h3>
-            <h6 className=" border-b-2 inline-block my-2 pb-1 font-medium">Initial deposit:  <span className="text-accent">₦1,000,000.00</span></h6>
+            <h3 className="font-semibold text-lg md:text-xl">
+              {fullDetails.price && fullDetails.price.toLocaleString("en-NG", {
+                style: "currency",
+                currency: "NGN",
+              })}
+            </h3>
+            <h6 className=" border-b-2 inline-block my-2 pb-1 font-medium">
+              Initial deposit:{" "}
+              <span className="text-accent">
+                {fullDetails.intialDeposit && fullDetails.intialDeposit.toLocaleString("en-NG", {
+                style: "currency",
+                currency: "NGN",
+              })}
+              </span>
+            </h6>
             <p className="text-sm text-justify">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus eos
-              reiciendis atque amet placeat, magnam delectus, rerum voluptatibus
-              aliquam officiis vitae, provident impedit quae? Deserunt iste
-              iusto veritatis quidem laboriosam?Lorem ipsum dolor sit amet
-              consectetur adipisicing elit. Natus eos reiciendis atque amet
-              placeat, magnam delectus, rerum voluptatibus aliquam officiis
-              vitae, provident impedit quae? Deserunt iste iusto veritatis
-              quidem
+             {fullDetails.description}
             </p>
 
             <div className="border-b mt-3" />
@@ -58,7 +89,7 @@ const HouseDetails = ({ close }) => {
                     <span className="text-sm">Bedroom</span>
                     <div className="flex items-center gap-3">
                       <i className="ri-hotel-bed-line text-xl"></i>
-                      <span>3</span>
+                      {/* <span>{fullDetails.detail[0]}</span> */}
                     </div>
                   </div>
                   <div>

@@ -140,11 +140,11 @@ const ListHouse = () => {
 
                         <h5 className="font-medium pt-2 pb-1">Amenities: </h5>
                         <ul className="list-disc pl-4 text-sm">
-                          <li>Elevator</li>
-                          <li>Spa</li>
-                          <li>Pool</li>
-                          <li>Gym</li>
-                          <li>24-hour</li>
+                          {item.moreDetails.map((amenities) => (
+                            <li key={amenities} className="block">
+                              {amenities}
+                            </li>
+                          ))}
                         </ul>
                       </div>
                     </div>

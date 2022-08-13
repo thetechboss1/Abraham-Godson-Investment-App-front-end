@@ -9,11 +9,14 @@ import Land from "./Land";
 
 const Properties = () => {
   const [switchProperty, setSwitchProperty] = useState(true);
-
-
+  const [properties, setProperties] = useState([]);
+  const [listLand, setListLand] = useState([]);
+  const [listHouse, setListHouse] = useState([]);
+  const [loading, setLoading] = useState(false);
   const { userInfo } = useContext(PageContext);
 
   const getProperties = useCallback(() => {
+    setLoading(true);
     const fn = async () => {
       let res = await axios.get(`${url}/properties`, {
         headers: {
@@ -21,7 +24,15 @@ const Properties = () => {
           Authorization: `bearer ${userInfo.token}`,
         },
       });
-      // console.log("prop",res.data.properties);
+
+      setProperties(res.data.properties);
+      setLoading(false);
+      // let displayHouse = properties.filter((property) => {
+      //   return property.type === "House";
+        
+      // });
+
+      // console.log("",displayHouse);
     };
     fn();
   }, [userInfo.token]);
@@ -29,6 +40,8 @@ const Properties = () => {
   useEffect(() => {
     getProperties();
   }, [getProperties]);
+
+  // console.log(properties);
 
   return (
     <DashboardLayout>
@@ -50,7 +63,11 @@ const Properties = () => {
             </button>
           </div>
 
-          {switchProperty ? <House /> : <Land />}
+          {switchProperty ? (
+            <House properties={properties} loading={loading} />
+          ) : (
+            <Land />
+          )}
         </div>
       </div>
     </DashboardLayout>

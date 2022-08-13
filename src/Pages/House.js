@@ -10,16 +10,27 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const House = () => {
+const House = ({ properties, loading }) => {
   const [openShare, setOpenShare] = useState(false);
   const [openFullDialog, setOpenFullDialog] = useState(false);
+  const [getId, setGetId] = useState("");
 
+  const openDetails = (id) => {
+    setGetId(id);
+    setOpenFullDialog(true);
+  };
+
+  const listHouse = properties.filter((p) => {
+    return p.type === "House";
+  });
+
+  // console.log(listHouse);
   return (
     <>
       {/* House details */}
       <Dialog fullScreen open={openFullDialog} TransitionComponent={Transition}>
         <DashboardLayout>
-          <HouseDetails close={() => setOpenFullDialog(false)} />
+          <HouseDetails id={getId} close={() => setOpenFullDialog(false)} />
         </DashboardLayout>
       </Dialog>
 
@@ -50,49 +61,58 @@ const House = () => {
         </div>
       </form>
 
+      {loading && (
+        <div>
+          <h5 className="pt-4 font-medium text-lg">Loading....</h5>
+        </div>
+      )}
+
+      {/* {listHouse.length === 0 && (
+        <div>
+          <h5 className="pt-4 font-medium text-lg">No Property Yet</h5>
+        </div>
+      )} */}
+
       <div className="propertyWrap mt-7 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-5 gap-y-7">
-        {[1, 2, 3, 4, 5].map(() => (
+        {listHouse.map((item) => (
           <div className="box rounded cursor-pointer">
             <div
               className="top rounded-tr"
-              onClick={() => setOpenFullDialog(true)}
+              onClick={() => openDetails(item._id)}
             >
-              <img
-                src="https://cdn.pixabay.com/photo/2014/07/31/00/30/vw-beetle-405876__340.jpg"
-                alt=""
-                className="rounded-tr"
-              />
+              <img src={item.image} alt={item.name} className="rounded-tr" />
             </div>
             <div className="bottom">
-              <h3 className="text-lg font-medium pb-5 pt-1">
-                2-Bed Apartment | The Orchid
-              </h3>
+              <h3 className="text-lg font-medium pb-5 pt-1">{item.name}</h3>
 
               <div className="advants flex justify-between">
                 <div>
                   <span>Bedroom</span>
                   <div>
                     <i className="ri-hotel-bed-line text-xl"></i>
-                    <span>3</span>
+                    <span>{item.details[0]}</span>
                   </div>
                 </div>
                 <div>
                   <span>Bathroom</span>
                   <div>
                     <i className="fas fa-shower text-lg"></i>
-                    <span>2</span>
+                    <span>{item.details[1]}</span>
                   </div>
                 </div>
                 <div>
                   <span>Location</span>
                   <div>
-                    <h5 className="text-sm font-medium">Ebeju Lekki, Lagos</h5>
+                    <h5 className="text-sm font-medium">{item.location}</h5>
                   </div>
                 </div>
               </div>
               <div className="flex items-center justify-between mt-7">
                 <span className="text-sm block font-medium text-accent">
-                  ₦30,000,000.00
+                  {item.price.toLocaleString("en-NG", {
+                    style: "currency",
+                    currency: "NGN",
+                  })}
                 </span>
 
                 <button className="py-1 px-2 bg-secondary text-white text-sm flex items-center gap-2">

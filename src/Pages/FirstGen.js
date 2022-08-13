@@ -11,6 +11,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 const FirstGen = ({ myDownlineFirstGen }) => {
   const [openFullDialog, setOpenFullDialog] = useState(false);
   const [getId, setGetId] = useState("");
+  
   const openDetails = (id) => {
     setGetId(id);
     setOpenFullDialog(true);

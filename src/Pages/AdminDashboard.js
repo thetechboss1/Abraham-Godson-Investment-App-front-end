@@ -51,12 +51,12 @@ const AdminDashboard = () => {
       .then((result) => {
         let data = result.data.properties;
         let land = data.filter((property) => {
-          return property.type === "land";
+          return property.type === "Land";
         });
 
         setLandlen(land.length);
         let house = data.filter((property) => {
-          return property.type === "house";
+          return property.type === "House";
         });
         setHouselen(house.length);
       })
