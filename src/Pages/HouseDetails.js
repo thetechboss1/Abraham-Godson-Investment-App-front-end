@@ -55,23 +55,23 @@ const HouseDetails = ({ close, id }) => {
           </div>
           <div>
             <h3 className="font-semibold text-lg md:text-xl">
-              {fullDetails.price && fullDetails.price.toLocaleString("en-NG", {
-                style: "currency",
-                currency: "NGN",
-              })}
+              {fullDetails.price &&
+                fullDetails.price.toLocaleString("en-NG", {
+                  style: "currency",
+                  currency: "NGN",
+                })}
             </h3>
             <h6 className=" border-b-2 inline-block my-2 pb-1 font-medium">
               Initial deposit:{" "}
               <span className="text-accent">
-                {fullDetails.intialDeposit && fullDetails.intialDeposit.toLocaleString("en-NG", {
-                style: "currency",
-                currency: "NGN",
-              })}
+                {fullDetails.intialDeposit &&
+                  fullDetails.intialDeposit.toLocaleString("en-NG", {
+                    style: "currency",
+                    currency: "NGN",
+                  })}
               </span>
             </h6>
-            <p className="text-sm text-justify">
-             {fullDetails.description}
-            </p>
+            <p className="text-sm text-justify">{fullDetails.description}</p>
 
             <div className="border-b mt-3" />
             <div className="flex mt-3 gap-7 ">
@@ -89,7 +89,7 @@ const HouseDetails = ({ close, id }) => {
                     <span className="text-sm">Bedroom</span>
                     <div className="flex items-center gap-3">
                       <i className="ri-hotel-bed-line text-xl"></i>
-                      {/* <span>{fullDetails.detail[0]}</span> */}
+                      <span>{fullDetails.detail[0]}</span>
                     </div>
                   </div>
                   <div>
