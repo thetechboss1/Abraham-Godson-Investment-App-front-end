@@ -24,7 +24,7 @@ const House = ({ properties, loading }) => {
     return p.type === "House";
   });
 
-  // console.log(listHouse);
+
   return (
     <>
       {/* House details */}

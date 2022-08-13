@@ -8,9 +8,20 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const Land = () => {
+const Land = ({ properties }) => {
   const [openShare, setOpenShare] = useState(false);
   const [openFullDialog, setOpenFullDialog] = useState(false);
+  const [getId, setGetId] = useState("");
+
+  const openDetails = (id) => {
+    setGetId(id);
+    setOpenFullDialog(true);
+  };
+
+  const listLand = properties.filter((p) => {
+    return p.type === "Land";
+  });
+
   return (
     <div>
       {/* House details */}
@@ -47,39 +58,39 @@ const Land = () => {
       </form>
 
       <div className="propertyWrap mt-7 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-5 gap-y-7">
-        {[1, 2, 3, 4, 5].map(() => (
+        {listLand.map((item) => (
           <div className="box rounded cursor-pointer">
-            <div className="top rounded-tr" onClick={() => setOpenFullDialog(true)}>
-              <img
-                src="https://images.unsplash.com/photo-1592595896551-12b371d546d5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cmVhbCUyMGVzdGF0ZXxlbnwwfHwwfHw%3D&w=1000&q=80"
-                alt=""
-                className="rounded-tr"
-              />
+            <div
+              className="top rounded-tr"
+              onClick={() => openDetails(item._id)}
+            >
+              <img src={item.image} alt={item.name} className="rounded-tr" />
             </div>
             <div className="bottom">
-              <h3 className="text-lg font-medium pb-5 pt-1">
-                Villa In Alexandria
-              </h3>
+              <h3 className="text-lg font-medium pb-5 pt-1">{item.name}</h3>
 
               <div className="advants flex justify-between">
                 <div>
                   <span>Plot size</span>
 
                   <span className="block pt-2 font-semibold text-base">
-                    3500Sq Ft
+                    400
                   </span>
                 </div>
 
                 <div>
                   <span>Location</span>
                   <div>
-                    <h5 className="text-sm font-medium">Sangotedo, Lagos</h5>
+                    <h5 className="text-sm font-medium">{item.location}</h5>
                   </div>
                 </div>
               </div>
               <div className="flex items-center justify-between mt-7">
                 <span className="text-sm block font-medium text-accent">
-                  ₦20,000,000.00
+                  {item.price.toLocaleString("en-NG", {
+                    style: "currency",
+                    currency: "NGN",
+                  })}
                 </span>
 
                 <button className="py-1 px-2 bg-secondary text-white text-sm flex items-center gap-2">

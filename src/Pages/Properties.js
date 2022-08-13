@@ -27,12 +27,6 @@ const Properties = () => {
 
       setProperties(res.data.properties);
       setLoading(false);
-      // let displayHouse = properties.filter((property) => {
-      //   return property.type === "House";
-        
-      // });
-
-      // console.log("",displayHouse);
     };
     fn();
   }, [userInfo.token]);
@@ -41,7 +35,6 @@ const Properties = () => {
     getProperties();
   }, [getProperties]);
 
-  // console.log(properties);
 
   return (
     <DashboardLayout>
@@ -66,7 +59,7 @@ const Properties = () => {
           {switchProperty ? (
             <House properties={properties} loading={loading} />
           ) : (
-            <Land />
+            <Land  properties={properties} loading={loading} />
           )}
         </div>
       </div>

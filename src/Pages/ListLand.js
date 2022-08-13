@@ -22,7 +22,7 @@ const ListLand = () => {
       });
       let data = res.data.properties;
       let house = data.filter((property) => {
-        return property.type === "land";
+        return property.type === "Land";
       });
       setProperties(house);
     };
@@ -62,7 +62,7 @@ const ListLand = () => {
                   <td>{index + 1}</td>
                   <td>{item.name}</td>
                   <td>{item.location}</td>
-                  <td>{item.description}</td>
+                  <td>{item.description.slice(0, 31)}...</td>
                   <td>{item.price}</td>
                   <td>500 sq</td>
                   <td>{item.title}</td>

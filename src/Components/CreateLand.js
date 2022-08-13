@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { Modal } from "@mui/material";
 import {
   ErrorMessage,
@@ -9,9 +9,15 @@ import {
   useFormik,
 } from "formik";
 import * as Yup from "yup";
+import { toast } from "react-toastify";
+import { PageContext } from "../Context/PageContextProvider";
+import { url } from "../Api";
+import axios from "axios";
 
 const CreateLand = ({ handleClose, open }) => {
   const validate = Yup.string().required("Field is Required!");
+  const [sending, setSending] = useState(false);
+  const { userInfo } = useContext(PageContext);
   const validateNumber = Yup.number()
     .typeError("You must specify a number")
     .min(0, "Min value 0.")
@@ -33,21 +39,51 @@ const CreateLand = ({ handleClose, open }) => {
   };
 
   const onSubmit = (values) => {
-    console.log(values);
+    setSending(true);
+    let data = new FormData();
+    data.append("image", values.image);
+    data.append("name", values.name);
+    data.append("location", values.location);
+    data.append("price", values.price);
+    data.append("intialDeposit", values.intialDeposit);
+    data.append("description", values.description);
+    data.append("moreDetails", values.moreDetails.split(","));
+    data.append("details", values.details.plotSize);
+    data.append("type", values.type);
+
+    axios({
+      url: `${url}/properties/create`,
+      method: "post",
+      data: data,
+      headers: {
+        Accept: "application/json",
+        Authorization: `bearer ${userInfo.token}`,
+      },
+    })
+      .then((result) => {
+        setSending(false);
+        toast.success(result.data.message);
+        console.log(result);
+      })
+      .catch((err) => {
+        toast.error(err.message);
+        setSending(false);
+        console.log(err);
+      });
   };
 
   const validationSchema = Yup.object({
-    name: validate,
-    location: validate,
-    price: validateNumber,
-    image: validate,
-    description: validate,
-    initialDeposit: validate,
-    title: validate,
-    details: {
-      plotSize: validate,
-    },
-    moreDetails: validate,
+    // name: validate,
+    // location: validate,
+    // price: validateNumber,
+    // image: validate,
+    // description: validate,
+    // intialDeposit: validate,
+    // title: validate,
+    // details: {
+    //   plotSize: validate,
+    // },
+    // moreDetails: validate,
   });
 
   const {
@@ -108,7 +144,7 @@ const CreateLand = ({ handleClose, open }) => {
             <div className="form-control">
               <label>Price :</label>
               <input
-                type="text"
+                type="number"
                 name="price"
                 placeholder="Enter property price"
                 onChange={handleChange}
@@ -120,14 +156,14 @@ const CreateLand = ({ handleClose, open }) => {
             <div className="form-control">
               <label>Initial deposit :</label>
               <input
-                type="text"
-                name="initialDeposit"
+                type="number"
+                name="intialDeposit"
                 placeholder="Enter property price"
                 onChange={handleChange}
-                value={values.initialDeposit}
+                value={values.intialDeposit}
               />
-              {errors.initialDeposit ? (
-                <p className="errorMsg">{errors.initialDeposit}</p>
+              {errors.intialDeposit ? (
+                <p className="errorMsg">{errors.intialDeposit}</p>
               ) : null}
             </div>
 
@@ -160,13 +196,7 @@ const CreateLand = ({ handleClose, open }) => {
                 name="image"
                 placeholder="Enter property picture"
                 onChange={(event) => {
-                  let reader = new FileReader();
-                  reader.onload = () => {
-                    if (reader.readyState === 2) {
-                      setFieldValue("image", reader.result);
-                    }
-                  };
-                  reader.readAsDataURL(event.target.files[0]);
+                  setFieldValue("image", event.target.files[0]);
                 }}
               />
               {errors.image ? <p className="errorMsg">{errors.image}</p> : null}
@@ -207,7 +237,7 @@ const CreateLand = ({ handleClose, open }) => {
               Cancel
             </button>
             <button type="submit" className="button">
-              Submit
+            {sending ? "sending" : "Submit"}
             </button>
           </div>
         </form>

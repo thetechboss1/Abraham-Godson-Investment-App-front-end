@@ -74,14 +74,7 @@ const CreateHouse1 = ({ open, handleClose }) => {
     // handleReset();
   };
 
-  const onSubmit1 = (values) => {
-    let data = new FormData();
-    data.append("image", values.image);
 
-    console.log("val", {
-      image: values.image,
-    });
-  };
 
   const {
     handleChange,
@@ -174,7 +167,7 @@ const CreateHouse1 = ({ open, handleClose }) => {
                 placeholder="Enter property bedroom"
                 onChange={handleChange}
                 value={values.details.bedroom}
-                // required
+                required
               />
             </div>
             <div className="form-control">
@@ -185,7 +178,7 @@ const CreateHouse1 = ({ open, handleClose }) => {
                 placeholder="Enter property bathroom"
                 onChange={handleChange}
                 value={values.details.bathroom}
-                // required
+                required
               />
             </div>
 

@@ -25,8 +25,6 @@ const HouseDetails = ({ close, id }) => {
       });
   }, [userInfo.token, id]);
 
-  console.log(fullDetails.price);
-
   return (
     <>
       <div className="Container pb-10">
@@ -89,14 +87,18 @@ const HouseDetails = ({ close, id }) => {
                     <span className="text-sm">Bedroom</span>
                     <div className="flex items-center gap-3">
                       <i className="ri-hotel-bed-line text-xl"></i>
-                      <span>{fullDetails.detail[0]}</span>
+                      <span>
+                        {fullDetails.details && fullDetails.details[0]}
+                      </span>
                     </div>
                   </div>
                   <div>
                     <span className="text-sm">Bathroom</span>
                     <div className="flex items-center gap-3">
                       <i className="fas fa-shower text-lg"></i>
-                      <span>2</span>
+                      <span>
+                        {fullDetails.details && fullDetails.details[1]}
+                      </span>
                     </div>
                   </div>
                 </div>
