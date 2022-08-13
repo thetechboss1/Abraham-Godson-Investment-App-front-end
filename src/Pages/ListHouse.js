@@ -21,7 +21,7 @@ const ListHouse = () => {
       });
       let data = res.data.properties;
       let house = data.filter((property) => {
-        return property.type === "house";
+        return property.type === "House";
       });
       setProperties(house);
     };
@@ -31,6 +31,21 @@ const ListHouse = () => {
   useEffect(() => {
     getProperties();
   }, [getProperties]);
+
+  const deleteProperty = (id) => {
+    const fn1 = async () => {
+      let res = await axios.delete(`${url}/properties/:${id}`, {
+        headers: {
+          Authorization: `bearer ${userInfo.token}`,
+        },
+      });
+      // let data = res.data.properties;
+      console.log(res);
+      const newProperty = properties.filter((item) => item.id !== id);
+      setProperties(newProperty);
+    };
+    fn1();
+  };
 
   return (
     <div>
@@ -68,8 +83,13 @@ const ListHouse = () => {
                     <td>{index + 1}</td>
                     <td>{item.name}</td>
                     <td>{item.location}</td>
-                    <td>{item.description}</td>
-                    <td>{item.price}</td>
+                    <td>{item.description.slice(0, 31)}...</td>
+                    <td>
+                      {item.price.toLocaleString("en-NG", {
+                        style: "currency",
+                        currency: "NGN",
+                      })}
+                    </td>
                     <td>2</td>
                     <td>3</td>
                     <td>{item.intialDeposit}</td>
@@ -83,7 +103,7 @@ const ListHouse = () => {
                         className="ri-pencil-fill cursor-pointer hover:text-primary text-lg"
                       ></i>
                       <i
-                        onClick={() => alert("Delete Item")}
+                        onClick={deleteProperty(item._id)}
                         className="ri-delete-bin-6-line cursor-pointer hover:text-primary text-lg"
                       ></i>
                     </td>

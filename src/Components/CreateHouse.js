@@ -13,20 +13,20 @@ const CreateHouse1 = ({ open, handleClose }) => {
   const validate = Yup.string().required("Field is required!");
 
   const validationSchema = Yup.object({
-    // name: validate,
-    // location: validate,
-    // price: validate,
-    // initialDeposit: validate,
-    // image: validate,
-    // moreDetails: validate,
-    // description: validate,
+    name: validate,
+    location: validate,
+    price: validate,
+    intialDeposit: validate,
+    image: validate,
+    moreDetails: validate,
+    description: validate,
   });
 
   const initialValues = {
     name: "",
     location: "",
     price: "",
-    initialDeposit: "",
+    intialDeposit: "",
     details: {
       bedroom: "",
       bathroom: "",
@@ -41,23 +41,20 @@ const CreateHouse1 = ({ open, handleClose }) => {
     setSending(true);
     let data = new FormData();
     data.append("image", values.image);
+    data.append("name", values.name);
+    data.append("location", values.location);
+    data.append("price", values.price);
+    data.append("intialDeposit", values.intialDeposit);
+    data.append("description", values.description);
+    data.append("moreDetails", values.moreDetails.split(","));
+    data.append("details", values.details.bedroom);
+    data.append("details", values.details.bathroom);
+    data.append("type", values.type);
     
     axios({
       url: `${url}/properties/create`,
       method: "post",
-      data: {
-        name: values.name,
-        location: values.location,
-        price: values.price,
-        initialDeposit: values.initialDeposit,
-        image: values.image,
-        moreDetails: values.moreDetails.split(","),
-        description: values.description,
-        details: {
-          bedroom: values.details.bedroom,
-          bathroom: values.details.bathroom,
-        },
-      },
+      data: data,
       headers: {
         Accept: "application/json",
         Authorization: `bearer ${userInfo.token}`,
@@ -65,7 +62,7 @@ const CreateHouse1 = ({ open, handleClose }) => {
     })
       .then((result) => {
         setSending(false);
-        // toast.success(result.message);
+        toast.success(result.data.message);
         console.log(result);
       })
       .catch((err) => {
@@ -146,7 +143,7 @@ const CreateHouse1 = ({ open, handleClose }) => {
             <div className="form-control">
               <label>Price :</label>
               <input
-                type="text"
+                type="number"
                 name="price"
                 placeholder="Enter property price"
                 onChange={handleChange}
@@ -158,17 +155,17 @@ const CreateHouse1 = ({ open, handleClose }) => {
             <div className="form-control">
               <label>Initial deposit :</label>
               <input
-                type="text"
-                name="initialDeposit"
+                type="number"
+                name="intialDeposit"
                 placeholder="Enter property price"
                 onChange={handleChange}
-                value={values.initialDeposit}
+                value={values.intialDeposit}
               />
               {errors.initialDeposit ? (
-                <p className="errorMsg">{errors.initialDeposit}</p>
+                <p className="errorMsg">{errors.intialDeposit}</p>
               ) : null}
             </div>
-
+           
             <div className="form-control">
               <label>Bedroom :</label>
               <input
