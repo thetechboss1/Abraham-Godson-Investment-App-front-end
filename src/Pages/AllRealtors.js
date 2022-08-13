@@ -54,7 +54,6 @@ const AllRealtors = () => {
                 <th>Acc number</th>
                 <th>Bank name</th>
                 <th>Sales</th>
-                <th>Downline</th>
 
                 <th>View</th>
               </tr>
@@ -71,7 +70,6 @@ const AllRealtors = () => {
                     <td>{user.bankDetails.bankHolder}</td>
                     <td>{user.bankDetails.bankAccount}</td>
                     <td>{user.bankDetails.bankName}</td>
-                    <td>10</td>
                     <td>2</td>
 
                     <td className="flex items-center gap-3 justify-center">

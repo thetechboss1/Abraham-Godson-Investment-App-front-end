@@ -15,10 +15,10 @@ const CreateRealtor = ({ open, handleClose }) => {
   };
 
   const initialValues = {
-    name: "",
+    fullname: "",
     email: "",
     phone: "",
-    referral_phone: "",
+    refphone: "",
     password: "",
   };
 
@@ -31,19 +31,17 @@ const CreateRealtor = ({ open, handleClose }) => {
     })
       .then((result) => {
         setSending(false);
-        // toast.success(result.data.message);
-        // console.log(result);
+        toast.success(result.data.message);
       })
       .catch((err) => {
-        // console.log(err);
-        // toast.error(err.response.data.message);
+        toast.error(err.response.data.message);
         setSending(false);
       });
-    // onSubmitProps.resetForm();
+    onSubmitProps.resetForm();
   };
 
   const validationSchema = Yup.object({
-    name: Yup.string().required("Field is Required!"),
+    fullname: Yup.string().required("Field is Required!"),
     email: Yup.string()
       .email("Invalid email format")
       .required("Field is Required!"),
@@ -78,10 +76,14 @@ const CreateRealtor = ({ open, handleClose }) => {
               <label>Full Name :</label>
               <Field
                 type="text"
-                name="name"
+                name="fullname"
                 placeholder="Enter realtor full name"
               />
-              <ErrorMessage name="name" component="span" className="errorMsg" />
+              <ErrorMessage
+                name="fullname"
+                component="span"
+                className="errorMsg"
+              />
             </div>
             <div className="form-control">
               <label>Email :</label>
@@ -105,7 +107,7 @@ const CreateRealtor = ({ open, handleClose }) => {
               <label>Referral Phone :</label>
               <Field
                 type="tel"
-                name="referral_phone"
+                name="refphone"
                 placeholder="Enter referral phone number"
               />
             </div>

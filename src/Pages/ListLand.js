@@ -33,8 +33,6 @@ const ListLand = () => {
     getProperties();
   }, [getProperties]);
 
-  console.log(properties);
-
   return (
     <div>
       <div className="-mt-14 flex justify-end">

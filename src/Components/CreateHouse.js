@@ -13,13 +13,13 @@ const CreateHouse1 = ({ open, handleClose }) => {
   const validate = Yup.string().required("Field is required!");
 
   const validationSchema = Yup.object({
-    name: validate,
-    location: validate,
-    price: validate,
-    initialDeposit: validate,
-    image: validate,
-    moreDetails: validate,
-    description: validate,
+    // name: validate,
+    // location: validate,
+    // price: validate,
+    // initialDeposit: validate,
+    // image: validate,
+    // moreDetails: validate,
+    // description: validate,
   });
 
   const initialValues = {
@@ -39,6 +39,9 @@ const CreateHouse1 = ({ open, handleClose }) => {
 
   const onSubmit = (values) => {
     setSending(true);
+    let data = new FormData();
+    data.append("image", values.image);
+    
     axios({
       url: `${url}/properties/create`,
       method: "post",
@@ -62,16 +65,25 @@ const CreateHouse1 = ({ open, handleClose }) => {
     })
       .then((result) => {
         setSending(false);
-        toast.success(result.message);
-        // console.log(result);
+        // toast.success(result.message);
+        console.log(result);
       })
       .catch((err) => {
         toast.error(err.message);
         setSending(false);
-        // console.log(err.message);
+        console.log(err);
       });
 
     // handleReset();
+  };
+
+  const onSubmit1 = (values) => {
+    let data = new FormData();
+    data.append("image", values.image);
+
+    console.log("val", {
+      image: values.image,
+    });
   };
 
   const {
@@ -165,7 +177,7 @@ const CreateHouse1 = ({ open, handleClose }) => {
                 placeholder="Enter property bedroom"
                 onChange={handleChange}
                 value={values.details.bedroom}
-                required
+                // required
               />
             </div>
             <div className="form-control">
@@ -176,7 +188,7 @@ const CreateHouse1 = ({ open, handleClose }) => {
                 placeholder="Enter property bathroom"
                 onChange={handleChange}
                 value={values.details.bathroom}
-                required
+                // required
               />
             </div>
 
@@ -187,13 +199,14 @@ const CreateHouse1 = ({ open, handleClose }) => {
                 name="image"
                 placeholder="Enter property picture"
                 onChange={(event) => {
-                  let reader = new FileReader();
-                  reader.onload = () => {
-                    if (reader.readyState === 2) {
-                      setFieldValue("image", reader.result);
-                    }
-                  };
-                  reader.readAsDataURL(event.target.files[0]);
+                  // let reader = new FileReader();
+                  // reader.onload = () => {
+                  //   if (reader.readyState === 2) {
+                  //     setFieldValue("image", reader.result);
+                  //   }
+                  // };
+                  // reader.readAsDataURL(event.target.files[0]);
+                  setFieldValue("image",event.target.files[0]);
                 }}
               />
               {errors.image ? <p className="errorMsg">{errors.image}</p> : null}
