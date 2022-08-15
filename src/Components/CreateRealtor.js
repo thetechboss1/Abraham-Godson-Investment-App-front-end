@@ -32,6 +32,7 @@ const CreateRealtor = ({ open, handleClose }) => {
       .then((result) => {
         setSending(false);
         toast.success(result.data.message);
+        handleClose()
       })
       .catch((err) => {
         toast.error(err.response.data.message);

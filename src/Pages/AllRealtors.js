@@ -1,16 +1,21 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { url } from "../Api";
 import CreateRealtor from "../Components/CreateRealtor";
 import PageToper from "../Components/PageToper";
+import { PageContext } from "../Context/PageContextProvider";
 import DashboardLayout from "../Layout/DashboardLayout";
 
 const AllRealtors = () => {
   const [addModal, setAddModal] = useState(false);
   const [realtors, setRealtors] = useState([]);
-  const userInfo = JSON.parse(localStorage.getItem("user_info"));
+  const { userInfo } = useContext(PageContext);
+  const [loading, setLoading] = useState(false);
+  const [summarize, setSummarize] = useState({});
+  const [Referral, setReferral] = useState([])
 
   useEffect(() => {
+    setLoading(true);
     axios({
       url: `${url}/admin/realtors`,
       method: "GET",
@@ -18,9 +23,34 @@ const AllRealtors = () => {
         authorization: `bearer ${userInfo.token}`,
       },
     }).then((response) => {
+      setLoading(false);
       let data = response.data.realtors;
       setRealtors(data);
     });
+
+    // sales
+    const fn1 = async () => {
+      let res = await axios.get(`${url}/sales/mysales/stats`, {
+        headers: {
+          Accept: "application/json",
+          Authorization: `bearer ${userInfo.token}`,
+        },
+      });
+      setSummarize(res.data);
+    };
+    fn1();
+
+    //==== get downline ====
+    const fn = async () => {
+      let res = await axios.get(`${url}/user/refferalData`, {
+        headers: {
+          Accept: "application/json",
+          Authorization: `bearer ${userInfo.token}`,
+        },
+      });
+      setReferral(res.data.data.firstlv);
+    };
+    fn();
   }, [userInfo.token]);
 
   return (
@@ -42,43 +72,56 @@ const AllRealtors = () => {
               handleClose={() => setAddModal(false)}
             />
           </div>
-          <table className="general_table mt-5">
-            <thead className="bg-gray-200">
-              <tr>
-                <th>S/N</th>
-                <th>Full Name</th>
-                <th>Email</th>
-                <th>Phone number</th>
-                <th>Referral Phone</th>
-                <th>Acc name</th>
-                <th>Acc number</th>
-                <th>Bank name</th>
-                <th>Sales</th>
 
-                <th>View</th>
-              </tr>
-            </thead>
-            <tbody>
-              {realtors &&
-                realtors.map((user, index) => (
-                  <tr key={index}>
-                    <td>{index + 1}</td>
-                    <td>{user.fullname}</td>
-                    <td>{user.email}</td>
-                    <td>{user.phone}</td>
-                    <td>08056234565</td>
-                    <td>{user.bankDetails.bankHolder}</td>
-                    <td>{user.bankDetails.bankAccount}</td>
-                    <td>{user.bankDetails.bankName}</td>
-                    <td>2</td>
+          {!loading && realtors.length === 0 ? (
+            <div>
+              <h5 className="pt-4 font-medium text-lg">No Realtor yet</h5>
+            </div>
+          ) : (
+            <table className="general_table mt-5">
+              <thead className="bg-gray-200">
+                <tr>
+                  <th>S/N</th>
+                  <th>Full Name</th>
+                  <th>Email</th>
+                  <th>Phone number</th>
+                  <th>Referral Phone</th>
+                  <th>Acc name</th>
+                  <th>Acc number</th>
+                  <th>Bank name</th>
+                  <th>Sales</th>
 
-                    <td className="flex items-center gap-3 justify-center">
-                      <i className="ri-eye-line cursor-pointer hover:text-primary text-lg"></i>
-                    </td>
-                  </tr>
-                ))}
-            </tbody>
-          </table>
+                  <th>Downline</th>
+                </tr>
+              </thead>
+              <tbody>
+                {realtors &&
+                  realtors.map((user, index) => (
+                    <tr key={index}>
+                      <td>{index + 1}</td>
+                      <td>{user.fullname}</td>
+                      <td>{user.email}</td>
+                      <td>{user.phone}</td>
+                      <td></td>
+                      <td>{user.bankDetails.bankHolder}</td>
+                      <td>{user.bankDetails.bankAccount}</td>
+                      <td>{user.bankDetails.bankName}</td>
+                      <td>{summarize.totalSale}</td>
+
+                      <td className="flex items-center gap-3 justify-center">
+                        {Referral.length}
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+          )}
+
+          {loading && (
+            <div>
+              <h5 className="pt-4 font-medium text-lg">Loading....</h5>
+            </div>
+          )}
         </div>
       </div>
     </DashboardLayout>

@@ -8,10 +8,10 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const FirstGen = ({ myDownlineFirstGen }) => {
+const FirstGen = ({ myDownlineFirstGen, loading }) => {
   const [openFullDialog, setOpenFullDialog] = useState(false);
   const [getId, setGetId] = useState("");
-  
+
   const openDetails = (id) => {
     setGetId(id);
     setOpenFullDialog(true);
@@ -25,8 +25,10 @@ const FirstGen = ({ myDownlineFirstGen }) => {
         </DashboardLayout>
       </Dialog>
 
+      {loading && <h5 className="pt-4 font-medium text-lg">Loading...</h5>}
+
       <div>
-        {myDownlineFirstGen.length === 0 ? (
+        {!loading && myDownlineFirstGen.length === 0 ? (
           <div>
             <h5 className="pt-4 font-medium text-lg"> No Downline yet</h5>
           </div>
@@ -48,9 +50,7 @@ const FirstGen = ({ myDownlineFirstGen }) => {
                         <h5 className="font-medium text-base pb-1">
                           {info.fullname}
                         </h5>
-                        <p className="text-accent text-sm">
-                          {info.email}
-                        </p>
+                        <p className="text-accent text-sm">{info.email}</p>
                       </div>
                     </div>
                   </div>

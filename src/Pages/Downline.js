@@ -10,12 +10,14 @@ import SecondGen from "./SecondGen";
 
 const Downline = () => {
   const {userInfo} = useContext(PageContext)
-  
+  const [loading, setLoading] = useState(false)
+
   const [switchGen, setSwitchGen] = useState(true);
   const [myDownlineFirstGen, setMyDownlineFirstGen] = useState([]);
   const [myDownlineSecondGen, setMyDownlineSecondGen] = useState([]);
 
   const getD = useCallback(() => {
+    setLoading(true)
     const fn = async () => {
       let res = await axios.get(`${url}/user/refferalData`, {
         headers: {
@@ -25,6 +27,7 @@ const Downline = () => {
       });
       setMyDownlineFirstGen(res.data.data.firstlv);
       setMyDownlineSecondGen(res.data.data.secondlv);
+      setLoading(false)
     };
     fn();
   }, [userInfo.token]);
@@ -56,7 +59,7 @@ const Downline = () => {
           </div>
 
           {switchGen ? (
-            <FirstGen myDownlineFirstGen={myDownlineFirstGen} />
+            <FirstGen loading={loading} myDownlineFirstGen={myDownlineFirstGen} />
           ) : (
             <SecondGen myDownlineSecondGen={myDownlineSecondGen} />
           )}

@@ -1,11 +1,34 @@
-import React from "react";
+import axios from "axios";
+import React, { useContext, useEffect, useState } from "react";
+import { url } from "../Api";
 import PageToper from "../Components/PageToper";
+import { PageContext } from "../Context/PageContextProvider";
 
-const LandDetails = ({ close }) => {
+const LandDetails = ({ close, id }) => {
+  const { userInfo } = useContext(PageContext);
+  const [fullDetails, setFullDetails] = useState({});
+
+  useEffect(() => {
+    axios
+      .get(`${url}/properties/${id}`, {
+        headers: {
+          Accept: "application/json",
+          Authorization: `bearer ${userInfo.token}`,
+        },
+      })
+      .then((response) => {
+        setFullDetails(response.data.property);
+      })
+
+      .catch((err) => {
+        console.error("err", err);
+      });
+  }, [userInfo.token, id]);
+
   return (
     <>
       <div className="Container">
-        <PageToper title=" Villa In Alexandria" desc="Sangotedo, Lagos" />
+        <PageToper title={fullDetails.name} desc={fullDetails.location} />
         <div className="mb-6 flex justify-between items-center">
           <button className="button flex items-center gap-2" onClick={close}>
             <span>All Properties</span>
@@ -23,41 +46,43 @@ const LandDetails = ({ close }) => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           <div>
             <img
-              src="https://images.unsplash.com/photo-1592595896551-12b371d546d5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cmVhbCUyMGVzdGF0ZXxlbnwwfHwwfHw%3D&w=1000&q=80"
+              src={fullDetails.image}
               alt="villa"
               className="rounded w-full"
             />
           </div>
           <div>
-            <h3 className="font-semibold text-lg md:text-xl">₦20,000,000.00</h3>
+            <h3 className="font-semibold text-lg md:text-xl">
+              {fullDetails.price &&
+                fullDetails.price.toLocaleString("en-NG", {
+                  style: "currency",
+                  currency: "NGN",
+                })}
+            </h3>
             <h6 className=" border-b-2 inline-block mt-1 pb-1 font-medium">
-              Initial deposit:{" "}
-              <span className="text-accent">₦1,000,000.00</span>
+              Initial deposit:
+              <span className="text-accent">
+                {fullDetails.intialDeposit && fullDetails.intialDeposit.toLocaleString("en-NG", {
+                  style: "currency",
+                  currency: "NGN",
+                })}
+              </span>
             </h6>
             <h4 className="font-medium py-2">
-              Land title:{" "}
-              <span className="text-accent">Deep of Rectification</span>
+              Land title:
+              <span className="text-accent">
+                {fullDetails.title && fullDetails.title}
+              </span>
             </h4>
 
-            <p className="text-sm text-justify">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus eos
-              reiciendis atque amet placeat, magnam delectus, rerum voluptatibus
-              aliquam officiis vitae, provident impedit quae? Deserunt iste
-              iusto veritatis quidem laboriosam?Lorem ipsum dolor sit amet
-              consectetur adipisicing elit. Natus eos reiciendis atque amet
-              placeat, magnam delectus, rerum voluptatibus aliquam officiis
-              vitae, provident impedit quae? Deserunt iste iusto veritatis
-              quidem
-            </p>
+            <p className="text-sm text-justify">{fullDetails.description}</p>
 
             <div className="border-b mt-3" />
             <div className="flex mt-3 gap-7 ">
               <ul className="list-disc pl-4 text-sm">
-                <li>Dry land</li>
-                <li>Close to road</li>
-                <li>Pool</li>
-                <li>Gym</li>
-                <li>24-hour</li>
+                {fullDetails.moreDetails && fullDetails.moreDetails.map((ts) => (
+                  <li key={ts}>{ts}</li>
+                ))}
               </ul>
               <div className="border-r" />
               <div>
@@ -65,7 +90,7 @@ const LandDetails = ({ close }) => {
                   <span className="text-sm">Plot size</span>
                   <div className="flex items-center gap-3">
                     <i className="ri-landscape-line text-xl"></i>
-                    <span className="text-sm">3500Sq Ft</span>
+                    <span className="text-sm">{fullDetails.details}</span>
                   </div>
                 </div>
               </div>

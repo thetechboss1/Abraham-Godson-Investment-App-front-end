@@ -23,7 +23,6 @@ const FirstGen = ({ myDownlineSecondGen }) => {
           <FirstGenDetails id={getId} close={() => setOpenFullDialog(false)} />
         </DashboardLayout>
       </Dialog>
-
       <div>
         {myDownlineSecondGen.length === 0 ? (
           <div>

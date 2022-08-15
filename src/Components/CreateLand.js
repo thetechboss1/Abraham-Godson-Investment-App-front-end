@@ -15,13 +15,28 @@ import { url } from "../Api";
 import axios from "axios";
 
 const CreateLand = ({ handleClose, open }) => {
-  const validate = Yup.string().required("Field is Required!");
+  
   const [sending, setSending] = useState(false);
   const { userInfo } = useContext(PageContext);
+  const validate = Yup.string().required("Field is Required!");
   const validateNumber = Yup.number()
     .typeError("You must specify a number")
     .min(0, "Min value 0.")
     .required("Field is Required!");
+
+    // const validationSchema = Yup.object({
+    //   name: validate,
+    //   location: validate,
+    //   price: validateNumber,
+    //   image: validate,
+    //   description: validate,
+    //   intialDeposit: validate,
+    //   title: validate,
+    //   details: {
+    //     plotSize: validate,
+    //   },
+    //   moreDetails: validate,
+    // });
 
   const initialValues = {
     name: "",
@@ -33,8 +48,8 @@ const CreateLand = ({ handleClose, open }) => {
     title: "",
     image: "",
     description: "",
-    initialDeposit: "",
-    moreDetails: "",
+    intialDeposit: "",
+    moreDetails: [""],
     type: "Land",
   };
 
@@ -45,6 +60,7 @@ const CreateLand = ({ handleClose, open }) => {
     data.append("name", values.name);
     data.append("location", values.location);
     data.append("price", values.price);
+    data.append("title", values.title);
     data.append("intialDeposit", values.intialDeposit);
     data.append("description", values.description);
     data.append("moreDetails", values.moreDetails.split(","));
@@ -63,28 +79,12 @@ const CreateLand = ({ handleClose, open }) => {
       .then((result) => {
         setSending(false);
         toast.success(result.data.message);
-        console.log(result);
       })
       .catch((err) => {
         toast.error(err.message);
         setSending(false);
-        console.log(err);
       });
   };
-
-  const validationSchema = Yup.object({
-    // name: validate,
-    // location: validate,
-    // price: validateNumber,
-    // image: validate,
-    // description: validate,
-    // intialDeposit: validate,
-    // title: validate,
-    // details: {
-    //   plotSize: validate,
-    // },
-    // moreDetails: validate,
-  });
 
   const {
     handleChange,
@@ -96,7 +96,7 @@ const CreateLand = ({ handleClose, open }) => {
   } = useFormik({
     initialValues,
     onSubmit,
-    validationSchema,
+    // validationSchema,
   });
 
   return (
@@ -125,6 +125,7 @@ const CreateLand = ({ handleClose, open }) => {
                 placeholder="Enter property name"
                 onChange={handleChange}
                 value={values.name}
+                required
               />
               {errors.name ? <p className="errorMsg">{errors.name}</p> : null}
             </div>
@@ -136,6 +137,7 @@ const CreateLand = ({ handleClose, open }) => {
                 placeholder="Enter property location"
                 onChange={handleChange}
                 value={values.location}
+                required
               />
               {errors.location ? (
                 <p className="errorMsg">{errors.location}</p>
@@ -149,6 +151,7 @@ const CreateLand = ({ handleClose, open }) => {
                 placeholder="Enter property price"
                 onChange={handleChange}
                 value={values.price}
+                required
               />
               {errors.price ? <p className="errorMsg">{errors.price}</p> : null}
             </div>
@@ -161,6 +164,7 @@ const CreateLand = ({ handleClose, open }) => {
                 placeholder="Enter property price"
                 onChange={handleChange}
                 value={values.intialDeposit}
+                required
               />
               {errors.intialDeposit ? (
                 <p className="errorMsg">{errors.intialDeposit}</p>
@@ -186,6 +190,7 @@ const CreateLand = ({ handleClose, open }) => {
                 placeholder="Enter land title"
                 onChange={handleChange}
                 value={values.title}
+                required
               />
               {errors.title ? <p className="errorMsg">{errors.title}</p> : null}
             </div>
@@ -198,6 +203,7 @@ const CreateLand = ({ handleClose, open }) => {
                 onChange={(event) => {
                   setFieldValue("image", event.target.files[0]);
                 }}
+                required
               />
               {errors.image ? <p className="errorMsg">{errors.image}</p> : null}
             </div>
@@ -208,6 +214,7 @@ const CreateLand = ({ handleClose, open }) => {
                 placeholder="Enter description"
                 onChange={handleChange}
                 value={values.description}
+                required
               />
 
               {errors.description ? (
@@ -221,6 +228,7 @@ const CreateLand = ({ handleClose, open }) => {
                 placeholder="Enter amenities and separate them with comma,"
                 onChange={handleChange}
                 value={values.moreDetails}
+                required
               />
 
               {errors.moreDetails ? (

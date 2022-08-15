@@ -21,9 +21,10 @@ const HouseDetails = ({ close, id }) => {
       })
 
       .catch((err) => {
-        console.error("err", err);
+        
       });
   }, [userInfo.token, id]);
+
 
   return (
     <>
@@ -74,11 +75,10 @@ const HouseDetails = ({ close, id }) => {
             <div className="border-b mt-3" />
             <div className="flex mt-3 gap-7 ">
               <ul className="list-disc pl-4 text-sm">
-                <li>Elevator</li>
-                <li>Spa</li>
-                <li>Pool</li>
-                <li>Gym</li>
-                <li>24-hour</li>
+                {fullDetails.moreDetails &&
+                  fullDetails.moreDetails.map((list) => {
+                    return <li key={list}>{list}</li>;
+                  })}
               </ul>
               <div className="border-r" />
               <div>

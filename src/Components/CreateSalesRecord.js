@@ -1,35 +1,61 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { Autocomplete, Modal, TextField } from "@mui/material";
-import { Field, Formik, useFormik } from "formik";
-import * as Yup from "yup";
 import "../css/form.css";
 import axios from "axios";
 import { url } from "../Api";
+import { toast } from "react-toastify";
+import { PageContext } from "../Context/PageContextProvider";
 
 const CreateSalesRecord = ({ open, handleClose }) => {
+  const { userInfo } = useContext(PageContext);
   // const [realtorsInputValue, setRealtorsInputValue] = useState("");
   // const [propertiesInputValue, setPropertiesInputValue] = useState("");
   const [realtors, setRealtors] = useState([]);
   const [properties, setProperties] = useState([]);
+  const [user, setUser] = useState("");
+  const [property, setProperty] = useState("");
+  const [deposit, setDeposit] = useState("");
+  const [status, setStatus] = useState("");
+  const [commissionPaid, setCommissionPaid] = useState("");
+  const [buyerName, setBuyerName] = useState("");
+  const [buyerEmail, setBuyerEmail] = useState("");
+  const [buyerPhone, setBuyerPhone] = useState("");
+  const [sending, setSending] = useState(false);
 
-  // handle form
-  // const initialValues = {
-  //   property: propertiesInputValue,
-  // };
+  const onSubmit = (e) => {
+    e.preventDefault();
+    setSending(true);
+    let data = {
+      property,
+      user,
+      deposit,
+      buyerDetails: {
+        buyerName,
+        buyerEmail,
+        buyerPhone,
+      },
+      commissionPaid: commissionPaid === "true" ? true : false,
+      status,
+    };
+    axios({
+      url: `${url}/sales/create`,
+      method: "post",
+      data,
+      headers: {
+        authorization: `bearer ${userInfo.token}`,
+      },
+    })
+      .then((result) => {
+        toast.success("sales added successfully");
+        setSending(false);
+      })
+      .catch((err) => {
+        setSending(false);
+      });
+  };
 
-  const validationSchema = Yup.object({});
-
-  const onSubmit = (values) => {};
-
-  const formik = useFormik({
-    // initialValues,
-    onSubmit,
-    validationSchema,
-  });
-
-  const userInfo = JSON.parse(localStorage.getItem("user_info"));
-
-  useEffect(() => {
+  const fetchAllData = useCallback(() => {
+    // === Fetch sales ====//
     axios({
       url: `${url}/sales`,
       method: "GET",
@@ -40,6 +66,7 @@ const CreateSalesRecord = ({ open, handleClose }) => {
       console.log(response);
     });
 
+    // === realtors ===//
     axios({
       url: `${url}/admin/realtors`,
       method: "GET",
@@ -51,6 +78,7 @@ const CreateSalesRecord = ({ open, handleClose }) => {
       setRealtors(data);
     });
 
+    // ==  fetch properties ===//
     axios({
       url: `${url}/properties`,
       method: "GET",
@@ -62,6 +90,10 @@ const CreateSalesRecord = ({ open, handleClose }) => {
       setProperties(data);
     });
   }, []);
+
+  useEffect(() => {
+    fetchAllData();
+  }, [fetchAllData]);
 
   return (
     <Modal open={open} onClose={handleClose}>
@@ -75,11 +107,13 @@ const CreateSalesRecord = ({ open, handleClose }) => {
             onClick={handleClose}
           ></i>
         </div>
-        {/* property,user,deposit,buyerDetails,commissionPaid} */}
-        <form className="grid grid-cols-2 gap-x-4">
+        <form
+          className="grid grid-cols-1 lg:grid-cols-2 gap-x-4"
+          onSubmit={onSubmit}
+        >
           <div className="form-control">
             <label>Property</label>
-            <select>
+            <select onChange={(e) => setProperty(e.target.value)} required>
               <option value="">-Select Property --</option>
               {properties &&
                 properties.map((item) => (
@@ -92,8 +126,8 @@ const CreateSalesRecord = ({ open, handleClose }) => {
 
           <div className="form-control">
             <label>Realtor</label>
-            <select>
-              <option value="">-Select realtor --</option>
+            <select onChange={(e) => setUser(e.target.value)} required>
+              <option value="">--Select realtor--</option>
               {realtors &&
                 realtors.map((user) => (
                   <option value={user._id} key={user._id}>
@@ -105,31 +139,65 @@ const CreateSalesRecord = ({ open, handleClose }) => {
 
           <div className="form-control">
             <label>Amount Paid</label>
-            <input type="number" />
+            <input
+              type="number"
+              onChange={(e) => setDeposit(e.target.value)}
+              required
+            />
           </div>
 
           <div className="form-control">
             <label>Buyers Name</label>
-            <input type="text" />
+            <input
+              type="text"
+              onChange={(e) => setBuyerName(e.target.value)}
+              required
+            />
           </div>
 
           <div className="form-control">
             <label>Buyers phone</label>
-            <input type="tel" />
+            <input
+              type="tel"
+              onChange={(e) => setBuyerPhone(e.target.value)}
+              required
+            />
           </div>
 
           <div className="form-control">
             <label>Buyers email</label>
-            <input type="email" />
+            <input
+              type="email"
+              onChange={(e) => setBuyerEmail(e.target.value)}
+              required
+            />
+          </div>
+
+          <div className="form-control">
+            <label>Payment status</label>
+            <select onChange={(e) => setStatus(e.target.value)} required>
+              <option value="">-select Payment status--</option>
+              <option value="Completed">Completed</option>
+              <option value="Incomplete">Incomplete</option>
+            </select>
           </div>
 
           <div className="form-control">
             <label>Commission Paid</label>
-            <select>
+            <select
+              onChange={(e) => setCommissionPaid(e.target.value)}
+              required
+            >
               <option value="">-select Commission status--</option>
               <option value="true">paid</option>
               <option value="false">unpaid</option>
             </select>
+          </div>
+
+          <div>
+            <button type="submit" className="button">
+              {sending ? "Sending" : "Submit"}
+            </button>
           </div>
         </form>
       </div>

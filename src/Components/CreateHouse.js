@@ -62,6 +62,7 @@ const CreateHouse1 = ({ open, handleClose }) => {
     })
       .then((result) => {
         setSending(false);
+        handleClose()
         toast.success(result.data.message);
         console.log(result);
       })
@@ -71,10 +72,8 @@ const CreateHouse1 = ({ open, handleClose }) => {
         console.log(err);
       });
 
-    // handleReset();
+    handleReset();
   };
-
-
 
   const {
     handleChange,
@@ -82,7 +81,6 @@ const CreateHouse1 = ({ open, handleClose }) => {
     handleSubmit,
     values,
     errors,
-    touched,
     setFieldValue,
   } = useFormik({
     initialValues,

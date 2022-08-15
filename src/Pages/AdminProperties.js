@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import PageToper from "../Components/PageToper";
 import DashboardLayout from "../Layout/DashboardLayout";
-import CreateHouse from "./ListHouse";
-import CreateLand from "./ListLand";
+import CreateHouse from "./AdminListHouse";
+import CreateLand from "./AdminListLand";
 
 const AdminProperties = () => {
   const [switchProperty, setSwitchProperty] = useState(true);

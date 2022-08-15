@@ -2,16 +2,18 @@ import { Modal } from "@mui/material";
 import axios from "axios";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { url } from "../Api";
-import CreateHouse from "../Components/CreateHouse";
 import { PageContext } from "../Context/PageContextProvider";
+import CreateLand from "../Components/CreateLand";
 
-const ListHouse = () => {
+const AdminListLand = () => {
   const [addModal, setAddModal] = useState(false);
   const [descModal, setDescModal] = useState(false);
   const { userInfo } = useContext(PageContext);
   const [properties, setProperties] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const getProperties = useCallback(() => {
+    setLoading(true);
     const fn1 = async () => {
       let res = await axios.get(`${url}/properties`, {
         headers: {
@@ -21,9 +23,10 @@ const ListHouse = () => {
       });
       let data = res.data.properties;
       let house = data.filter((property) => {
-        return property.type === "House";
+        return property.type === "Land";
       });
       setProperties(house);
+      setLoading(false);
     };
     fn1();
   }, [userInfo.token]);
@@ -32,21 +35,6 @@ const ListHouse = () => {
     getProperties();
   }, [getProperties]);
 
-  const deleteProperty = (id) => {
-    const fn1 = async () => {
-      let res = await axios.delete(`${url}/properties/:${id}`, {
-        headers: {
-          Authorization: `bearer ${userInfo.token}`,
-        },
-      });
-      // let data = res.data.properties;
-      console.log(res);
-      const newProperty = properties.filter((item) => item.id !== id);
-      setProperties(newProperty);
-    };
-    fn1();
-  };
-
   return (
     <div>
       <div className="-mt-14 flex justify-end">
@@ -54,10 +42,16 @@ const ListHouse = () => {
           Add +
         </button>
       </div>
-      <CreateHouse open={addModal} handleClose={() => setAddModal(false)} />
-      {properties.length === 0 && (
+      <CreateLand open={addModal} handleClose={() => setAddModal(false)} />
+      {!loading && properties.length === 0 && (
         <div>
           <h5 className="pt-4 font-medium text-lg"> No Property yet</h5>
+        </div>
+      )}
+
+      {loading && (
+        <div>
+          <h5 className="pt-4 font-medium text-lg">Loading....</h5>
         </div>
       )}
       {properties.length > 0 && (
@@ -69,9 +63,8 @@ const ListHouse = () => {
               <th>Location</th>
               <th>Description</th>
               <th>Price</th>
-              <th>Bedroom</th>
-              <th>Bathroom</th>
-              <th>Initial deposit</th>
+              <th>Plot size</th>
+              <th>Land title</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -84,38 +77,33 @@ const ListHouse = () => {
                     <td>{item.name}</td>
                     <td>{item.location}</td>
                     <td>{item.description.slice(0, 31)}...</td>
-                    <td>
-                      {item.price.toLocaleString("en-NG", {
-                        style: "currency",
-                        currency: "NGN",
-                      })}
-                    </td>
-                    <td>2</td>
-                    <td>3</td>
-                    <td>{item.intialDeposit}</td>
+                    <td>{item.price}</td>
+                    <td>{item.details}</td>
+                    <td>{item.title}</td>
                     <td className="flex items-center gap-3 justify-center">
                       <i
                         onClick={() => setDescModal(true)}
                         className="ri-eye-line cursor-pointer hover:text-primary text-lg"
                       ></i>
                       <i
-                        // onClick={() => setAddModal(true)}
+                        onClick={() => setAddModal(true)}
                         className="ri-pencil-fill cursor-pointer hover:text-primary text-lg"
                       ></i>
                       <i
-                        onClick={deleteProperty(item._id)}
+                        onClick={() => alert("Delete Item")}
                         className="ri-delete-bin-6-line cursor-pointer hover:text-primary text-lg"
                       ></i>
                     </td>
                   </tr>
+
                   {/* description modal */}
                   <Modal open={descModal} onClose={() => setDescModal(false)}>
                     <div
-                      className="CModal scrollBar"
+                      className="CModal"
                       style={{ maxWidth: 600, height: "85%" }}
                     >
                       <div className="flex justify-between items-center mb-7">
-                        <h5 className="font-semibold text-accent text-lg capitalize">
+                        <h5 className="font-semibold text-accent text-lg">
                           {item.name}
                         </h5>
                         <i
@@ -127,7 +115,7 @@ const ListHouse = () => {
                       <div>
                         <img
                           src={item.image}
-                          alt=""
+                          alt={item.name}
                           className="rounded w-full h-72"
                         />
                       </div>
@@ -140,11 +128,11 @@ const ListHouse = () => {
 
                         <h5 className="font-medium pt-2 pb-1">Amenities: </h5>
                         <ul className="list-disc pl-4 text-sm">
-                          {item.moreDetails.map((amenities) => (
-                            <li key={amenities} className="block">
-                              {amenities}
-                            </li>
-                          ))}
+                          <li>Elevator</li>
+                          <li>Spa</li>
+                          <li>Pool</li>
+                          <li>Gym</li>
+                          <li>24-hour</li>
                         </ul>
                       </div>
                     </div>
@@ -155,10 +143,8 @@ const ListHouse = () => {
           </tbody>
         </table>
       )}
-
-      {/* description modal */}
     </div>
   );
 };
 
-export default ListHouse;
+export default AdminListLand;

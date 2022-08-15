@@ -27,7 +27,7 @@ const Land = ({ properties }) => {
       {/* House details */}
       <Dialog fullScreen open={openFullDialog} TransitionComponent={Transition}>
         <DashboardLayout>
-          <LandDetails close={() => setOpenFullDialog(false)} />
+          <LandDetails id={getId} close={() => setOpenFullDialog(false)} />
         </DashboardLayout>
       </Dialog>
       {/* sear bar */}
