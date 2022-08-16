@@ -12,6 +12,7 @@ const Land = ({ properties }) => {
   const [openShare, setOpenShare] = useState(false);
   const [openFullDialog, setOpenFullDialog] = useState(false);
   const [getId, setGetId] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
 
   const openDetails = (id) => {
     setGetId(id);
@@ -20,6 +21,17 @@ const Land = ({ properties }) => {
 
   const listLand = properties.filter((p) => {
     return p.type === "Land";
+  });
+
+  const filterBySearch = listLand.filter((val) => {
+    if (searchTerm === "") {
+      return val;
+    } else if (
+      val.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      val.location.toLowerCase().includes(searchTerm.toLowerCase())
+    ) {
+      return val;
+    }
   });
 
   return (
@@ -53,12 +65,15 @@ const Land = ({ properties }) => {
             id="simple-search"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="Search property"
+            onChange={(e) => {
+              setSearchTerm(e.target.value);
+            }}
           />
         </div>
       </form>
 
       <div className="propertyWrap mt-7 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-5 gap-y-7">
-        {listLand.map((item) => (
+        {filterBySearch.map((item) => (
           <div className="box rounded cursor-pointer">
             <div
               className="top rounded-tr"

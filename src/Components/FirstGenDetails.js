@@ -25,8 +25,6 @@ const FirstGenDetails = ({ close, id }) => {
       });
   }, [userInfo?.token, id]);
 
-  console.log(id);
-
   return (
     <div className="Container">
       <PageToper

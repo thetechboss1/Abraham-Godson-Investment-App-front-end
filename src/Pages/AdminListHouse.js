@@ -2,6 +2,7 @@ import { Modal } from "@mui/material";
 import axios from "axios";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { url } from "../Api";
+import { AdminHouseDetail } from "../Components/AdminHouseAndLandDetails";
 import CreateHouse from "../Components/CreateHouse";
 import { PageContext } from "../Context/PageContextProvider";
 
@@ -11,6 +12,7 @@ const AdminListHouse = () => {
   const { userInfo } = useContext(PageContext);
   const [properties, setProperties] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [getId, setGetId] = useState("");
 
   const getProperties = useCallback(() => {
     setLoading(true);
@@ -27,25 +29,30 @@ const AdminListHouse = () => {
       });
       setProperties(house);
       setLoading(false);
-    };
+    }
     fn1();
-  }, [userInfo?.token]);
+  }, [userInfo?.token])
 
   useEffect(() => {
     getProperties();
   }, [getProperties]);
 
-  const deleteProperty = (id) => {
-    const fn1 = async () => {
-      let res = await axios.delete(`${url}/properties/:${id}`, {
-        headers: {
-          Authorization: `bearer ${userInfo?.token}`,
-        },
-      });
-      const newProperty = properties.filter((item) => item.id !== id);
-      setProperties(newProperty);
-    };
-    fn1();
+  // const deleteProperty = (id) => {
+  //   const fn1 = async () => {
+  //     let res = await axios.delete(`${url}/properties/:${id}`, {
+  //       headers: {
+  //         Authorization: `bearer ${userInfo?.token}`,
+  //       },
+  //     });
+  //     const newProperty = properties.filter((item) => item.id !== id);
+  //     setProperties(newProperty);
+  //   };
+  //   fn1();
+  // };
+
+  const openDetails = (id) => {
+    setGetId(id);
+    setDescModal(true);
   };
 
   return (
@@ -56,7 +63,11 @@ const AdminListHouse = () => {
         </button>
       </div>
       <CreateHouse open={addModal} handleClose={() => setAddModal(false)} />
-
+      <AdminHouseDetail
+        id={getId}
+        open={descModal}
+        handleClose={() => setDescModal(false)}
+      />
       {!loading && properties.length === 0 && (
         <div>
           <h5 className="pt-4 font-medium text-lg"> No Property yet</h5>
@@ -86,10 +97,9 @@ const AdminListHouse = () => {
           </thead>
           <tbody>
             {properties.map((item, index) => {
-         
               return (
                 <>
-                  <tr>
+                  <tr key={index}>
                     <td>{index + 1}</td>
                     <td>{item.name}</td>
                     <td>{item.location}</td>
@@ -102,10 +112,15 @@ const AdminListHouse = () => {
                     </td>
                     <td>{item.details[0]}</td>
                     <td>{item.details[1]}</td>
-                    <td>{item.intialDeposit}</td>
+                    <td>
+                      {item.intialDeposit.toLocaleString("en-NG", {
+                        style: "currency",
+                        currency: "NGN",
+                      })}
+                    </td>
                     <td className="flex items-center gap-3 justify-center">
                       <i
-                        onClick={() => setDescModal(true)}
+                        onClick={() => openDetails(item._id)}
                         className="ri-eye-line cursor-pointer hover:text-primary text-lg"
                       ></i>
                       <i
@@ -113,52 +128,11 @@ const AdminListHouse = () => {
                         className="ri-pencil-fill cursor-pointer hover:text-primary text-lg"
                       ></i>
                       <i
-                        onClick={deleteProperty(item._id)}
+                        // onClick={deleteProperty(item._id)}
                         className="ri-delete-bin-6-line cursor-pointer hover:text-primary text-lg"
                       ></i>
                     </td>
                   </tr>
-                  {/* description modal */}
-                  <Modal open={descModal} onClose={() => setDescModal(false)}>
-                    <div
-                      className="CModal scrollBar"
-                      style={{ maxWidth: 600, height: "85%" }}
-                    >
-                      <div className="flex justify-between items-center mb-7">
-                        <h5 className="font-semibold text-accent text-lg capitalize">
-                          {item.location}
-                        </h5>
-                        <i
-                          className="fas fa-times cursor-pointer text-xl"
-                          onClick={() => setDescModal(false)}
-                        ></i>
-                      </div>
-
-                      <div>
-                        <img
-                          src={item.image}
-                          alt={item.name}
-                          className="rounded w-full h-72"
-                        />
-                      </div>
-
-                      <div>
-                        <h5 className="font-medium pt-3 pb-1">Description: </h5>
-                        <p className="text-justify text-sm">
-                          {item.description}
-                        </p>
-
-                        <h5 className="font-medium pt-2 pb-1">Amenities: </h5>
-                        <ul className="list-disc pl-4 text-sm">
-                          {item.moreDetails.map((amenities) => (
-                            <li key={amenities} className="block">
-                              {amenities}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    </div>
-                  </Modal>
                 </>
               );
             })}

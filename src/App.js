@@ -20,11 +20,10 @@ function App() {
   const { userInfo } = useContext(PageContext);
   localStorage.getItem("user_info");
   const navigate = useNavigate();
+  
   useEffect(() => {
     if (!localStorage.getItem("user_info")) {
       navigate("/login");
-    } else {
-      navigate("/");
     }
   }, []);
 
