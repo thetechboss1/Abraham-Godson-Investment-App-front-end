@@ -34,7 +34,7 @@ const EditPersonalInfo = () => {
         {
           headers: {
             Accept: "application/json",
-            Authorization: `bearer ${userInfo.token}`,
+            Authorization: `bearer ${userInfo?.token}`,
           },
         }
       )

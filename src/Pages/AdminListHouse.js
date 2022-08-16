@@ -18,7 +18,7 @@ const AdminListHouse = () => {
       let res = await axios.get(`${url}/properties`, {
         headers: {
           Accept: "application/json",
-          Authorization: `bearer ${userInfo.token}`,
+          Authorization: `bearer ${userInfo?.token}`,
         },
       });
       let data = res.data.properties;
@@ -29,7 +29,7 @@ const AdminListHouse = () => {
       setLoading(false);
     };
     fn1();
-  }, [userInfo.token]);
+  }, [userInfo?.token]);
 
   useEffect(() => {
     getProperties();
@@ -39,7 +39,7 @@ const AdminListHouse = () => {
     const fn1 = async () => {
       let res = await axios.delete(`${url}/properties/:${id}`, {
         headers: {
-          Authorization: `bearer ${userInfo.token}`,
+          Authorization: `bearer ${userInfo?.token}`,
         },
       });
       const newProperty = properties.filter((item) => item.id !== id);

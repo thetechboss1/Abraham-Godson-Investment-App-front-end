@@ -22,7 +22,7 @@ const Downline = () => {
       let res = await axios.get(`${url}/user/refferalData`, {
         headers: {
           Accept: "application/json",
-          Authorization: `bearer ${userInfo.token}`,
+          Authorization: `bearer ${userInfo?.token}`,
         },
       });
       setMyDownlineFirstGen(res.data.data.firstlv);
@@ -30,7 +30,7 @@ const Downline = () => {
       setLoading(false)
     };
     fn();
-  }, [userInfo.token]);
+  }, [userInfo?.token]);
 
   useEffect(() => {
     getD();

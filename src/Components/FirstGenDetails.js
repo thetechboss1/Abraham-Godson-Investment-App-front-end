@@ -13,7 +13,7 @@ const FirstGenDetails = ({ close, id }) => {
       .get(`${url}/user/profile/byID/${id}`, {
         headers: {
           Accept: "application/json",
-          Authorization: `bearer ${userInfo.token}`,
+          Authorization: `bearer ${userInfo?.token}`,
         },
       })
       .then((response) => {
@@ -23,7 +23,7 @@ const FirstGenDetails = ({ close, id }) => {
       .catch((err) => {
         console.error(err);
       });
-  }, [userInfo.token, id]);
+  }, [userInfo?.token, id]);
 
   console.log(id);
 

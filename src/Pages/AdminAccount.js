@@ -26,7 +26,7 @@ const AdminAccount = () => {
         {
           headers: {
             Accept: "application/json",
-            Authorization: `bearer ${userInfo.token}`,
+            Authorization: `bearer ${userInfo?.token}`,
           },
         }
       )
@@ -46,7 +46,7 @@ const AdminAccount = () => {
       method: "post",
       headers: {
         Accept: "application/json",
-        Authorization: `bearer ${userInfo.token}`,
+        Authorization: `bearer ${userInfo?.token}`,
       },
       data: {
         password: values.password,

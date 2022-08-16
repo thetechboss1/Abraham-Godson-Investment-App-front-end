@@ -13,7 +13,7 @@ const SecondGenDetails = ({ close, id }) => {
       .get(`${url}/user/profile/byID/${id}`, {
         headers: {
           Accept: "application/json",
-          Authorization: `bearer ${userInfo.token}`,
+          Authorization: `bearer ${userInfo?.token}`,
         },
       })
       .then((response) => {

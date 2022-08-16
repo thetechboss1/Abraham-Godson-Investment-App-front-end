@@ -13,7 +13,7 @@ const LandDetails = ({ close, id }) => {
       .get(`${url}/properties/${id}`, {
         headers: {
           Accept: "application/json",
-          Authorization: `bearer ${userInfo.token}`,
+          Authorization: `bearer ${userInfo?.token}`,
         },
       })
       .then((response) => {
@@ -23,7 +23,7 @@ const LandDetails = ({ close, id }) => {
       .catch((err) => {
         console.error("err", err);
       });
-  }, [userInfo.token, id]);
+  }, [userInfo?.token, id]);
 
   return (
     <>

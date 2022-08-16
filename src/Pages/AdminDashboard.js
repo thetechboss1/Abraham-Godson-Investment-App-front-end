@@ -21,7 +21,7 @@ const AdminDashboard = () => {
       let res = await axios.get(`${url}/admin/realtors`, {
         headers: {
           Accept: "application/json",
-          Authorization: `bearer ${userInfo.token}`,
+          Authorization: `bearer ${userInfo?.token}`,
         },
       });
       setRealtors(res.data.realtors);
@@ -33,7 +33,7 @@ const AdminDashboard = () => {
       let res = await axios.get(`${url}/properties`, {
         headers: {
           Accept: "application/json",
-          Authorization: `bearer ${userInfo.token}`,
+          Authorization: `bearer ${userInfo?.token}`,
         },
       });
       setProperties(res.data.properties);
@@ -45,7 +45,7 @@ const AdminDashboard = () => {
       url: `${url}/properties`,
       method: "get",
       headers: {
-        Authorization: `bearer ${userInfo.token}`,
+        Authorization: `bearer ${userInfo?.token}`,
       },
     })
       .then((result) => {
@@ -67,7 +67,7 @@ const AdminDashboard = () => {
       url: `${url}/sales`,
       method: "get",
       headers: {
-        Authorization: `bearer ${userInfo.token}`,
+        Authorization: `bearer ${userInfo?.token}`,
       },
     })
       .then((result) => {
@@ -82,7 +82,7 @@ const AdminDashboard = () => {
         setUnpaidlen(unpaid.length);
       })
       .catch((err) => {});
-  }, [userInfo.token]);
+  }, [userInfo?.token]);
 
   useEffect(() => {
     getAllData();

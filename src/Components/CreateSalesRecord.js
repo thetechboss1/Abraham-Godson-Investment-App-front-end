@@ -42,7 +42,7 @@ const CreateSalesRecord = ({ open, handleClose }) => {
       method: "post",
       data,
       headers: {
-        authorization: `bearer ${userInfo.token}`,
+        authorization: `bearer ${userInfo?.token}`,
       },
     })
       .then((result) => {
@@ -60,7 +60,7 @@ const CreateSalesRecord = ({ open, handleClose }) => {
       url: `${url}/sales`,
       method: "GET",
       headers: {
-        authorization: `bearer ${userInfo.token}`,
+        authorization: `bearer ${userInfo?.token}`,
       },
     }).then((response) => {
       console.log(response);
@@ -71,7 +71,7 @@ const CreateSalesRecord = ({ open, handleClose }) => {
       url: `${url}/admin/realtors`,
       method: "GET",
       headers: {
-        authorization: `bearer ${userInfo.token}`,
+        authorization: `bearer ${userInfo?.token}`,
       },
     }).then((response) => {
       let data = response.data.realtors;
@@ -83,7 +83,7 @@ const CreateSalesRecord = ({ open, handleClose }) => {
       url: `${url}/properties`,
       method: "GET",
       headers: {
-        authorization: `bearer ${userInfo.token}`,
+        authorization: `bearer ${userInfo?.token}`,
       },
     }).then((response) => {
       let data = response.data.properties;

@@ -17,7 +17,7 @@ const Home = () => {
       let res = await axios.get(`${url}/user/refferalData`, {
         headers: {
           Accept: "application/json",
-          Authorization: `bearer ${userInfo.token}`,
+          Authorization: `bearer ${userInfo?.token}`,
         },
       });
       setMyDownlineFirstGen(res.data.data.firstlv);
@@ -29,13 +29,13 @@ const Home = () => {
       let res = await axios.get(`${url}/sales/mysales/stats`, {
         headers: {
           Accept: "application/json",
-          Authorization: `bearer ${userInfo.token}`,
+          Authorization: `bearer ${userInfo?.token}`,
         },
       });
       setSummarize(res.data);
     };
     fn1();
-  }, [userInfo.token]);
+  }, [userInfo?.token]);
 
   useEffect(() => {
     getAllData();

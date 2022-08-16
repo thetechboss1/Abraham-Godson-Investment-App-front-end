@@ -17,7 +17,7 @@ const AdminProperties = () => {
       let res = await axios.get(`${url}/properties`, {
         headers: {
           Accept: "application/json",
-          Authorization: `bearer ${userInfo.token}`,
+          Authorization: `bearer ${userInfo?.token}`,
         },
       });
       setProperties(res.data.properties);

@@ -20,7 +20,7 @@ const AllRealtors = () => {
       url: `${url}/admin/realtors`,
       method: "GET",
       headers: {
-        authorization: `bearer ${userInfo.token}`,
+        authorization: `bearer ${userInfo?.token}`,
       },
     }).then((response) => {
       setLoading(false);
@@ -33,7 +33,7 @@ const AllRealtors = () => {
       let res = await axios.get(`${url}/sales/mysales/stats`, {
         headers: {
           Accept: "application/json",
-          Authorization: `bearer ${userInfo.token}`,
+          Authorization: `bearer ${userInfo?.token}`,
         },
       });
       setSummarize(res.data);
@@ -45,13 +45,13 @@ const AllRealtors = () => {
       let res = await axios.get(`${url}/user/refferalData`, {
         headers: {
           Accept: "application/json",
-          Authorization: `bearer ${userInfo.token}`,
+          Authorization: `bearer ${userInfo?.token}`,
         },
       });
       setReferral(res.data.data.firstlv);
     };
     fn();
-  }, [userInfo.token]);
+  }, [userInfo?.token]);
 
   return (
     <DashboardLayout>

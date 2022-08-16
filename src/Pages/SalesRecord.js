@@ -18,14 +18,14 @@ const SalesRecord = () => {
       url: `${url}/sales`,
       method: "GET",
       headers: {
-        authorization: `bearer ${userInfo.token}`,
+        authorization: `bearer ${userInfo?.token}`,
       },
     }).then((response) => {
       let data = response.data.sales;
       setSales(data);
       setLoading(false);
     });
-  }, [userInfo.token]);
+  }, [userInfo?.token]);
 
   return (
     <DashboardLayout>

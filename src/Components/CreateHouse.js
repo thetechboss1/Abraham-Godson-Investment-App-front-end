@@ -57,7 +57,7 @@ const CreateHouse1 = ({ open, handleClose }) => {
       data: data,
       headers: {
         Accept: "application/json",
-        Authorization: `bearer ${userInfo.token}`,
+        Authorization: `bearer ${userInfo?.token}`,
       },
     })
       .then((result) => {

@@ -1,5 +1,5 @@
 import Login from "./Auth/Login";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import Register from "./Auth/Register";
 import Home from "./Pages/Home";
 import Account from "./Pages/Account";
@@ -12,12 +12,21 @@ import AdminProperties from "./Pages/AdminProperties";
 import SalesRecord from "./Pages/SalesRecord";
 import { PageContext } from "./Context/PageContextProvider";
 import AccountContextProvider from "./Context/AccountContextProvider";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import ForgetPassword from "./Auth/ForgetPassword";
 import RestPassword from "./Auth/RestPassword";
 
 function App() {
   const { userInfo } = useContext(PageContext);
+  localStorage.getItem("user_info");
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!localStorage.getItem("user_info")) {
+      navigate("/login");
+    } else {
+      navigate("/");
+    }
+  }, []);
 
   return (
     <>

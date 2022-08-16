@@ -34,13 +34,13 @@ const Account = () => {
       let res = await axios.get(`${url}/user/refferalData`, {
         headers: {
           Accept: "application/json",
-          Authorization: `bearer ${userInfo.token}`,
+          Authorization: `bearer ${userInfo?.token}`,
         },
       });
       setGetUpline(res.data.upline);
     };
     fn();
-  }, [userInfo.token]);
+  }, [userInfo?.token]);
 
   return (
     <DashboardLayout>

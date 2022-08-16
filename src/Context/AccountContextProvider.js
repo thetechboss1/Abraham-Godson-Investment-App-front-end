@@ -10,11 +10,12 @@ const AccountContextProvider = (props) => {
   // retrieve user info
   const [userAccount, setUserAccount] = useState({});
   useEffect(() => {
-    axios
+    if(localStorage.getItem("user_info") !== null) {
+      axios
       .get(`${url}/user/profile`, {
         headers: {
           Accept: "application/json",
-          Authorization: `bearer ${userInfo.token}`,
+          Authorization: `bearer ${userInfo?.token}`,
         },
       })
       .then((response) => {
@@ -24,7 +25,9 @@ const AccountContextProvider = (props) => {
       .catch((err) => {
         console.error(err);
       });
-  }, [userInfo.token]);
+    }
+
+  }, []);
 
   return (
     <>
