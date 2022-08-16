@@ -11,8 +11,7 @@ const AllRealtors = () => {
   const [realtors, setRealtors] = useState([]);
   const { userInfo } = useContext(PageContext);
   const [loading, setLoading] = useState(false);
-  const [summarize, setSummarize] = useState({});
-  const [Referral, setReferral] = useState([])
+ 
 
   useEffect(() => {
     setLoading(true);
@@ -28,29 +27,8 @@ const AllRealtors = () => {
       setRealtors(data);
     });
 
-    // sales
-    const fn1 = async () => {
-      let res = await axios.get(`${url}/sales/mysales/stats`, {
-        headers: {
-          Accept: "application/json",
-          Authorization: `bearer ${userInfo?.token}`,
-        },
-      });
-      setSummarize(res.data);
-    };
-    fn1();
 
-    //==== get downline ====
-    const fn = async () => {
-      let res = await axios.get(`${url}/user/refferalData`, {
-        headers: {
-          Accept: "application/json",
-          Authorization: `bearer ${userInfo?.token}`,
-        },
-      });
-      setReferral(res.data.data.firstlv);
-    };
-    fn();
+  
   }, [userInfo?.token]);
 
   return (
@@ -89,9 +67,8 @@ const AllRealtors = () => {
                   <th>Acc name</th>
                   <th>Acc number</th>
                   <th>Bank name</th>
-                  <th>Sales</th>
 
-                  <th>Downline</th>
+                  <th>View</th>
                 </tr>
               </thead>
               <tbody>
@@ -106,10 +83,9 @@ const AllRealtors = () => {
                       <td>{user.bankDetails.bankHolder}</td>
                       <td>{user.bankDetails.bankAccount}</td>
                       <td>{user.bankDetails.bankName}</td>
-                      <td>{summarize.totalSale}</td>
 
                       <td className="flex items-center gap-3 justify-center">
-                        {Referral.length}
+                        <i className="ri-eye-line cursor-pointer hover:text-secondary"></i>
                       </td>
                     </tr>
                   ))}

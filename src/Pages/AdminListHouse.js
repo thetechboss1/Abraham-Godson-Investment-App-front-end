@@ -4,11 +4,13 @@ import React, { useCallback, useContext, useEffect, useState } from "react";
 import { url } from "../Api";
 import { AdminHouseDetail } from "../Components/AdminHouseAndLandDetails";
 import CreateHouse from "../Components/CreateHouse";
+import EditHouse from "../Components/EditHouse";
 import { PageContext } from "../Context/PageContextProvider";
 
 const AdminListHouse = () => {
   const [addModal, setAddModal] = useState(false);
   const [descModal, setDescModal] = useState(false);
+  const [editModal, setEditModal] = useState(false);
   const { userInfo } = useContext(PageContext);
   const [properties, setProperties] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -29,30 +31,39 @@ const AdminListHouse = () => {
       });
       setProperties(house);
       setLoading(false);
-    }
+    };
     fn1();
-  }, [userInfo?.token])
+  }, [userInfo?.token]);
 
   useEffect(() => {
     getProperties();
   }, [getProperties]);
 
-  // const deleteProperty = (id) => {
-  //   const fn1 = async () => {
-  //     let res = await axios.delete(`${url}/properties/:${id}`, {
-  //       headers: {
-  //         Authorization: `bearer ${userInfo?.token}`,
-  //       },
-  //     });
-  //     const newProperty = properties.filter((item) => item.id !== id);
-  //     setProperties(newProperty);
-  //   };
-  //   fn1();
-  // };
+  const deleteProperty = (id) => {
+    const fn1 = async () => {
+      alert("Are you sure you want to delete property");
+      let res = await axios.delete(`${url}/properties/${id}`, {
+        headers: {
+          Authorization: `bearer ${userInfo?.token}`,
+        },
+      });
+      const newProperty = properties.filter((item) => item.id !== id);
+      setProperties(newProperty);
+      if (res) {
+        window.location.reload();
+      }
+    };
+    fn1();
+  };
 
   const openDetails = (id) => {
     setGetId(id);
     setDescModal(true);
+  };
+
+  const openEdit = (id) => {
+    setEditModal(true);
+    setGetId(id);
   };
 
   return (
@@ -67,6 +78,11 @@ const AdminListHouse = () => {
         id={getId}
         open={descModal}
         handleClose={() => setDescModal(false)}
+      />
+      <EditHouse
+        id={getId}
+        open={editModal}
+        handleClose={() => setEditModal(false)}
       />
       {!loading && properties.length === 0 && (
         <div>
@@ -124,11 +140,11 @@ const AdminListHouse = () => {
                         className="ri-eye-line cursor-pointer hover:text-primary text-lg"
                       ></i>
                       <i
-                        // onClick={() => setAddModal(true)}
+                        onClick={() => openEdit(item._id)}
                         className="ri-pencil-fill cursor-pointer hover:text-primary text-lg"
                       ></i>
                       <i
-                        // onClick={deleteProperty(item._id)}
+                        onClick={() => deleteProperty(item._id)}
                         className="ri-delete-bin-6-line cursor-pointer hover:text-primary text-lg"
                       ></i>
                     </td>

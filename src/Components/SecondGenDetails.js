@@ -7,6 +7,7 @@ import PageToper from "./PageToper";
 const SecondGenDetails = ({ close, id }) => {
   const { userInfo } = useContext(PageContext);
   const [fullDetails, setFullDetails] = useState({});
+  const [sales, setSales] = useState({})
 
   useEffect(() => {
     axios
@@ -18,6 +19,7 @@ const SecondGenDetails = ({ close, id }) => {
       })
       .then((response) => {
         setFullDetails(response.data.user);
+        setSales(response.data.sales)
       })
 
       .catch((err) => {
@@ -78,7 +80,7 @@ const SecondGenDetails = ({ close, id }) => {
             <label>Property sold</label>
             <input
               type="text"
-              placeholder="0"
+              placeholder={sales.length}
               disabled
               className="placeholder:text-black"
             />

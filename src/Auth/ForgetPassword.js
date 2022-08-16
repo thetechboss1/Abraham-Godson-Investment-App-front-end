@@ -1,12 +1,40 @@
 import { ErrorMessage, Formik, Form, Field } from "formik";
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Tooltip from "@mui/material/Tooltip";
 import * as Yup from "yup";
-// import axios from "axios";
+import { toast } from "react-toastify";
+import axios from "axios";
+import { url } from "../Api/index";
+import { PageContext } from "../Context/PageContextProvider";
 
 const ForgetPassword = () => {
-  const onSubmit = (values) => {};
+  const { setOpenBackDrop } = useContext(PageContext);
+  const navigate = useNavigate();
+
+  const onSubmit = (values, onSubmitProps) => {
+    setOpenBackDrop(true);
+    axios({
+      url: `${url}/user/forgot/password`,
+      method: "post",
+      data: {
+        email: values.email
+      },
+    })
+      .then((result) => {
+        setOpenBackDrop(false);
+        // toast.success(result.data.message);
+        // navigate("/reset-password");
+        console.log(result);
+      })
+      .catch((err) => {
+        console.log(err);
+        // toast.error(err.response.data.message);
+        setOpenBackDrop(false);
+      });
+
+    // onSubmitProps.resetForm();
+  };
 
   return (
     <div className="h-screen flex items-center justify-center bg-gray-100">
@@ -42,7 +70,7 @@ const ForgetPassword = () => {
                   className="errorMsg"
                 />
               </div>
-              <button className="button w-8/12 mt-3">Submit</button>
+              <button type="submit" className="button w-8/12 mt-3">Submit</button>
             </Form>
           </Formik>
         </div>

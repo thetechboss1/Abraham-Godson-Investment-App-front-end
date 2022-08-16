@@ -10,8 +10,6 @@ import Land from "./Land";
 const Properties = () => {
   const [switchProperty, setSwitchProperty] = useState(true);
   const [properties, setProperties] = useState([]);
-  const [listLand, setListLand] = useState([]);
-  const [listHouse, setListHouse] = useState([]);
   const [loading, setLoading] = useState(false);
   const { userInfo } = useContext(PageContext);
 
@@ -24,7 +22,6 @@ const Properties = () => {
           Authorization: `bearer ${userInfo?.token}`,
         },
       });
-
       setProperties(res.data.properties);
       setLoading(false);
     };

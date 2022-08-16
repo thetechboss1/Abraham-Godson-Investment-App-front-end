@@ -27,6 +27,7 @@ const SalesRecord = () => {
     });
   }, [userInfo?.token]);
 
+
   return (
     <DashboardLayout>
       <div className="Container">
@@ -68,11 +69,11 @@ const SalesRecord = () => {
               </tr>
             </thead>
             <tbody>
-              {sales &&
+              {
                 sales.map((sale, index) => (
                   <tr key={index}>
                     <td>0{index + 1}</td>
-                    <td>{sale.property.name}</td>
+                    <td>{sale.property && sale.property.name}</td>
                     <td>{sale.user.fullname}</td>
                     <td>{sale.status}</td>
                     <td>
@@ -82,7 +83,7 @@ const SalesRecord = () => {
                       })}
                     </td>
                     <td>{sale.commissionPaid ? "paid" : "unpaid"}</td>
-                    <td>{sale.property.type}</td>
+                    <td>{sale.property && sale.property.type}</td>
                     <td>{sale.buyerDetails.buyerName}</td>
                     <td>{sale.buyerDetails.buyerEmail}</td>
                     <td>{sale.buyerDetails.buyerPhone}</td>

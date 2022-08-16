@@ -1,3 +1,4 @@
+import { data } from "autoprefixer";
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { url } from "../Api";
@@ -7,6 +8,7 @@ import PageToper from "./PageToper";
 const FirstGenDetails = ({ close, id }) => {
   const { userInfo } = useContext(PageContext);
   const [fullDetails, setFullDetails] = useState({});
+  const [sales, setSales] = useState({})
 
   useEffect(() => {
     axios
@@ -18,10 +20,10 @@ const FirstGenDetails = ({ close, id }) => {
       })
       .then((response) => {
         setFullDetails(response.data.user);
+        setSales(response.data.sales)
       })
 
       .catch((err) => {
-        console.error(err);
       });
   }, [userInfo?.token, id]);
 
@@ -78,7 +80,7 @@ const FirstGenDetails = ({ close, id }) => {
             <label>Property sold</label>
             <input
               type="text"
-              placeholder="0"
+              placeholder={sales.length}
               disabled
               className="placeholder:text-black"
             />

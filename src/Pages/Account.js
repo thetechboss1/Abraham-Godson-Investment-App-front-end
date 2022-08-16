@@ -42,6 +42,9 @@ const Account = () => {
     fn();
   }, [userInfo?.token]);
 
+
+
+
   return (
     <DashboardLayout>
       {/* edit dialog */}
@@ -88,7 +91,7 @@ const Account = () => {
                   <input
                     type="text"
                     ref={textAreaRef}
-                    value={`http://localhost:3000/register?ref=${userAccount.phone}`}
+                    value={`http://localhost:3000/register?ref=${userAccount.refID}`}
                     className="focus:outline-none w-full bg-gray-100 py-2 text-sm rounded-md"
                   />
                   <i

@@ -35,6 +35,23 @@ const AdminListLand = () => {
     getProperties();
   }, [getProperties]);
 
+  const deleteProperty = (id) => {
+    const fn1 = async () => {
+      alert("Are you sure you want to delete property");
+      let res = await axios.delete(`${url}/properties/${id}`, {
+        headers: {
+          Authorization: `bearer ${userInfo?.token}`,
+        },
+      });
+      const newProperty = properties.filter((item) => item.id !== id);
+      setProperties(newProperty);
+      if (res) {
+        window.location.reload();
+      }
+    };
+    fn1();
+  };
+
   return (
     <div>
       <div className="-mt-14 flex justify-end">
@@ -90,7 +107,7 @@ const AdminListLand = () => {
                         className="ri-pencil-fill cursor-pointer hover:text-primary text-lg"
                       ></i>
                       <i
-                        onClick={() => alert("Delete Item")}
+                        onClick={() => deleteProperty(item._id)}
                         className="ri-delete-bin-6-line cursor-pointer hover:text-primary text-lg"
                       ></i>
                     </td>

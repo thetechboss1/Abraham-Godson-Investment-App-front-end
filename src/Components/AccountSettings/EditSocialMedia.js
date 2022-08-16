@@ -19,7 +19,7 @@ const EditSocialMedia = () => {
   const onSubmit = (values) => {
     axios
       .patch(
-        `${url}/user/profile/update/social
+        `${url}/user/profile/update/socials
   `,
         values,
         {

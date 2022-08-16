@@ -1,11 +1,8 @@
-import React, { useCallback, useContext, useEffect, useState } from "react";
+import React, { useState } from "react";
 import ShareProperty from "../Components/ShareProperty";
 import { Dialog, Slide } from "@mui/material";
 import HouseDetails from "./HouseDetails";
 import DashboardLayout from "../Layout/DashboardLayout";
-import { PageContext } from "../Context/PageContextProvider";
-import { url } from "../Api";
-import axios from "axios";
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });

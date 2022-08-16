@@ -55,17 +55,7 @@ const CreateSalesRecord = ({ open, handleClose }) => {
   };
 
   const fetchAllData = useCallback(() => {
-    // === Fetch sales ====//
-    axios({
-      url: `${url}/sales`,
-      method: "GET",
-      headers: {
-        authorization: `bearer ${userInfo?.token}`,
-      },
-    }).then((response) => {
-      console.log(response);
-    });
-
+  
     // === realtors ===//
     axios({
       url: `${url}/admin/realtors`,
