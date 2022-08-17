@@ -19,10 +19,10 @@ export const AdminHouseDetail = ({ handleClose, id, open }) => {
         setFullDetails(response.data.property);
       })
 
-      .catch((err) => {});
+      .catch((err) => {
+        console.err(err);
+      });
   }, [userInfo?.token, id]);
-
-//   console.log(fullDetails);
 
   return (
     <div>
@@ -55,11 +55,12 @@ export const AdminHouseDetail = ({ handleClose, id, open }) => {
 
             <h5 className="font-medium pt-2 pb-1">Amenities: </h5>
             <ul className="list-disc pl-4 text-sm">
-              {fullDetails?.moreDetails && fullDetails.moreDetails.map((amenities) => (
-                <li key={amenities} className="block">
-                  {amenities}
-                </li>
-              ))}
+              {fullDetails?.moreDetails &&
+                fullDetails.moreDetails.map((amenities) => (
+                  <li key={amenities} className="block">
+                    {amenities}
+                  </li>
+                ))}
             </ul>
           </div>
         </div>
