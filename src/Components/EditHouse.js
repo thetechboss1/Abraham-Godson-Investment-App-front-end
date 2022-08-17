@@ -14,7 +14,7 @@ const EditHouse = ({ open, handleClose, id }) => {
   const [intialDeposit, setInitialDeposit] = useState("");
   const [bedroom, setBedroom] = useState("");
   const [bathroom, setBathroom] = useState("");
-  const [image, setImage] = useState("");
+  const [image, setImage] = useState({});
   const [description, setDescription] = useState("");
   const [moreDetails, setMoreDetails] = useState([""]);
 
