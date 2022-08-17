@@ -1,4 +1,5 @@
 import { Modal } from "@mui/material";
+import { data } from "autoprefixer";
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -14,7 +15,7 @@ const EditHouse = ({ open, handleClose, id }) => {
   const [intialDeposit, setInitialDeposit] = useState("");
   const [bedroom, setBedroom] = useState("");
   const [bathroom, setBathroom] = useState("");
-  const [image, setImage] = useState({});
+  const [image, setImage] = useState("");
   const [description, setDescription] = useState("");
   const [moreDetails, setMoreDetails] = useState([""]);
 
@@ -36,10 +37,11 @@ const EditHouse = ({ open, handleClose, id }) => {
         setBathroom(val.details[1]);
         setDescription(val.description);
         setMoreDetails(val.moreDetails);
+        setImage(val.image)
       })
 
       .catch((err) => {
-        console.log(err);
+        console.error(err);
       });
   }, [userInfo?.token, id]);
 
@@ -63,6 +65,17 @@ const EditHouse = ({ open, handleClose, id }) => {
       url: `${url}/properties/${id}`,
       method: "patch",
       data: data,
+      // {
+      //   name,
+      //   location,
+      //   price,
+      //   intialDeposit,
+      //   description,
+      //   moreDetails,
+      //   bedroom,
+      //   bathroom,
+      //   type,
+      // },
       headers: {
         Accept: "application/json",
         Authorization: `bearer ${userInfo?.token}`,
@@ -170,8 +183,9 @@ const EditHouse = ({ open, handleClose, id }) => {
                 name="image"
                 placeholder="Enter property picture"
                 onChange={(event) => {
-                  setImage("image", event.target.files[0]);
+                  setImage(event.target.files[0]);
                 }}
+                // value={image}
               />
             </div>
             <div className="form-control">
