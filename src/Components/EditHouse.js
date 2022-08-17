@@ -1,5 +1,4 @@
 import { Modal } from "@mui/material";
-import { data } from "autoprefixer";
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -37,7 +36,7 @@ const EditHouse = ({ open, handleClose, id }) => {
         setBathroom(val.details[1]);
         setDescription(val.description);
         setMoreDetails(val.moreDetails);
-        setImage(val.image)
+        setImage(val.image);
       })
 
       .catch((err) => {
@@ -65,17 +64,6 @@ const EditHouse = ({ open, handleClose, id }) => {
       url: `${url}/properties/${id}`,
       method: "patch",
       data: data,
-      // {
-      //   name,
-      //   location,
-      //   price,
-      //   intialDeposit,
-      //   description,
-      //   moreDetails,
-      //   bedroom,
-      //   bathroom,
-      //   type,
-      // },
       headers: {
         Accept: "application/json",
         Authorization: `bearer ${userInfo?.token}`,
@@ -83,13 +71,12 @@ const EditHouse = ({ open, handleClose, id }) => {
     })
       .then((result) => {
         setSending(false);
-        console.log(result);
-        // handleClose();
-        // toast.success(result.data.message);
+        handleClose();
+        toast.success(result.data.message);
+        window.reload();
       })
       .catch((err) => {
-        console.log(err);
-        // toast.error(err.message);
+        toast.error(err.data.message);
         setSending(false);
       });
   };
@@ -118,6 +105,7 @@ const EditHouse = ({ open, handleClose, id }) => {
                 placeholder="Enter property name"
                 onChange={(e) => setName(e.target.value)}
                 value={name}
+                required
               />
             </div>
 
@@ -129,6 +117,7 @@ const EditHouse = ({ open, handleClose, id }) => {
                 placeholder="Enter property location"
                 onChange={(e) => setLocation(e.target.value)}
                 value={location}
+                required
               />
             </div>
             <div className="form-control">
@@ -139,6 +128,7 @@ const EditHouse = ({ open, handleClose, id }) => {
                 placeholder="Enter property price"
                 onChange={(e) => setPrice(e.target.value)}
                 value={price}
+                required
               />
             </div>
 
@@ -150,6 +140,7 @@ const EditHouse = ({ open, handleClose, id }) => {
                 placeholder="Enter property price"
                 onChange={(e) => setInitialDeposit(e.target.value)}
                 value={intialDeposit}
+                required
               />
             </div>
 
@@ -185,7 +176,7 @@ const EditHouse = ({ open, handleClose, id }) => {
                 onChange={(event) => {
                   setImage(event.target.files[0]);
                 }}
-                // value={image}
+                required
               />
             </div>
             <div className="form-control">
@@ -195,6 +186,7 @@ const EditHouse = ({ open, handleClose, id }) => {
                 placeholder="Enter description"
                 onChange={(e) => setDescription(e.target.value)}
                 value={description}
+                required
               />
             </div>
             <div className="form-control -mt-16">
@@ -204,6 +196,7 @@ const EditHouse = ({ open, handleClose, id }) => {
                 placeholder="Enter amenities and separate them with comma,"
                 onChange={(e) => setMoreDetails(e.target.value)}
                 value={moreDetails}
+                required
               />
             </div>
           </div>
