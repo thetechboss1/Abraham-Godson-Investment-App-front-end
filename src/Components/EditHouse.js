@@ -1,18 +1,23 @@
 import { Modal } from "@mui/material";
 import axios from "axios";
-import { useFormik } from "formik";
 import React, { useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import * as Yup from "yup";
 import { url } from "../Api";
 import { PageContext } from "../Context/PageContextProvider";
 
 const EditHouse = ({ open, handleClose, id }) => {
   const { userInfo } = useContext(PageContext);
   const [sending, setSending] = useState(false);
-  const validate = Yup.string().required("Field is required!");
-  const [fullDetails, setFullDetails] = useState({});
-  const [formValues, setFormValues] = useState(null);
+  const [name, setName] = useState("");
+  const [location, setLocation] = useState("");
+  const [price, setPrice] = useState("");
+  const [intialDeposit, setInitialDeposit] = useState("");
+  const [bedroom, setBedroom] = useState("");
+  const [bathroom, setBathroom] = useState("");
+  const [image, setImage] = useState("");
+  const [description, setDescription] = useState("");
+  const [moreDetails, setMoreDetails] = useState([]);
+
   useEffect(() => {
     axios
       .get(`${url}/properties/${id}`, {
@@ -22,52 +27,37 @@ const EditHouse = ({ open, handleClose, id }) => {
         },
       })
       .then((response) => {
-        setFullDetails(response.data.property);
+        let val = response.data.property;
+        setName(val.name);
+        setLocation(val.location);
+        setPrice(val.price);
+        setInitialDeposit(val.intialDeposit);
+        setBedroom(val.details[0]);
+        setBathroom(val.details[1]);
+        setDescription(val.description);
+        setMoreDetails(val.moreDetails);
       })
 
-      .catch((err) => {});
+      .catch((err) => {
+        console.log(err);
+      });
   }, [userInfo?.token, id]);
 
-//   console.log("client", fullDetails);
+  const type = "House";
 
-  const validationSchema = Yup.object({
-    name: validate,
-    location: validate,
-    price: validate,
-    intialDeposit: validate,
-    image: validate,
-    moreDetails: validate,
-    description: validate,
-  });
-
-  const savedValues = {
-    name: "Full name",
-    location: "Abuja",
-    price: "",
-    intialDeposit: "",
-    details: {
-      bedroom: "",
-      bathroom: "",
-    },
-    image: "",
-    moreDetails: "",
-    type: "House",
-    description: "",
-  };
-
-  const onSubmit = (values) => {
+  const onSubmit = () => {
     setSending(true);
     let data = new FormData();
-    data.append("image", values.image);
-    data.append("name", values.name);
-    data.append("location", values.location);
-    data.append("price", values.price);
-    data.append("intialDeposit", values.intialDeposit);
-    data.append("description", values.description);
-    data.append("moreDetails", values.moreDetails.split(","));
-    data.append("details", values.details.bedroom);
-    data.append("details", values.details.bathroom);
-    data.append("type", values.type);
+    data.append("image", image);
+    data.append("name", name);
+    data.append("location", location);
+    data.append("price", price);
+    data.append("intialDeposit", intialDeposit);
+    data.append("description", description);
+    data.append("moreDetails", moreDetails.split(","));
+    data.append("details", bedroom);
+    data.append("details", bathroom);
+    data.append("type", type);
     axios({
       url: `${url}/properties/create`,
       method: "post",
@@ -86,22 +76,7 @@ const EditHouse = ({ open, handleClose, id }) => {
         toast.error(err.message);
         setSending(false);
       });
-
-    handleReset();
   };
-
-  const {
-    handleChange,
-    handleReset,
-    handleSubmit,
-    values,
-    errors,
-    setFieldValue,
-  } = useFormik({
-    initialValues: { formValues },
-    onSubmit,
-    validationSchema,
-  });
 
   return (
     <Modal open={open} onClose={handleClose}>
@@ -117,7 +92,7 @@ const EditHouse = ({ open, handleClose, id }) => {
           ></i>
         </div>
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={onSubmit}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-5">
             <div className="form-control">
               <label>Name :</label>
@@ -125,10 +100,9 @@ const EditHouse = ({ open, handleClose, id }) => {
                 type="text"
                 name="name"
                 placeholder="Enter property name"
-                onChange={handleChange}
-                value={values.name}
+                onChange={(e) => setName(e.target.value)}
+                value={name}
               />
-              {errors.name ? <p className="errorMsg">{errors.name}</p> : null}
             </div>
 
             <div className="form-control">
@@ -137,12 +111,9 @@ const EditHouse = ({ open, handleClose, id }) => {
                 type="text"
                 name="location"
                 placeholder="Enter property location"
-                onChange={handleChange}
-                value={values.location}
+                onChange={(e) => setLocation(e.target.value)}
+                value={location}
               />
-              {errors.location ? (
-                <p className="errorMsg">{errors.location}</p>
-              ) : null}
             </div>
             <div className="form-control">
               <label>Price :</label>
@@ -150,10 +121,9 @@ const EditHouse = ({ open, handleClose, id }) => {
                 type="number"
                 name="price"
                 placeholder="Enter property price"
-                onChange={handleChange}
-                value={values.price}
+                onChange={(e) => setPrice(e.target.value)}
+                value={price}
               />
-              {errors.price ? <p className="errorMsg">{errors.price}</p> : null}
             </div>
 
             <div className="form-control">
@@ -162,12 +132,9 @@ const EditHouse = ({ open, handleClose, id }) => {
                 type="number"
                 name="intialDeposit"
                 placeholder="Enter property price"
-                onChange={handleChange}
-                value={values.intialDeposit}
+                onChange={(e) => setInitialDeposit(e.target.value)}
+                value={intialDeposit}
               />
-              {errors.initialDeposit ? (
-                <p className="errorMsg">{errors.intialDeposit}</p>
-              ) : null}
             </div>
 
             <div className="form-control">
@@ -176,8 +143,8 @@ const EditHouse = ({ open, handleClose, id }) => {
                 type="number"
                 name="details.bedroom"
                 placeholder="Enter property bedroom"
-                onChange={handleChange}
-                // value={values.details.bedroom}
+                onChange={(e) => setBedroom(e.target.value)}
+                value={bedroom}
                 required
               />
             </div>
@@ -187,8 +154,8 @@ const EditHouse = ({ open, handleClose, id }) => {
                 type="number"
                 name="details.bathroom"
                 placeholder="Enter property bathroom"
-                onChange={handleChange}
-                // value={values.details.bathroom}
+                onChange={(e) => setBathroom(e.target.value)}
+                value={bathroom}
                 required
               />
             </div>
@@ -200,39 +167,30 @@ const EditHouse = ({ open, handleClose, id }) => {
                 name="image"
                 placeholder="Enter property picture"
                 onChange={(event) => {
-                  setFieldValue("image", event.target.files[0]);
+                  setImage("image", event.target.files[0]);
                 }}
               />
-              {errors.image ? <p className="errorMsg">{errors.image}</p> : null}
             </div>
             <div className="form-control">
               <label>Description :</label>
               <textarea
                 name="description"
                 placeholder="Enter description"
-                onChange={handleChange}
-                value={values.description}
+                onChange={(e) => setDescription(e.target.value)}
+                value={description}
               />
-
-              {errors.description ? (
-                <p className="errorMsg">{errors.description}</p>
-              ) : null}
             </div>
             <div className="form-control -mt-16">
               <label>Amenities :</label>
               <textarea
                 name="moreDetails"
                 placeholder="Enter amenities and separate them with comma,"
-                onChange={handleChange}
-                value={values.moreDetails}
+                onChange={(e) => setMoreDetails(e.target.value)}
+                value={moreDetails}
               />
-
-              {errors.moreDetails ? (
-                <p className="errorMsg">{errors.moreDetails}</p>
-              ) : null}
             </div>
           </div>
-          <button type="button" className="transparentButton mr-5" onClick={() => setFormValues(savedValues)}>Get</button>
+
           <button type="submit" className="button">
             {sending ? "sending" : "Update"}
           </button>
