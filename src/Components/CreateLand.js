@@ -18,26 +18,6 @@ const CreateLand = ({ handleClose, open }) => {
   
   const [sending, setSending] = useState(false);
   const { userInfo } = useContext(PageContext);
-  const validate = Yup.string().required("Field is Required!");
-  const validateNumber = Yup.number()
-    .typeError("You must specify a number")
-    .min(0, "Min value 0.")
-    .required("Field is Required!");
-
-    // const validationSchema = Yup.object({
-    //   name: validate,
-    //   location: validate,
-    //   price: validateNumber,
-    //   image: validate,
-    //   description: validate,
-    //   intialDeposit: validate,
-    //   title: validate,
-    //   details: {
-    //     plotSize: validate,
-    //   },
-    //   moreDetails: validate,
-    // });
-
   const initialValues = {
     name: "",
     location: "",
@@ -79,11 +59,15 @@ const CreateLand = ({ handleClose, open }) => {
       .then((result) => {
         setSending(false);
         toast.success(result.data.message);
+        handleReset()
+        handleClose()
       })
       .catch((err) => {
         toast.error(err.message);
         setSending(false);
+        handleReset()
       });
+      
   };
 
   const {
@@ -96,7 +80,6 @@ const CreateLand = ({ handleClose, open }) => {
   } = useFormik({
     initialValues,
     onSubmit,
-    // validationSchema,
   });
 
   return (

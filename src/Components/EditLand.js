@@ -5,15 +5,15 @@ import { toast } from "react-toastify";
 import { url } from "../Api";
 import { PageContext } from "../Context/PageContextProvider";
 
-const EditHouse = ({ open, handleClose, id }) => {
+const EditLand = ({ open, handleClose, id }) => {
   const { userInfo } = useContext(PageContext);
   const [sending, setSending] = useState(false);
   const [name, setName] = useState("");
   const [location, setLocation] = useState("");
   const [price, setPrice] = useState("");
   const [intialDeposit, setInitialDeposit] = useState("");
-  const [bedroom, setBedroom] = useState("");
-  const [bathroom, setBathroom] = useState("");
+  const [title, setTitle] = useState("");
+  const [details, setDetails] = useState("");
   const [image, setImage] = useState("");
   const [description, setDescription] = useState("");
   const [moreDetails, setMoreDetails] = useState([""]);
@@ -32,10 +32,11 @@ const EditHouse = ({ open, handleClose, id }) => {
         setLocation(val.location);
         setPrice(val.price);
         setInitialDeposit(val.intialDeposit);
-        setBedroom(val.details[0]);
-        setBathroom(val.details[1]);
+        setTitle(val.title);
+        setDetails(val.details);
         setDescription(val.description);
         setMoreDetails(val.moreDetails);
+        console.log(val);
       })
 
       .catch((err) => {
@@ -43,7 +44,7 @@ const EditHouse = ({ open, handleClose, id }) => {
       });
   }, [userInfo?.token, id]);
 
-  const type = "House";
+  const type = "Land";
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -56,8 +57,8 @@ const EditHouse = ({ open, handleClose, id }) => {
     data.append("intialDeposit", intialDeposit);
     data.append("description", description);
     data.append("moreDetails", moreDetails);
-    data.append("details", bedroom);
-    data.append("details", bathroom);
+    data.append("title", title);
+    data.append("details", details);
     data.append("type", type);
     axios({
       url: `${url}/properties/${id}`,
@@ -141,24 +142,24 @@ const EditHouse = ({ open, handleClose, id }) => {
             </div>
 
             <div className="form-control">
-              <label>Bedroom :</label>
+              <label>Land title :</label>
               <input
-                type="number"
-                name="details.bedroom"
-                placeholder="Enter property bedroom"
-                onChange={(e) => setBedroom(e.target.value)}
-                value={bedroom}
+                type="text"
+                name="title"
+                placeholder="Enter land title"
+                onChange={(e) => setTitle(e.target.value)}
+                value={title}
                 required
               />
             </div>
             <div className="form-control">
-              <label>Bathroom :</label>
+              <label>Plot size :</label>
               <input
-                type="number"
-                name="details.bathroom"
+                type="text"
+                name="details"
                 placeholder="Enter property bathroom"
-                onChange={(e) => setBathroom(e.target.value)}
-                value={bathroom}
+                onChange={(e) => setDetails(e.target.value)}
+                value={details}
                 required
               />
             </div>
@@ -203,4 +204,4 @@ const EditHouse = ({ open, handleClose, id }) => {
   );
 };
 
-export default EditHouse;
+export default EditLand;

@@ -27,7 +27,6 @@ const SalesRecord = () => {
     });
   }, [userInfo?.token]);
 
-
   return (
     <DashboardLayout>
       <div className="Container">
@@ -69,33 +68,36 @@ const SalesRecord = () => {
               </tr>
             </thead>
             <tbody>
-              {
-                sales.map((sale, index) => (
-                  <tr key={index}>
-                    <td>0{index + 1}</td>
-                    <td>{sale.property && sale.property.name}</td>
-                    <td>{sale.user.fullname}</td>
-                    <td>{sale.status}</td>
-                    <td>
-                      {sale.deposit.toLocaleString("en-NG", {
-                        style: "currency",
-                        currency: "NGN",
-                      })}
-                    </td>
-                    <td>{sale.commissionPaid ? "paid" : "unpaid"}</td>
-                    <td>{sale.property && sale.property.type}</td>
-                    <td>{sale.buyerDetails.buyerName}</td>
-                    <td>{sale.buyerDetails.buyerEmail}</td>
-                    <td>{sale.buyerDetails.buyerPhone}</td>
-                    <td>{sale.createdAt.split("T")[0]}</td>
-                    <td>
-                      <i
-                        onClick={() => setAddModal(true)}
-                        className="ri-pencil-fill cursor-pointer hover:text-primary text-lg"
-                      ></i>
-                    </td>
-                  </tr>
-                ))}
+              {sales.map((sale, index) => (
+                <tr key={index}>
+                  <td>0{index + 1}</td>
+                  <td>
+                    {sale.property ? sale.property.name : "Property deleted"}
+                  </td>
+                  <td>{sale.user.fullname}</td>
+                  <td>{sale.status}</td>
+                  <td>
+                    {sale.deposit.toLocaleString("en-NG", {
+                      style: "currency",
+                      currency: "NGN",
+                    })}
+                  </td>
+                  <td>{sale.commissionPaid ? "paid" : "unpaid"}</td>
+                  <td>
+                    {sale.property ? sale.property.type : "Property deleted"}
+                  </td>
+                  <td>{sale.buyerDetails.buyerName}</td>
+                  <td>{sale.buyerDetails.buyerEmail}</td>
+                  <td>{sale.buyerDetails.buyerPhone}</td>
+                  <td>{sale.createdAt.split("T")[0]}</td>
+                  <td>
+                    <i
+                      onClick={() => setAddModal(true)}
+                      className="ri-pencil-fill cursor-pointer hover:text-primary text-lg"
+                    ></i>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         )}

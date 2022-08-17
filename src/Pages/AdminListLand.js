@@ -4,6 +4,7 @@ import React, { useCallback, useContext, useEffect, useState } from "react";
 import { url } from "../Api";
 import { PageContext } from "../Context/PageContextProvider";
 import CreateLand from "../Components/CreateLand";
+import EditLand from "../Components/EditLand";
 
 const AdminListLand = () => {
   const [addModal, setAddModal] = useState(false);
@@ -11,6 +12,8 @@ const AdminListLand = () => {
   const { userInfo } = useContext(PageContext);
   const [properties, setProperties] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [getId, setGetId] = useState("");
+  const [editModal, setEditModal] = useState(false);
 
   const getProperties = useCallback(() => {
     setLoading(true);
@@ -52,6 +55,11 @@ const AdminListLand = () => {
     fn1();
   };
 
+  const openEdit = (id) => {
+    setEditModal(true);
+    setGetId(id);
+  };
+
   return (
     <div>
       <div className="-mt-14 flex justify-end">
@@ -60,6 +68,11 @@ const AdminListLand = () => {
         </button>
       </div>
       <CreateLand open={addModal} handleClose={() => setAddModal(false)} />
+      <EditLand
+        id={getId}
+        open={editModal}
+        handleClose={() => setEditModal(false)}
+      />
       {!loading && properties.length === 0 && (
         <div>
           <h5 className="pt-4 font-medium text-lg"> No Property yet</h5>
@@ -103,7 +116,7 @@ const AdminListLand = () => {
                         className="ri-eye-line cursor-pointer hover:text-primary text-lg"
                       ></i>
                       <i
-                        onClick={() => setAddModal(true)}
+                        onClick={() => openEdit(item._id)}
                         className="ri-pencil-fill cursor-pointer hover:text-primary text-lg"
                       ></i>
                       <i
