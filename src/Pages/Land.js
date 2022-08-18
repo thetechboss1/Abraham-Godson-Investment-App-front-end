@@ -1,23 +1,11 @@
 import React, { useState } from "react";
 import ShareProperty from "../Components/ShareProperty";
-import { Dialog, Slide } from "@mui/material";
-import DashboardLayout from "../Layout/DashboardLayout";
-import LandDetails from "./LandDetails";
-
-const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
+import { Link } from "react-router-dom";
 
 const Land = ({ properties }) => {
   const [openShare, setOpenShare] = useState(false);
-  const [openFullDialog, setOpenFullDialog] = useState(false);
-  const [getId, setGetId] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
 
-  const openDetails = (id) => {
-    setGetId(id);
-    setOpenFullDialog(true);
-  };
 
   const listLand = properties.filter((p) => {
     return p.type === "Land";
@@ -32,16 +20,11 @@ const Land = ({ properties }) => {
     ) {
       return val;
     }
+    
   });
 
   return (
     <div>
-      {/* House details */}
-      <Dialog fullScreen open={openFullDialog} TransitionComponent={Transition}>
-        <DashboardLayout>
-          <LandDetails id={getId} close={() => setOpenFullDialog(false)} />
-        </DashboardLayout>
-      </Dialog>
       {/* sear bar */}
       <form className="flex items-center justify-end md:-mt-16">
         <div className="relative w-full md:w-56">
@@ -75,12 +58,9 @@ const Land = ({ properties }) => {
       <div className="propertyWrap mt-7 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-5 gap-y-7">
         {filterBySearch.map((item) => (
           <div className="box rounded cursor-pointer">
-            <div
-              className="top rounded-tr"
-              onClick={() => openDetails(item._id)}
-            >
+            <Link to={`/properties/${item._id}`} className="top rounded-tr">
               <img src={item.image} alt={item.name} className="rounded-tr" />
-            </div>
+            </Link>
             <div className="bottom">
               <h3 className="text-lg font-medium pb-5 pt-1">{item.name}</h3>
 

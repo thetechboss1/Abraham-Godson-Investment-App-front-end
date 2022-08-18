@@ -1,16 +1,19 @@
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import { url } from "../Api";
 import PageToper from "../Components/PageToper";
 import { PageContext } from "../Context/PageContextProvider";
+import DashboardLayout from "../Layout/DashboardLayout";
 
-const HouseDetails = ({ close, id }) => {
+const PropertyDetails = ({ id }) => {
   const { userInfo } = useContext(PageContext);
   const [fullDetails, setFullDetails] = useState({});
+  const params = useParams();
 
   useEffect(() => {
     axios
-      .get(`${url}/properties/${id}`, {
+      .get(`${url}/properties/${params.id}`, {
         headers: {
           Accept: "application/json",
           Authorization: `bearer ${userInfo?.token}`,
@@ -20,28 +23,19 @@ const HouseDetails = ({ close, id }) => {
         setFullDetails(response.data.property);
       })
 
-      .catch((err) => {
-        
-      });
-  }, [userInfo?.token, id]);
-
+      .catch((err) => {});
+  }, [userInfo?.token, params.id]);
 
   return (
-    <>
-      <div className="Container pb-10">
+    <DashboardLayout>
+      <div className="Container">
         <PageToper title={fullDetails.name} desc={fullDetails.location} />
         <div className="mb-6 flex justify-between items-center">
-          <button className="button flex items-center gap-2" onClick={close}>
+          <Link to="/properties" className="button flex items-center gap-2">
             <span>All Properties</span>
             <i className="ri-arrow-right-line font-medium"></i>
-          </button>
-          <button
-            onClick={close}
-            className="transparentButton flex items-center gap-2"
-          >
-            <span className="md:flex hidden">Close</span>
-            <i className="ri-close-line"></i>
-          </button>
+          </Link>
+          <button className="transparentButton">{fullDetails.type}</button>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
@@ -70,6 +64,13 @@ const HouseDetails = ({ close, id }) => {
                   })}
               </span>
             </h6>
+            {fullDetails.title && (
+              <h4 className="font-medium pb-2">
+                Land title:
+                <span className="text-accent">{fullDetails.title}</span>
+              </h4>
+            )}
+
             <p className="text-sm text-justify">{fullDetails.description}</p>
 
             <div className="border-b mt-3" />
@@ -81,34 +82,43 @@ const HouseDetails = ({ close, id }) => {
                   })}
               </ul>
               <div className="border-r" />
-              <div>
-                <div className="flex items-center gap-5">
-                  <div>
-                    <span className="text-sm">Bedroom</span>
-                    <div className="flex items-center gap-3">
-                      <i className="ri-hotel-bed-line text-xl"></i>
-                      <span>
-                        {fullDetails.details && fullDetails.details[0]}
-                      </span>
-                    </div>
+              {fullDetails.type === "Land" && (
+                <div>
+                  <span className="text-sm">Plot size</span>
+                  <div className="flex items-center gap-3">
+                    <i className="ri-landscape-line text-xl"></i>
+                    <span className="text-sm">{fullDetails.details}</span>
                   </div>
-                  <div>
-                    <span className="text-sm">Bathroom</span>
-                    <div className="flex items-center gap-3">
-                      <i className="fas fa-shower text-lg"></i>
-                      <span>
-                        {fullDetails.details && fullDetails.details[1]}
-                      </span>
+                </div>
+              )}
+              {/* house */}
+              {fullDetails.type === "House" && (
+                <div>
+                  <div className="flex items-center gap-5">
+                    <div>
+                      <span className="text-sm">Bedroom</span>
+                      <div className="flex items-center gap-3">
+                        <i className="ri-hotel-bed-line text-xl"></i>
+                        <span>{fullDetails.details[0]}</span>
+                      </div>
+                    </div>
+                    <div>
+                      <span className="text-sm">Bathroom</span>
+                      <div className="flex items-center gap-3">
+                        <i className="fas fa-shower text-lg"></i>
+                        <span>{fullDetails.details[1]}</span>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              )}
+
             </div>
           </div>
         </div>
       </div>
-    </>
+    </DashboardLayout>
   );
 };
 
-export default HouseDetails;
+export default PropertyDetails;

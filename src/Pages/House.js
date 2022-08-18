@@ -1,21 +1,14 @@
 import React, { useState } from "react";
 import ShareProperty from "../Components/ShareProperty";
-import { Dialog, Slide } from "@mui/material";
-import HouseDetails from "./HouseDetails";
-import DashboardLayout from "../Layout/DashboardLayout";
-
-const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
+import { Link } from "react-router-dom";
 
 const House = ({ properties, loading }) => {
   const [openShare, setOpenShare] = useState(false);
-  const [openFullDialog, setOpenFullDialog] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [getId, setGetId] = useState("");
+
   const openDetails = (id) => {
     setGetId(id);
-    setOpenFullDialog(true);
   };
 
   const listHouse = properties.filter((p) => {
@@ -35,13 +28,6 @@ const House = ({ properties, loading }) => {
 
   return (
     <>
-      {/* House details */}
-      <Dialog fullScreen open={openFullDialog} TransitionComponent={Transition}>
-        <DashboardLayout>
-          <HouseDetails id={getId} close={() => setOpenFullDialog(false)} />
-        </DashboardLayout>
-      </Dialog>
-
       {/* sear bar */}
       <form className="flex items-center justify-end md:-mt-16">
         <div className="relative w-full md:w-56">
@@ -78,21 +64,18 @@ const House = ({ properties, loading }) => {
         </div>
       )}
 
-      {/* {listHouse.length === 0 && (
+      {!loading && listHouse.length === 0 && (
         <div>
           <h5 className="pt-4 font-medium text-lg">No Property Yet</h5>
         </div>
-      )} */}
+      )}
 
       <div className="propertyWrap mt-7 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-5 gap-y-7">
         {filterBySearch.map((item) => (
           <div className="box rounded cursor-pointer">
-            <div
-              className="top rounded-tr"
-              onClick={() => openDetails(item._id)}
-            >
+            <Link to={`/properties/${item._id}`} className="top rounded-tr">
               <img src={item.image} alt={item.name} className="rounded-tr" />
-            </div>
+            </Link>
             <div className="bottom">
               <h3 className="text-lg font-medium pb-5 pt-1">{item.name}</h3>
 

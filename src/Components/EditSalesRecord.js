@@ -1,11 +1,11 @@
-import React, { useCallback, useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Modal } from "@mui/material";
 import axios from "axios";
 import { url } from "../Api";
 import { toast } from "react-toastify";
 import { PageContext } from "../Context/PageContextProvider";
 
-const EditSalesRecord = ({ open, handleClose }) => {
+const EditSalesRecord = ({ open, handleClose, id }) => {
   const { userInfo } = useContext(PageContext);
   const [deposit, setDeposit] = useState("");
   const [status, setStatus] = useState("");
@@ -16,33 +16,49 @@ const EditSalesRecord = ({ open, handleClose }) => {
     e.preventDefault();
     setSending(true);
 
-    let data = {
-      deposit,
-      commissionPaid: commissionPaid === "true" ? true : false,
-      status,
-    };
     axios({
-      url: `${url}/sales/create`,
-      method: "post",
-      data,
+      url: `${url}/sales/${id}`,
+      method: "patch",
+      data: {
+        deposit,
+        status,
+        commissionPaid: commissionPaid === "true" ? true : false,
+      },
       headers: {
         authorization: `bearer ${userInfo?.token}`,
       },
     })
       .then((result) => {
-        // toast.success("sales added successfully");
+        toast.success(result.data.message);
         setSending(false);
+        handleClose();
+        window.location.reload();
       })
       .catch((err) => {
+        toast.error(err.data.message);
         setSending(false);
       });
   };
 
-  // const fetchAllData = useCallback(() => {}, [userInfo?.token]);
+  useEffect(() => {
+    axios
+      .get(`${url}/sales/single/view/${id}`, {
+        headers: {
+          Accept: "application/json",
+          Authorization: `bearer ${userInfo?.token}`,
+        },
+      })
+      .then((response) => {
+        let val = response.data.sales;
+        setDeposit(val.deposit);
+        setStatus(val.status);
+        setCommissionPaid(val.commissionPaid);
+      })
 
-  // useEffect(() => {
-  //   fetchAllData();
-  // }, [fetchAllData]);
+      .catch((err) => {
+        console.error(err);
+      });
+  }, [userInfo?.token, id]);
 
   return (
     <Modal open={open} onClose={handleClose}>
@@ -66,12 +82,17 @@ const EditSalesRecord = ({ open, handleClose }) => {
               type="number"
               onChange={(e) => setDeposit(e.target.value)}
               required
+              value={deposit}
             />
           </div>
 
           <div className="form-control">
             <label>Payment status</label>
-            <select onChange={(e) => setStatus(e.target.value)} required>
+            <select
+              value={status}
+              onChange={(e) => setStatus(e.target.value)}
+              required
+            >
               <option value="">-select Payment status--</option>
               <option value="Completed">Completed</option>
               <option value="Incomplete">Incomplete</option>
@@ -81,6 +102,7 @@ const EditSalesRecord = ({ open, handleClose }) => {
           <div className="form-control">
             <label>Commission Paid</label>
             <select
+              value={commissionPaid}
               onChange={(e) => setCommissionPaid(e.target.value)}
               required
             >
