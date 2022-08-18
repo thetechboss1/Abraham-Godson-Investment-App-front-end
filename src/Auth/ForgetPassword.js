@@ -18,22 +18,19 @@ const ForgetPassword = () => {
       url: `${url}/user/forgot/password`,
       method: "post",
       data: {
-        email: values.email
+        email: values.email,
       },
     })
       .then((result) => {
         setOpenBackDrop(false);
-        // toast.success(result.data.message);
-        // navigate("/reset-password");
-        console.log(result);
+        toast.success("Code sent to your email");
+        navigate("/reset-password");
+        onSubmitProps.resetForm();
       })
       .catch((err) => {
-        console.log(err);
-        // toast.error(err.response.data.message);
+        toast.error(err.response.data.message);
         setOpenBackDrop(false);
       });
-
-    // onSubmitProps.resetForm();
   };
 
   return (
@@ -70,7 +67,9 @@ const ForgetPassword = () => {
                   className="errorMsg"
                 />
               </div>
-              <button type="submit" className="button w-8/12 mt-3">Submit</button>
+              <button type="submit" className="button w-8/12 mt-3">
+                Submit
+              </button>
             </Form>
           </Formik>
         </div>

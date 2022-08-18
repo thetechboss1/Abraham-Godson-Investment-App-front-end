@@ -91,7 +91,7 @@ const Account = () => {
                   <input
                     type="text"
                     ref={textAreaRef}
-                    value={`http://localhost:3000/register?ref=${userAccount.refID}`}
+                    value={`http://agrn.com.ng/register?ref=${userAccount.refID}`}
                     className="focus:outline-none w-full bg-gray-100 py-2 text-sm rounded-md"
                   />
                   <i

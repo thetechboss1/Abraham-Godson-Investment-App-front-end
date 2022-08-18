@@ -1,5 +1,5 @@
 import Login from "./Auth/Login";
-import { Route, Routes} from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Register from "./Auth/Register";
 import Home from "./Pages/Home";
 import Account from "./Pages/Account";
@@ -28,6 +28,8 @@ function App() {
         {/* normal user routes */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/forget-password" element={<ForgetPassword />} />
+        <Route path="/reset-password" element={<RestPassword />} />
 
         <Route element={<ProtectedRoutes />}>
           <Route
@@ -61,8 +63,6 @@ function App() {
           <Route path="/downline" element={<Downline />} />
           <Route path="/properties" element={<Properties />} />
           <Route path="/properties/:id" element={<PropertyDetails />} />
-          <Route path="/forget-password" element={<ForgetPassword />} />
-          <Route path="/reset-password" element={<RestPassword />} />
 
           {/* Admin routes */}
           <Route path="/all-users" element={<AllUsers />} />

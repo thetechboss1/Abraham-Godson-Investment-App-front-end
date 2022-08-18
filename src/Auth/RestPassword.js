@@ -1,13 +1,39 @@
 import { ErrorMessage, Formik, Form, Field } from "formik";
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Tooltip from "@mui/material/Tooltip";
 import * as Yup from "yup";
+import axios from "axios";
+import { url } from "../Api";
+import { PageContext } from "../Context/PageContextProvider";
+import { toast } from "react-toastify";
 
 const RestPassword = () => {
   const validate = Yup.string().required("Field is Required!");
+  const { setOpenBackDrop } = useContext(PageContext);
+  const navigate = useNavigate();
 
-  const onSubmit = (values) => {};
+  const onSubmit = (values, onSubmitProps) => {
+    setOpenBackDrop(true);
+    axios({
+      url: `${url}/user/password/new`,
+      method: "post",
+      data: {
+        code: values.code,
+        newPassword: values.newPassword,
+      },
+    })
+      .then((result) => {
+        setOpenBackDrop(false);
+        toast.success(result.data.message);
+        navigate("/login");
+        onSubmitProps.resetForm();
+      })
+      .catch((err) => {
+        toast.error(err.data.message);
+        setOpenBackDrop(false);
+      });
+  };
   return (
     <div className="h-screen flex items-center justify-center bg-gray-100">
       <div className="form-container" style={{ maxWidth: 400 }}>
@@ -50,7 +76,7 @@ const RestPassword = () => {
               <div className="form-control w-full">
                 <label>Password</label>
                 <Field
-                  type="email"
+                  type="password"
                   name="newPassword"
                   placeholder="Enter new password"
                   className="bg-gray-50"
