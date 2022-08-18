@@ -73,7 +73,7 @@ const EditHouse = ({ open, handleClose, id }) => {
         setSending(false);
         handleClose();
         toast.success(result.data.message);
-        window.reload();
+        window.location.reload();
       })
       .catch((err) => {
         toast.error(err.data.message);

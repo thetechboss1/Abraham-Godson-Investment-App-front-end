@@ -74,6 +74,15 @@ body {
   @apply w-full border border-slate-300 pl-2 pr-10 py-2 rounded-md placeholder:text-sm text-sm focus:outline-none;
 }
 
+.formWrap {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  padding: 10px 0;
+}
+
 /*== Sidebar menu ==*/
 .sidebarWrap {
   background: var(--primary);
@@ -311,13 +320,11 @@ body {
   -webkit-box-shadow: inset 0 0 6px gray;
 }
 
-
 .form-container {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  /* padding: 15px 25px 25px 25px; */
   border-radius: 10px;
   width: 90%;
 }

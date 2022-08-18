@@ -5,14 +5,20 @@ import CreateRealtor from "../Components/CreateRealtor";
 import PageToper from "../Components/PageToper";
 import { PageContext } from "../Context/PageContextProvider";
 import DashboardLayout from "../Layout/DashboardLayout";
+import RealtorDetails from "../Components/RealtorsDetails"
+import { Dialog, Slide } from "@mui/material";
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+
 
 const AllRealtors = () => {
   const [addModal, setAddModal] = useState(false);
   const [realtors, setRealtors] = useState([]);
   const { userInfo } = useContext(PageContext);
   const [loading, setLoading] = useState(false);
- 
-
+  const [openFullDialog, setOpenFullDialog] = useState(false);
+  const [getId, setGetId] = useState("");
   useEffect(() => {
     setLoading(true);
     axios({
@@ -27,11 +33,27 @@ const AllRealtors = () => {
       setRealtors(data);
     });
 
-
   
   }, [userInfo?.token]);
 
+
+
+
+  const openDetails = (id) => {
+    setGetId(id);
+    setOpenFullDialog(true);
+  };
+
   return (
+    <>
+
+     {/* realtors details */}
+     <Dialog fullScreen open={openFullDialog} TransitionComponent={Transition}>
+        <DashboardLayout>
+          <RealtorDetails id={getId} close={() => setOpenFullDialog(false)} />
+        </DashboardLayout>
+      </Dialog>
+
     <DashboardLayout>
       <div className="Container">
         <PageToper
@@ -85,7 +107,7 @@ const AllRealtors = () => {
                       <td>{user.bankDetails.bankName}</td>
 
                       <td className="flex items-center gap-3 justify-center">
-                        <i className="ri-eye-line cursor-pointer hover:text-secondary"></i>
+                        <i onClick={() => openDetails(user._id)} className="ri-eye-line cursor-pointer hover:text-secondary"></i>
                       </td>
                     </tr>
                   ))}
@@ -101,6 +123,7 @@ const AllRealtors = () => {
         </div>
       </div>
     </DashboardLayout>
+    </>
   );
 };
 

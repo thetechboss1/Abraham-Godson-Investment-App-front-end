@@ -11,7 +11,7 @@ import axios from "axios";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const { setOpenBackDrop } = useContext(PageContext);
+  const { setOpenBackDrop, setCheckLogin } = useContext(PageContext);
   const navigate = useNavigate();
   // handle toggle
   const toggle = () => {
@@ -44,6 +44,7 @@ const Login = () => {
         setOpenBackDrop(false);
         toast.success(result.data.message);
         localStorage.setItem("user_info", JSON.stringify(result.data));
+        // setCheckLogin(true);
         navigate("/");
       })
       .catch((err) => {
@@ -127,7 +128,10 @@ const Login = () => {
                   </label>
                 </div>
 
-                <Link to="/forget-password" className="cursor-pointer hover:text-secondary">
+                <Link
+                  to="/forget-password"
+                  className="cursor-pointer hover:text-secondary"
+                >
                   Forget password
                 </Link>
               </div>

@@ -3,6 +3,7 @@ import ShareProperty from "../Components/ShareProperty";
 import { Dialog, Slide } from "@mui/material";
 import HouseDetails from "./HouseDetails";
 import DashboardLayout from "../Layout/DashboardLayout";
+
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });

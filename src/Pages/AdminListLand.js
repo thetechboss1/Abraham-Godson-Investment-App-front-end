@@ -1,10 +1,10 @@
-import { Modal } from "@mui/material";
 import axios from "axios";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { url } from "../Api";
 import { PageContext } from "../Context/PageContextProvider";
 import CreateLand from "../Components/CreateLand";
 import EditLand from "../Components/EditLand";
+import { AdminLandDetail } from "../Components/AdminHouseAndLandDetails";
 
 const AdminListLand = () => {
   const [addModal, setAddModal] = useState(false);
@@ -55,6 +55,11 @@ const AdminListLand = () => {
     fn1();
   };
 
+  const openDetails = (id) => {
+    setGetId(id);
+    setDescModal(true);
+  };
+
   const openEdit = (id) => {
     setEditModal(true);
     setGetId(id);
@@ -68,6 +73,11 @@ const AdminListLand = () => {
         </button>
       </div>
       <CreateLand open={addModal} handleClose={() => setAddModal(false)} />
+      <AdminLandDetail
+        id={getId}
+        open={descModal}
+        handleClose={() => setDescModal(false)}
+      />
       <EditLand
         id={getId}
         open={editModal}
@@ -93,6 +103,7 @@ const AdminListLand = () => {
               <th>Location</th>
               <th>Description</th>
               <th>Price</th>
+              <th>Initial deposit</th>
               <th>Plot size</th>
               <th>Land title</th>
               <th>Action</th>
@@ -107,12 +118,23 @@ const AdminListLand = () => {
                     <td>{item.name}</td>
                     <td>{item.location}</td>
                     <td>{item.description.slice(0, 31)}...</td>
-                    <td>{item.price}</td>
+                    <td>
+                      {item.price.toLocaleString("en-NG", {
+                        style: "currency",
+                        currency: "NGN",
+                      })}
+                    </td>
+                    <td>
+                      {item.intialDeposit.toLocaleString("en-NG", {
+                        style: "currency",
+                        currency: "NGN",
+                      })}
+                    </td>
                     <td>{item.details}</td>
                     <td>{item.title}</td>
                     <td className="flex items-center gap-3 justify-center">
                       <i
-                        onClick={() => setDescModal(true)}
+                        onClick={() => openDetails(item._id)}
                         className="ri-eye-line cursor-pointer hover:text-primary text-lg"
                       ></i>
                       <i
@@ -125,48 +147,6 @@ const AdminListLand = () => {
                       ></i>
                     </td>
                   </tr>
-
-                  {/* description modal */}
-                  <Modal open={descModal} onClose={() => setDescModal(false)}>
-                    <div
-                      className="CModal"
-                      style={{ maxWidth: 600, height: "85%" }}
-                    >
-                      <div className="flex justify-between items-center mb-7">
-                        <h5 className="font-semibold text-accent text-lg">
-                          {item.name}
-                        </h5>
-                        <i
-                          className="fas fa-times cursor-pointer text-xl"
-                          onClick={() => setDescModal(false)}
-                        ></i>
-                      </div>
-
-                      <div>
-                        <img
-                          src={item.image}
-                          alt={item.name}
-                          className="rounded w-full h-72"
-                        />
-                      </div>
-
-                      <div>
-                        <h5 className="font-medium pt-3 pb-1">Description: </h5>
-                        <p className="text-justify text-sm">
-                          {item.description}
-                        </p>
-
-                        <h5 className="font-medium pt-2 pb-1">Amenities: </h5>
-                        <ul className="list-disc pl-4 text-sm">
-                          <li>Elevator</li>
-                          <li>Spa</li>
-                          <li>Pool</li>
-                          <li>Gym</li>
-                          <li>24-hour</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </Modal>
                 </>
               );
             })}

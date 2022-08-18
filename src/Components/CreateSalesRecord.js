@@ -1,6 +1,5 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
-import { Autocomplete, Modal, TextField } from "@mui/material";
-import "../css/form.css";
+import { Modal } from "@mui/material";
 import axios from "axios";
 import { url } from "../Api";
 import { toast } from "react-toastify";
@@ -8,8 +7,6 @@ import { PageContext } from "../Context/PageContextProvider";
 
 const CreateSalesRecord = ({ open, handleClose }) => {
   const { userInfo } = useContext(PageContext);
-  // const [realtorsInputValue, setRealtorsInputValue] = useState("");
-  // const [propertiesInputValue, setPropertiesInputValue] = useState("");
   const [realtors, setRealtors] = useState([]);
   const [properties, setProperties] = useState([]);
   const [user, setUser] = useState("");
@@ -55,7 +52,6 @@ const CreateSalesRecord = ({ open, handleClose }) => {
   };
 
   const fetchAllData = useCallback(() => {
-  
     // === realtors ===//
     axios({
       url: `${url}/admin/realtors`,
@@ -79,7 +75,7 @@ const CreateSalesRecord = ({ open, handleClose }) => {
       let data = response.data.properties;
       setProperties(data);
     });
-  }, []);
+  }, [userInfo?.token]);
 
   useEffect(() => {
     fetchAllData();

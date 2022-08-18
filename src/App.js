@@ -15,61 +15,62 @@ import AccountContextProvider from "./Context/AccountContextProvider";
 import { useContext, useEffect } from "react";
 import ForgetPassword from "./Auth/ForgetPassword";
 import RestPassword from "./Auth/RestPassword";
+import ProtectedRoutes from "./Auth/ProtectedRoutes";
+import NotFound from "./Pages/NotFound";
 
 function App() {
   const { userInfo } = useContext(PageContext);
   localStorage.getItem("user_info");
   const navigate = useNavigate();
-  
-  useEffect(() => {
-    if (!localStorage.getItem("user_info")) {
-      navigate("/login");
-    }
-  }, []);
 
   return (
     <>
       <Routes>
         {/* normal user routes */}
-        <Route
-          path="/"
-          element={
-            userInfo && userInfo.role === "user" ? (
-              <AccountContextProvider>
-                <Home />
-              </AccountContextProvider>
-            ) : (
-              <AccountContextProvider>
-                <AdminDashboard />
-              </AccountContextProvider>
-            )
-          }
-        />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route
-          path="/account"
-          element={
-            userInfo && userInfo.role === "user" ? (
-              <AccountContextProvider>
-                <Account />
-              </AccountContextProvider>
-            ) : (
-              <AccountContextProvider>
-                <AdminAccount />
-              </AccountContextProvider>
-            )
-          }
-        />
-        <Route path="/downline" element={<Downline />} />
-        <Route path="/properties" element={<Properties />} />
-        <Route path="/forget-password" element={<ForgetPassword />} />
-        <Route path="/reset-password" element={<RestPassword />} />
 
-        {/* Admin routes */}
-        <Route path="/all-users" element={<AllUsers />} />
-        <Route path="/admin-properties" element={<AdminProperties />} />
-        <Route path="/sales-records" element={<SalesRecord />} />
+        <Route element={<ProtectedRoutes />}>
+          <Route
+            path="/"
+            element={
+              userInfo && userInfo.role === "user" ? (
+                <AccountContextProvider>
+                  <Home />
+                </AccountContextProvider>
+              ) : (
+                <AccountContextProvider>
+                  <AdminDashboard />
+                </AccountContextProvider>
+              )
+            }
+          />
+          <Route
+            path="/account"
+            element={
+              userInfo && userInfo.role === "user" ? (
+                <AccountContextProvider>
+                  <Account />
+                </AccountContextProvider>
+              ) : (
+                <AccountContextProvider>
+                  <AdminAccount />
+                </AccountContextProvider>
+              )
+            }
+          />
+          <Route path="/downline" element={<Downline />} />
+          <Route path="/properties" element={<Properties />} />
+          <Route path="/forget-password" element={<ForgetPassword />} />
+          <Route path="/reset-password" element={<RestPassword />} />
+
+          {/* Admin routes */}
+          <Route path="/all-users" element={<AllUsers />} />
+          <Route path="/admin-properties" element={<AdminProperties />} />
+          <Route path="/sales-records" element={<SalesRecord />} />
+        </Route>
+
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </>
   );

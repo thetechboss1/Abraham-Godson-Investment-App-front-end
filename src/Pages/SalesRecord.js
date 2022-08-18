@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { url } from "../Api";
 import CreateSalesRecord from "../Components/CreateSalesRecord";
+import EditSalesRecord from "../Components/EditSalesRecord";
 import PageToper from "../Components/PageToper";
 import { PageContext } from "../Context/PageContextProvider";
 import DashboardLayout from "../Layout/DashboardLayout";
@@ -11,6 +12,8 @@ const SalesRecord = () => {
   const [addModal, setAddModal] = useState(false);
   const [sales, setSales] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [editOpen, setEditOpen] = useState(false);
+  const [getId, setGetId] = useState("");
 
   useEffect(() => {
     setLoading(true);
@@ -27,6 +30,11 @@ const SalesRecord = () => {
     });
   }, [userInfo?.token]);
 
+  const openEdit = (id) => {
+    setEditOpen(true);
+    setGetId(id);
+  };
+
   return (
     <DashboardLayout>
       <div className="Container">
@@ -39,11 +47,17 @@ const SalesRecord = () => {
             open={addModal}
             handleClose={() => setAddModal(false)}
           />
+
+          <EditSalesRecord
+            id={getId}
+            open={editOpen}
+            handleClose={() => setEditOpen(false)}
+          />
         </div>
 
         {!loading && sales.length === 0 && (
           <div>
-            <h5 className="pt-4 font-medium text-lg"> No Property yet</h5>
+            <h5 className="pt-4 font-medium text-lg"> No Sales yet</h5>
           </div>
         )}
 
@@ -92,7 +106,7 @@ const SalesRecord = () => {
                   <td>{sale.createdAt.split("T")[0]}</td>
                   <td>
                     <i
-                      onClick={() => setAddModal(true)}
+                      onClick={() => openEdit(sale._id)}
                       className="ri-pencil-fill cursor-pointer hover:text-primary text-lg"
                     ></i>
                   </td>

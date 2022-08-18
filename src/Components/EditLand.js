@@ -36,7 +36,7 @@ const EditLand = ({ open, handleClose, id }) => {
         setDetails(val.details);
         setDescription(val.description);
         setMoreDetails(val.moreDetails);
-        console.log(val);
+        setImage(val.image)
       })
 
       .catch((err) => {
@@ -72,12 +72,13 @@ const EditLand = ({ open, handleClose, id }) => {
       .then((result) => {
         setSending(false);
         console.log(result);
-        // handleClose();
-        // toast.success(result.data.message);
+        handleClose();
+        toast.success(result.data.message);
+        window.location.reload();
       })
       .catch((err) => {
         console.log(err);
-        // toast.error(err.message);
+        toast.error(err.data.message);
         setSending(false);
       });
   };
@@ -171,8 +172,9 @@ const EditLand = ({ open, handleClose, id }) => {
                 name="image"
                 placeholder="Enter property picture"
                 onChange={(event) => {
-                  setImage("image", event.target.files[0]);
+                  setImage(event.target.files[0])
                 }}
+                required
               />
             </div>
             <div className="form-control">
@@ -182,6 +184,7 @@ const EditLand = ({ open, handleClose, id }) => {
                 placeholder="Enter description"
                 onChange={(e) => setDescription(e.target.value)}
                 value={description}
+                required
               />
             </div>
             <div className="form-control -mt-16">
@@ -191,6 +194,7 @@ const EditLand = ({ open, handleClose, id }) => {
                 placeholder="Enter amenities and separate them with comma,"
                 onChange={(e) => setMoreDetails(e.target.value)}
                 value={moreDetails}
+                required
               />
             </div>
           </div>

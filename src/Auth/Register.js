@@ -1,9 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import {
-  Link,
-  useNavigate,
-  useSearchParams,
-} from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { PageContext } from "../Context/PageContextProvider";
 import logo from "../Images/logo1.png";
 import showcase from "../Images/showcase.jpg";
@@ -46,7 +42,7 @@ const Register = () => {
     email: validate.email("Invalid email format"),
     phone: validate.min(11, "Incomplete phone number"),
     password: validate.min(8, "Password must not be lass than 8 characters"),
-    refphone: Yup.string().min(11, "Incomplete phone number"),
+    refphone: Yup.number().typeError('you must specify a number').min(11, "Incomplete phone number"),
   });
 
   const onSubmit = (values, onSubmitProps) => {
@@ -70,10 +66,10 @@ const Register = () => {
   };
 
   return (
-    <>
-      <div className="auth_page">
-        <div className="bg-white shadow-md rounded-md grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-0">
-          <div className="px-4 py-5 flex items-center">
+    <div className="h-screen bg-neutral">
+      <div className="formWrap" style={{ maxWidth: 700 }}>
+        <div className="bg-white shadow-md rounded-md grid grid-cols-1 md:grid-cols-2">
+          <div className="px-4 py-5 flex items-center justify-center">
             <div>
               <div className="pb-10">
                 <img src={logo} alt="logo" className="h-12" />
@@ -126,14 +122,21 @@ const Register = () => {
                         className="errorMsg"
                       />
                     </div>
-                    <div className="form-group">
+                    <div className="form-group test">
                       <label>Referral phone</label>
                       <Field
                         type="tel"
                         name="refphone"
                         placeholder="referral phone number"
                         disabled={disAble}
+                        className="referral_phone"
+                        style={{ background: disAble ? "#ccc" : "" }}
                       />
+                      {disAble && (
+                        <span className="text-green-700 text-xs">
+                          Referral phone Filled
+                        </span>
+                      )}
                       <ErrorMessage
                         name="refphone"
                         component="span"
@@ -168,16 +171,11 @@ const Register = () => {
                       className="errorMsg"
                     />
                   </div>
-                  <button type="submit">Register</button>
+                  <button type="submit" className="button mt-5 w-full" style={{background: "var(--primary)"}}>Register</button>
 
                   <div className="flex justify-between items-center"></div>
                 </Form>
               </Formik>
-              <div className="flex items-center justify-between gap-10 md:gap-20 lg:gap-x-36 text-sm invisible">
-                <span>hiddenhidden</span>
-
-                <span>hiddenhiddenhiddenhidden</span>
-              </div>
 
               <div className="text-sm mt-5 flex items-center gap-x-3 justify-center">
                 <p>have an account already? </p>
@@ -208,7 +206,7 @@ const Register = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

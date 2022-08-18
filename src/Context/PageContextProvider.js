@@ -1,5 +1,5 @@
 import { Backdrop, CircularProgress } from "@mui/material";
-import React, { useState, createContext } from "react";
+import React, { useState, createContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -8,7 +8,7 @@ export const PageContext = createContext();
 const PageContextProvider = (props) => {
   const navigate = useNavigate();
   const [openBackDrop, setOpenBackDrop] = useState(false);
-
+  const [checkLogin, setCheckLogin] = useState(false);
   const userInfo = JSON.parse(localStorage.getItem("user_info"));
 
   const logout = () => {
@@ -32,6 +32,8 @@ const PageContextProvider = (props) => {
           setOpenBackDrop,
           userInfo,
           logout,
+          checkLogin,
+          setCheckLogin,
         }}
       >
         {props.children}
