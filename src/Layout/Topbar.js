@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import Drawer from "@mui/material/Drawer";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { Tooltip } from "@mui/material";
 import { PageContext } from "../Context/PageContextProvider";
 
@@ -19,7 +19,9 @@ const Topbar = () => {
     <>
       <div className="bg-primary w-full">
         <div className="Container flex justify-between items-center text-white py-2">
-          <h4 className="font-bold text-lg">Abraham Godson</h4>
+          <Link to="/" className="font-bold text-lg">
+            Abraham Godson
+          </Link>
           <i
             className="ri-menu-line text-xl font-bold cursor-pointer"
             onClick={toggleDrawer("left", true)}
@@ -103,7 +105,9 @@ const Topbar = () => {
               <i className="ri-logout-circle-r-line text-xl font-medium"></i>
             </Tooltip>
 
-            <span className="text-base" onClick={logout}>Logout</span>
+            <span className="text-base" onClick={logout}>
+              Logout
+            </span>
           </div>
         </div>
       </Drawer>

@@ -1,11 +1,8 @@
 import React, { useState } from "react";
-import ShareProperty from "../Components/ShareProperty";
 import { Link } from "react-router-dom";
 
 const Land = ({ properties }) => {
-  const [openShare, setOpenShare] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-
 
   const listLand = properties.filter((p) => {
     return p.type === "Land";
@@ -20,7 +17,6 @@ const Land = ({ properties }) => {
     ) {
       return val;
     }
-    
   });
 
   return (
@@ -88,14 +84,14 @@ const Land = ({ properties }) => {
                   })}
                 </span>
 
-                <button className="py-1 px-2 bg-secondary text-white text-sm flex items-center gap-2">
-                  <span onClick={() => setOpenShare(true)}>Share</span>
-                  <ShareProperty
-                    open={openShare}
-                    handleClose={() => setOpenShare(false)}
-                  />
+                <Link
+                  to={`/properties/${item._id}`}
+                  className="py-1 px-2 bg-secondary text-white text-sm flex items-center gap-2"
+                >
+                  <span>Share</span>
+
                   <i className="ri-share-line"></i>
-                </button>
+                </Link>
               </div>
             </div>
           </div>

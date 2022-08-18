@@ -5,11 +5,25 @@ import { url } from "../Api";
 import PageToper from "../Components/PageToper";
 import { PageContext } from "../Context/PageContextProvider";
 import DashboardLayout from "../Layout/DashboardLayout";
+import {
+  FacebookShareButton,
+  TwitterShareButton,
+  WhatsappShareButton,
+  TelegramShareButton,
+} from "react-share";
+import {
+  FacebookIcon,
+  TwitterIcon,
+  WhatsappIcon,
+  TelegramIcon,
+} from "react-share";
 
-const PropertyDetails = ({ id }) => {
+const PropertyDetails = () => {
   const { userInfo } = useContext(PageContext);
   const [fullDetails, setFullDetails] = useState({});
   const params = useParams();
+
+  const shareUrl = "https://abraham-realtors.netlify.app/properties";
 
   useEffect(() => {
     axios
@@ -112,7 +126,45 @@ const PropertyDetails = ({ id }) => {
                   </div>
                 </div>
               )}
+            </div>
 
+            {/* share social */}
+
+            <div className="flex gap-2 mt-3">
+              <FacebookShareButton
+                url={`${shareUrl}/${params.id}`}
+                quote={fullDetails.name}
+                hashtag={fullDetails.name}
+                description={fullDetails.description}
+              >
+                <FacebookIcon size={32} round />
+              </FacebookShareButton>
+
+              <TwitterShareButton
+                url={`${shareUrl}/${params.id}`}
+                quote={fullDetails.name}
+                hashtag={"#Property"}
+                description={fullDetails.description}
+              >
+                <TwitterIcon size={32} round />
+              </TwitterShareButton>
+
+              <WhatsappShareButton
+                url={`${shareUrl}/${params.id}`}
+                quote={fullDetails.name}
+                hashtag={"#Property"}
+                description={fullDetails.description}
+              >
+                <WhatsappIcon size={32} round />
+              </WhatsappShareButton>
+              <TelegramShareButton
+                url={`${shareUrl}/${params.id}`}
+                quote={fullDetails.name}
+                hashtag={"#Property"}
+                description={fullDetails.description}
+              >
+                <TelegramIcon size={32} round />
+              </TelegramShareButton>
             </div>
           </div>
         </div>
