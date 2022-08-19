@@ -23,7 +23,7 @@ const PropertyDetails = () => {
   const [fullDetails, setFullDetails] = useState({});
   const params = useParams();
 
-  const shareUrl = "https://abraham-realtors.netlify.app/properties";
+  const shareUrl = "https://www.agrn.com.ng/properties";
 
   useEffect(() => {
     axios
