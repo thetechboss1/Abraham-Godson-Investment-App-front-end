@@ -83,7 +83,7 @@ const Topbar = () => {
                   <span>Realtors</span>
                 </NavLink>
 
-                <NavLink to="/admin-properties" className="sidebar_link_mobile">
+                <NavLink to="/properties" className="sidebar_link_mobile">
                   <i className="ri-award-line text-base"></i>
                   <span>Properties</span>
                 </NavLink>

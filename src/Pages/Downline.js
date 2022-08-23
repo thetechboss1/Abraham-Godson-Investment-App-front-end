@@ -25,9 +25,10 @@ const Downline = () => {
           Authorization: `bearer ${userInfo?.token}`,
         },
       });
+      setLoading(false)
       setMyDownlineFirstGen(res.data.data.firstlv);
       setMyDownlineSecondGen(res.data.data.secondlv);
-      setLoading(false)
+      
     };
     fn();
   }, [userInfo?.token]);

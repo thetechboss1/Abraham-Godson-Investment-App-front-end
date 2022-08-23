@@ -61,12 +61,20 @@ function App() {
             }
           />
           <Route path="/downline" element={<Downline />} />
-          <Route path="/properties" element={<Properties />} />
+          <Route
+            path="/properties"
+            element={
+              userInfo && userInfo.role === "user" ? (
+                <Properties />
+              ) : (
+                <AdminProperties />
+              )
+            }
+          />
           <Route path="/properties/:id" element={<PropertyDetails />} />
 
           {/* Admin routes */}
           <Route path="/all-users" element={<AllUsers />} />
-          <Route path="/admin-properties" element={<AdminProperties />} />
           <Route path="/sales-records" element={<SalesRecord />} />
         </Route>
 

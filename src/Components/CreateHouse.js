@@ -64,12 +64,11 @@ const CreateHouse1 = ({ open, handleClose }) => {
         setSending(false);
         handleClose()
         toast.success(result.data.message);
-        console.log(result);
+        window.location.reload()
       })
       .catch((err) => {
         toast.error(err.message);
         setSending(false);
-        console.log(err);
       });
 
     handleReset();
@@ -187,13 +186,6 @@ const CreateHouse1 = ({ open, handleClose }) => {
                 name="image"
                 placeholder="Enter property picture"
                 onChange={(event) => {
-                  // let reader = new FileReader();
-                  // reader.onload = () => {
-                  //   if (reader.readyState === 2) {
-                  //     setFieldValue("image", reader.result);
-                  //   }
-                  // };
-                  // reader.readAsDataURL(event.target.files[0]);
                   setFieldValue("image",event.target.files[0]);
                 }}
               />

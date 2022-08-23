@@ -43,8 +43,8 @@ const CreateSalesRecord = ({ open, handleClose }) => {
       },
     })
       .then((result) => {
-        toast.success("sales added successfully");
         setSending(false);
+        toast.success("sales added successfully");
       })
       .catch((err) => {
         setSending(false);

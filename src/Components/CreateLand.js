@@ -61,6 +61,7 @@ const CreateLand = ({ handleClose, open }) => {
         toast.success(result.data.message);
         handleReset()
         handleClose()
+        window.location.reload()
       })
       .catch((err) => {
         toast.error(err.message);

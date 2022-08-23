@@ -49,7 +49,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
             <span className={isOpen ? "" : "hidden"}>Realtors</span>
           </NavLink>
 
-          <NavLink to="/admin-properties" className="sidebar_link">
+          <NavLink to="/properties" className="sidebar_link">
             <Tooltip title="properties" placement="right-start">
               <i className="ri-building-3-line"></i>
             </Tooltip>
