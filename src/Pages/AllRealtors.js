@@ -5,12 +5,12 @@ import CreateRealtor from "../Components/CreateRealtor";
 import PageToper from "../Components/PageToper";
 import { PageContext } from "../Context/PageContextProvider";
 import DashboardLayout from "../Layout/DashboardLayout";
-import RealtorDetails from "../Components/RealtorsDetails"
+import RealtorDetails from "../Components/RealtorsDetails";
 import { Dialog, Slide } from "@mui/material";
+import DataTable from "react-data-table-component";
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
-
 
 const AllRealtors = () => {
   const [addModal, setAddModal] = useState(false);
@@ -19,7 +19,10 @@ const AllRealtors = () => {
   const [loading, setLoading] = useState(false);
   const [openFullDialog, setOpenFullDialog] = useState(false);
   const [getId, setGetId] = useState("");
-  useEffect(() => {
+  const [search, setSearch] = useState("");
+  const [filteredRealtors, setFilteredRealtors] = useState([]);
+
+  const fetchAllRealtors = () => {
     setLoading(true);
     axios({
       url: `${url}/admin/realtors`,
@@ -31,98 +34,116 @@ const AllRealtors = () => {
       setLoading(false);
       let data = response.data.realtors;
       setRealtors(data);
+      setFilteredRealtors(data);
     });
+  };
 
-  
+  useEffect(() => {
+    fetchAllRealtors();
   }, [userInfo?.token]);
 
-
-
+  useEffect(() => {
+    const result = realtors.filter((item) => {
+      return item.fullname.toLowerCase().match(search.toLocaleLowerCase());
+    });
+    setFilteredRealtors(result);
+  }, [search]);
 
   const openDetails = (id) => {
     setGetId(id);
     setOpenFullDialog(true);
   };
 
+  const columns = [
+    {
+      name: "Full Name",
+      selector: "fullname",
+      sortable: true,
+    },
+    {
+      name: "Email Address",
+      selector: "email",
+    },
+    {
+      name: "Phone Number",
+      selector: "phone",
+    },
+    {
+      name: "Action",
+      cell: (row) => (
+        <button
+          onClick={() => openDetails(row._id)}
+          style={{ padding: "6px 13px" }}
+          className="border border-slate-400 hover:text-secondary hover:border-slate-800 rounded bg-transparent text-accent transition ease-in-out duration-500 text-sm tracking-wider"
+        >
+          View Profile
+        </button>
+      ),
+    },
+  ];
+
   return (
     <>
-
-     {/* realtors details */}
-     <Dialog fullScreen open={openFullDialog} TransitionComponent={Transition}>
+      {/* realtors details */}
+      <Dialog fullScreen open={openFullDialog} TransitionComponent={Transition}>
         <DashboardLayout>
           <RealtorDetails id={getId} close={() => setOpenFullDialog(false)} />
         </DashboardLayout>
       </Dialog>
 
-    <DashboardLayout>
-      <div className="Container">
-        <PageToper
-          title="All Realtors"
-          desc="List of all realtors"
-          adminAccount
-        />
+      <DashboardLayout>
+        <div className="Container">
+          <PageToper
+            title="All Realtors"
+            desc="List of all realtors"
+            adminAccount
+          />
 
-        <div>
-          <div className="flex justify-end">
-            <button onClick={() => setAddModal(true)} className="button">
-              Add +
-            </button>
-            <CreateRealtor
-              open={addModal}
-              handleClose={() => setAddModal(false)}
-            />
+          <div>
+            <div className="flex justify-end">
+              <button onClick={() => setAddModal(true)} className="button">
+                Add +
+              </button>
+              <CreateRealtor
+                open={addModal}
+                handleClose={() => setAddModal(false)}
+              />
+            </div>
+
+            {!loading && realtors.length === 0 ? (
+              <div>
+                <h5 className="pt-4 font-medium text-lg">No Realtor yet</h5>
+              </div>
+            ) : (
+              <DataTable
+                columns={columns}
+                data={filteredRealtors}
+                pagination
+                fixedHeader
+                responsive
+                striped
+                highlightOnHover
+                subHeader
+                subHeaderComponent={
+                  <input
+                    placeholder="Search table.."
+                    className="border px-2"
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                  />
+                }
+                subHeaderAlign="left"
+              />
+            )}
+
+            {loading && (
+              <div>
+                <h5 className="pt-4 font-medium text-lg">Loading....</h5>
+              </div>
+            )}
           </div>
-
-          {!loading && realtors.length === 0 ? (
-            <div>
-              <h5 className="pt-4 font-medium text-lg">No Realtor yet</h5>
-            </div>
-          ) : (
-            <table className="general_table mt-5">
-              <thead className="bg-gray-200">
-                <tr>
-                  <th>S/N</th>
-                  <th>Full Name</th>
-                  <th>Email</th>
-                  <th>Phone number</th>
-                  <th>Referral Phone</th>
-                  <th>Acc name</th>
-                  <th>Acc number</th>
-                  <th>Bank name</th>
-
-                  <th>View</th>
-                </tr>
-              </thead>
-              <tbody>
-                {realtors &&
-                  realtors.map((user, index) => (
-                    <tr key={index}>
-                      <td>{index + 1}</td>
-                      <td>{user.fullname}</td>
-                      <td>{user.email}</td>
-                      <td>{user.phone}</td>
-                      <td></td>
-                      <td>{user.bankDetails.bankHolder}</td>
-                      <td>{user.bankDetails.bankAccount}</td>
-                      <td>{user.bankDetails.bankName}</td>
-
-                      <td className="flex items-center gap-3 justify-center">
-                        <i onClick={() => openDetails(user._id)} className="ri-eye-line cursor-pointer hover:text-secondary"></i>
-                      </td>
-                    </tr>
-                  ))}
-              </tbody>
-            </table>
-          )}
-
-          {loading && (
-            <div>
-              <h5 className="pt-4 font-medium text-lg">Loading....</h5>
-            </div>
-          )}
         </div>
-      </div>
-    </DashboardLayout>
+      </DashboardLayout>
     </>
   );
 };
