@@ -12,6 +12,9 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
+const btnStyle =
+  "border border-slate-400 hover:text-secondary hover:border-slate-800 rounded bg-transparent  transition ease-in-out duration-500 text-sm tracking-wider";
+
 const AllRealtors = () => {
   const [addModal, setAddModal] = useState(false);
   const [realtors, setRealtors] = useState([]);
@@ -69,12 +72,24 @@ const AllRealtors = () => {
       selector: "phone",
     },
     {
+      name: "My Upline",
+      cell: (row) => (
+        <button
+          onClick={() => openDetails(row._id)}
+          style={{ padding: "6px 13px" }}
+          className={`${btnStyle} text-primary`}
+        >
+          View
+        </button>
+      ),
+    },
+    {
       name: "Action",
       cell: (row) => (
         <button
           onClick={() => openDetails(row._id)}
           style={{ padding: "6px 13px" }}
-          className="border border-slate-400 hover:text-secondary hover:border-slate-800 rounded bg-transparent text-accent transition ease-in-out duration-500 text-sm tracking-wider"
+          className={`${btnStyle} text-accent`}
         >
           View Profile
         </button>
@@ -121,13 +136,14 @@ const AllRealtors = () => {
                 pagination
                 fixedHeader
                 responsive
+                className="overflow-x-auto"
                 striped
                 highlightOnHover
                 subHeader
                 subHeaderComponent={
                   <input
                     placeholder="Search table.."
-                    className="border px-2"
+                    className="border border-slate-500 py-2 pl-2 pr-5 font-medium rounded text-sm focus:outline-primary"
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
                   />

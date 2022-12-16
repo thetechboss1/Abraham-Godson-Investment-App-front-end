@@ -119,21 +119,20 @@ const RealtorsDetails = ({ close, id }) => {
             />
           </div>
           <div className="form-control">
-            <label>Office Address</label>
-            <input
-              type="text"
-              placeholder={userAccount.officeAdress}
-              disabled={true}
-              className={pStyle}
-            />
-          </div>
-          <div className="form-control">
             <label>State of origin</label>
             <input
               type="text"
               placeholder={userAccount.stateOfOrigin}
               disabled={true}
               className={pStyle}
+            />
+          </div>
+          <div className="form-control">
+            <label>Office Address</label>
+            <textarea
+              placeholder={userAccount.officeAdress}
+              disabled={true}
+              className={`${pStyle} h-24`}
             />
           </div>
 
