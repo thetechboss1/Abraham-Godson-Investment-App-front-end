@@ -4,13 +4,14 @@ import { url } from "../Api";
 import { PageContext } from "../Context/PageContextProvider";
 import PageToper from "./PageToper";
 
+export const pStyle = "placeholder:text-black bg-gray-100";
 const RealtorsDetails = ({ close, id }) => {
   const { userInfo } = useContext(PageContext);
   const [userAccount, setUserAccount] = useState({});
-  const [sales, setSales] = useState([])
-  const pStyle = "placeholder:text-black bg-gray-100";
+  const [sales, setSales] = useState([]);
+
   const social = userAccount.socialDetails;
-   const bank = userAccount.bankDetails;
+  const bank = userAccount.bankDetails;
 
   useEffect(() => {
     axios
@@ -27,7 +28,7 @@ const RealtorsDetails = ({ close, id }) => {
 
       .catch((err) => {});
   }, [userInfo?.token, id]);
-
+  console.log(userAccount);
   return (
     <div className="Container">
       <PageToper
@@ -157,7 +158,7 @@ const RealtorsDetails = ({ close, id }) => {
               className={pStyle}
             />
           </div>
-        
+
           <div className="form-control">
             <label>instagram </label>
             <input

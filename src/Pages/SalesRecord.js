@@ -1,3 +1,4 @@
+import { Modal } from "@mui/material";
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import DataTable from "react-data-table-component";
@@ -5,8 +6,10 @@ import { url } from "../Api";
 import CreateSalesRecord from "../Components/CreateSalesRecord";
 import EditSalesRecord from "../Components/EditSalesRecord";
 import PageToper from "../Components/PageToper";
+import { pStyle } from "../Components/RealtorsDetails";
 import { PageContext } from "../Context/PageContextProvider";
 import DashboardLayout from "../Layout/DashboardLayout";
+import { btnStyle } from "./AllRealtors";
 
 const SalesRecord = () => {
   const { userInfo } = useContext(PageContext);
@@ -16,7 +19,8 @@ const SalesRecord = () => {
   const [editOpen, setEditOpen] = useState(false);
   const [getId, setGetId] = useState("");
   const [search, setSearch] = useState("");
-  const [filteredRealtors, setFilteredRealtors] = useState([]);
+  const [filteredSales, setFilteredSales] = useState([]);
+  const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
     setLoading(true);
@@ -29,7 +33,7 @@ const SalesRecord = () => {
     }).then((response) => {
       let data = response.data.sales;
       setSales(data);
-      setFilteredRealtors(data);
+      setFilteredSales(data);
       setLoading(false);
     });
   }, [userInfo?.token]);
@@ -38,7 +42,7 @@ const SalesRecord = () => {
     const result = sales.filter((item) => {
       return item.property.name.toLowerCase().match(search.toLocaleLowerCase());
     });
-    setFilteredRealtors(result);
+    setFilteredSales(result);
   }, [search]);
 
   const openEdit = (id) => {
@@ -64,18 +68,69 @@ const SalesRecord = () => {
     },
     {
       name: "Deposit",
-      selector: "deposit",
+      cell: (amount) => (
+        <span>
+          {amount.deposit.toLocaleString("en-NG", {
+            style: "currency",
+            currency: "NGN",
+          })}
+        </span>
+      ),
     },
     {
       name: "Commission",
-      selector: "commissionPaid",
+      cell: (val) => (val.commissionPaid ? "paid" : "unpaid"),
     },
     {
-      name: "Commission",
-      selector: "commissionPaid",
+      name: "Type",
+      cell: (val) => (val.property ? val.property.type : "Property deleted"),
+    },
+
+    // {
+    //   name: "Client",
+    //   selector: "buyerDetails.buyerName",
+    // },
+    // {
+    //   name: "Client Email",
+    //   selector: "buyerDetails.buyerEmail",
+    // },
+    // {
+    //   name: "Client Phone",
+    //   selector: "buyerDetails.buyerPhone",
+    // },
+
+    // {sale.deposit.toLocaleString("en-NG", {
+    //             style: "currency",
+    //             currency: "NGN",
+    //           })}
+
+    {
+      name: "Date",
+      cell: (val) => val.createdAt.split("T")[0],
+    },
+    {
+      name: "Client",
+      cell: (val) => (
+        <button
+          style={{ padding: "4px 5px" }}
+          className={`${btnStyle} text-primary`}
+          onClick={() => setOpenModal(true)}
+        >
+          Client
+        </button>
+      ),
+    },
+
+    {
+      name: "Action",
+      cell: (val) => (
+        <i
+          onClick={() => openEdit(val._id)}
+          className="ri-pencil-fill cursor-pointer hover:text-primary text-lg"
+        ></i>
+      ),
     },
   ];
-
   return (
     <DashboardLayout>
       <div className="Container">
@@ -95,19 +150,16 @@ const SalesRecord = () => {
             handleClose={() => setEditOpen(false)}
           />
         </div>
-
         {!loading && sales.length === 0 && (
           <div>
             <h5 className="pt-4 font-medium text-lg"> No Sales yet</h5>
           </div>
         )}
-
         {loading && <h5 className="pt-4 font-medium text-lg">Loading....</h5>}
-
         {sales.length > 0 && (
           <DataTable
             columns={columns}
-            data={filteredRealtors}
+            data={filteredSales}
             pagination
             fixedHeader
             responsive
@@ -125,57 +177,43 @@ const SalesRecord = () => {
             }
             subHeaderAlign="left"
           />
-          // <table className="general_table mt-10">
-          //   <thead className="bg-gray-200">
-          //     <tr>
-          //       <th>S/N</th>
-          //       <th>Property</th>
-          //       <th>Realtor</th>
-          //       <th>Payment status</th>
-          //       <th>Deposit</th>
-          //       <th>Commission</th>
-          //       <th>Type</th>
-          //       <th>Client</th>
-          //       <th>Email</th>
-          //       <th>Phone</th>
-          //       <th>Date</th>
-          //       <th>Action</th>
-          //     </tr>
-          //   </thead>
-          //   <tbody>
-          //     {sales.map((sale, index) => (
-          //       <tr key={index}>
-          //         <td>0{index + 1}</td>
-          //         <td>
-          //           {sale.property ? sale.property.name : "Property deleted"}
-          //         </td>
-          //         <td>{sale.user.fullname}</td>
-          //         <td>{sale.status}</td>
-          //         <td>
-          //           {sale.deposit.toLocaleString("en-NG", {
-          //             style: "currency",
-          //             currency: "NGN",
-          //           })}
-          //         </td>
-          //         <td>{sale.commissionPaid ? "paid" : "unpaid"}</td>
-          //         <td>
-          //           {sale.property ? sale.property.type : "Property deleted"}
-          //         </td>
-          //         <td>{sale.buyerDetails.buyerName}</td>
-          //         <td>{sale.buyerDetails.buyerEmail}</td>
-          //         <td>{sale.buyerDetails.buyerPhone}</td>
-          //         <td>{sale.createdAt.split("T")[0]}</td>
-          //         <td>
-          //           <i
-          //             onClick={() => openEdit(sale._id)}
-          //             className="ri-pencil-fill cursor-pointer hover:text-primary text-lg"
-          //           ></i>
-          //         </td>
-          //       </tr>
-          //     ))}
-          //   </tbody>
-          // </table>
         )}
+
+        <Modal open={openModal} onClose={() => setOpenModal(false)}>
+          <div
+            className="CModal scrollBar"
+            style={{ maxWidth: 600, height: "85%" }}
+          >
+            <h4 className="font-semibold text-lg pb-4">Client Details</h4>
+            <div className="form-control">
+              <label>Full name</label>
+              <input
+                type="text"
+                // placeholder={userAccount.fullname}
+                disabled={true}
+                className={pStyle}
+              />
+            </div>
+            <div className="form-control">
+              <label>Email</label>
+              <input
+                type="text"
+                // placeholder={userAccount.email}
+                disabled={true}
+                className={pStyle}
+              />
+            </div>
+            <div className="form-control">
+              <label>Phone number</label>
+              <input
+                type="text"
+                // placeholder={userAccount.phone}
+                disabled={true}
+                className={pStyle}
+              />
+            </div>
+          </div>
+        </Modal>
       </div>
     </DashboardLayout>
   );

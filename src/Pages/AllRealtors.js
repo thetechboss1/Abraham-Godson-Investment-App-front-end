@@ -8,11 +8,12 @@ import DashboardLayout from "../Layout/DashboardLayout";
 import RealtorDetails from "../Components/RealtorsDetails";
 import { Dialog, Slide } from "@mui/material";
 import DataTable from "react-data-table-component";
+import UpLineDetails from "../Components/UpLineDetails";
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const btnStyle =
+export const btnStyle =
   "border border-slate-400 hover:text-secondary hover:border-slate-800 rounded bg-transparent  transition ease-in-out duration-500 text-sm tracking-wider";
 
 const AllRealtors = () => {
@@ -21,6 +22,7 @@ const AllRealtors = () => {
   const { userInfo } = useContext(PageContext);
   const [loading, setLoading] = useState(false);
   const [openFullDialog, setOpenFullDialog] = useState(false);
+  const [openUpLineDialog, setOpenUpLineDialog] = useState(false);
   const [getId, setGetId] = useState("");
   const [search, setSearch] = useState("");
   const [filteredRealtors, setFilteredRealtors] = useState([]);
@@ -57,6 +59,11 @@ const AllRealtors = () => {
     setOpenFullDialog(true);
   };
 
+  const openUpLineDetails = (id) => {
+    setGetId(id);
+    setOpenUpLineDialog(true);
+  };
+
   const columns = [
     {
       name: "Full Name",
@@ -75,7 +82,7 @@ const AllRealtors = () => {
       name: "My Upline",
       cell: (row) => (
         <button
-          onClick={() => openDetails(row._id)}
+          onClick={() => openUpLineDetails(row._id)}
           style={{ padding: "6px 13px" }}
           className={`${btnStyle} text-primary`}
         >
@@ -96,6 +103,7 @@ const AllRealtors = () => {
       ),
     },
   ];
+  
 
   return (
     <>
@@ -103,6 +111,16 @@ const AllRealtors = () => {
       <Dialog fullScreen open={openFullDialog} TransitionComponent={Transition}>
         <DashboardLayout>
           <RealtorDetails id={getId} close={() => setOpenFullDialog(false)} />
+        </DashboardLayout>
+      </Dialog>
+
+      <Dialog
+        fullScreen
+        open={openUpLineDialog}
+        TransitionComponent={Transition}
+      >
+        <DashboardLayout>
+          <UpLineDetails id={getId} close={() => setOpenUpLineDialog(false)} />
         </DashboardLayout>
       </Dialog>
 
