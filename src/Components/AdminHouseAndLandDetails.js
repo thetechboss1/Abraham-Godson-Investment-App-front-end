@@ -69,7 +69,6 @@ export const AdminHouseDetail = ({ handleClose, id, open }) => {
   );
 };
 
-
 // == Admin land details //
 
 export const AdminLandDetail = ({ handleClose, id, open }) => {
@@ -100,9 +99,12 @@ export const AdminLandDetail = ({ handleClose, id, open }) => {
           style={{ maxWidth: 600, height: "85%" }}
         >
           <div className="flex justify-between items-center mb-7">
-            <h5 className="font-semibold text-accent text-lg capitalize">
-              {fullDetails?.name}
-            </h5>
+            <div>
+              <h5 className="font-semibold text-accent text-lg capitalize">
+                {fullDetails?.name}
+              </h5>
+              <p className="text-sm pt-2">{fullDetails?.title}</p>
+            </div>
             <i
               className="fas fa-times cursor-pointer text-xl"
               onClick={handleClose}
@@ -136,4 +138,3 @@ export const AdminLandDetail = ({ handleClose, id, open }) => {
     </div>
   );
 };
-

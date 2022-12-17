@@ -77,7 +77,52 @@ const AdminListLand = () => {
     setFilteredLand(result);
   }, [search]);
 
-  const columns = [{ name: "Name", selector: "name", sortable: true }];
+  const columns = [
+    { name: "Name", selector: "name", sortable: true },
+    { name: "Location", selector: "location" },
+    {
+      name: "Price",
+      cell: (amount) => (
+        <span>
+          {amount.price.toLocaleString("en-NG", {
+            style: "currency",
+            currency: "NGN",
+          })}
+        </span>
+      ),
+    },
+    {
+      name: "Initial deposit",
+      cell: (amount) => (
+        <span>
+          {amount.intialDeposit.toLocaleString("en-NG", {
+            style: "currency",
+            currency: "NGN",
+          })}
+        </span>
+      ),
+    },
+    { name: "Plot Size", selector: "details" },
+    {
+      name: "Action",
+      cell: (val) => (
+        <div className="flex items-center gap-3 justify-center">
+          <i
+            onClick={() => openDetails(val._id)}
+            className="ri-eye-line cursor-pointer hover:text-primary text-lg"
+          ></i>
+          <i
+            onClick={() => openEdit(val._id)}
+            className="ri-pencil-fill cursor-pointer hover:text-primary text-lg"
+          ></i>
+          <i
+            onClick={() => deleteProperty(val._id)}
+            className="ri-delete-bin-6-line cursor-pointer hover:text-primary text-lg"
+          ></i>
+        </div>
+      ),
+    },
+  ];
 
   return (
     <div>
@@ -129,63 +174,6 @@ const AdminListLand = () => {
           }
           subHeaderAlign="right"
         />
-        // <table className="general_table mt-10">
-        //   <thead className="bg-gray-200">
-        //     <tr>
-        //       <th>S/N</th>
-        //       <th>Name</th>
-        //       <th>Location</th>
-        //       <th>Description</th>
-        //       <th>Price</th>
-        //       <th>Initial deposit</th>
-        //       <th>Plot size</th>
-        //       <th>Land title</th>
-        //       <th>Action</th>
-        //     </tr>
-        //   </thead>
-        //   <tbody>
-        //     {properties.map((item, index) => {
-        //       return (
-        //         <>
-        //           <tr key={index}>
-        //             <td>{index + 1}</td>
-        //             <td>{item.name}</td>
-        //             <td>{item.location}</td>
-        //             <td>{item.description.slice(0, 31)}...</td>
-        //             <td>
-        //               {item.price.toLocaleString("en-NG", {
-        //                 style: "currency",
-        //                 currency: "NGN",
-        //               })}
-        //             </td>
-        //             <td>
-        //               {item.intialDeposit.toLocaleString("en-NG", {
-        //                 style: "currency",
-        //                 currency: "NGN",
-        //               })}
-        //             </td>
-        //             <td>{item.details}</td>
-        //             <td>{item.title}</td>
-        //             <td className="flex items-center gap-3 justify-center">
-        //               <i
-        //                 onClick={() => openDetails(item._id)}
-        //                 className="ri-eye-line cursor-pointer hover:text-primary text-lg"
-        //               ></i>
-        //               <i
-        //                 onClick={() => openEdit(item._id)}
-        //                 className="ri-pencil-fill cursor-pointer hover:text-primary text-lg"
-        //               ></i>
-        //               <i
-        //                 onClick={() => deleteProperty(item._id)}
-        //                 className="ri-delete-bin-6-line cursor-pointer hover:text-primary text-lg"
-        //               ></i>
-        //             </td>
-        //           </tr>
-        //         </>
-        //       );
-        //     })}
-        //   </tbody>
-        // </table>
       )}
     </div>
   );
