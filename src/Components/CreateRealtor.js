@@ -32,8 +32,8 @@ const CreateRealtor = ({ open, handleClose }) => {
       .then((result) => {
         setSending(false);
         toast.success(result.data.message);
-        handleClose()
-        window.location.reload()
+        handleClose();
+        window.location.reload();
       })
       .catch((err) => {
         toast.error(err.response.data.message);
@@ -55,10 +55,7 @@ const CreateRealtor = ({ open, handleClose }) => {
 
   return (
     <Modal open={open} onClose={handleClose}>
-      <div
-        className="CModal scrollBar"
-        style={{ maxWidth: 400, height: "85%" }}
-      >
+      <div className="CModal scrollBar" style={{ maxWidth: 400 }}>
         <div className="flex justify-between items-center mb-7">
           <h5 className="font-semibold text-accent text-lg">Create Realtor</h5>
           <i

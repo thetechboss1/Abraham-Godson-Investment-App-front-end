@@ -1,4 +1,4 @@
-import { Modal } from "@mui/material";
+import { Tooltip } from "@mui/material";
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import DataTable from "react-data-table-component";
@@ -6,7 +6,7 @@ import { url } from "../Api";
 import CreateSalesRecord from "../Components/CreateSalesRecord";
 import EditSalesRecord from "../Components/EditSalesRecord";
 import PageToper from "../Components/PageToper";
-import { pStyle } from "../Components/RealtorsDetails";
+import { SalesRecordDetails } from "../Components/SalesRecordDetails";
 import { PageContext } from "../Context/PageContextProvider";
 import DashboardLayout from "../Layout/DashboardLayout";
 import { btnStyle } from "./AllRealtors";
@@ -50,6 +50,11 @@ const SalesRecord = () => {
     setGetId(id);
   };
 
+  const openSaleDetails = (id) => {
+    setOpenModal(true);
+    setGetId(id);
+  };
+
   const columns = [
     {
       name: "Property",
@@ -86,48 +91,23 @@ const SalesRecord = () => {
       cell: (val) => (val.property ? val.property.type : "Property deleted"),
     },
 
-    // {
-    //   name: "Client",
-    //   selector: "buyerDetails.buyerName",
-    // },
-    // {
-    //   name: "Client Email",
-    //   selector: "buyerDetails.buyerEmail",
-    // },
-    // {
-    //   name: "Client Phone",
-    //   selector: "buyerDetails.buyerPhone",
-    // },
-
-    // {sale.deposit.toLocaleString("en-NG", {
-    //             style: "currency",
-    //             currency: "NGN",
-    //           })}
-
-    {
-      name: "Date",
-      cell: (val) => val.createdAt.split("T")[0],
-    },
-    {
-      name: "Client",
-      cell: (val) => (
-        <button
-          style={{ padding: "4px 5px" }}
-          className={`${btnStyle} text-primary`}
-          onClick={() => setOpenModal(true)}
-        >
-          Client
-        </button>
-      ),
-    },
-
     {
       name: "Action",
       cell: (val) => (
-        <i
-          onClick={() => openEdit(val._id)}
-          className="ri-pencil-fill cursor-pointer hover:text-primary text-lg"
-        ></i>
+        <div className="flex items-center gap-4">
+          <Tooltip title="Edit Sale" placement="top">
+            <i
+              onClick={() => openEdit(val._id)}
+              className="ri-pencil-fill cursor-pointer hover:text-primary text-lg"
+            ></i>
+          </Tooltip>
+          <Tooltip title="View Sale Details" placement="top">
+            <i
+              onClick={() => openSaleDetails(val._id)}
+              className="ri-eye-line cursor-pointer hover:text-primary text-lg"
+            ></i>
+          </Tooltip>
+        </div>
       ),
     },
   ];
@@ -148,6 +128,11 @@ const SalesRecord = () => {
             id={getId}
             open={editOpen}
             handleClose={() => setEditOpen(false)}
+          />
+          <SalesRecordDetails
+            id={getId}
+            open={openModal}
+            handleClose={() => setOpenModal(false)}
           />
         </div>
         {!loading && sales.length === 0 && (
@@ -178,42 +163,6 @@ const SalesRecord = () => {
             subHeaderAlign="left"
           />
         )}
-
-        <Modal open={openModal} onClose={() => setOpenModal(false)}>
-          <div
-            className="CModal scrollBar"
-            style={{ maxWidth: 600, height: "85%" }}
-          >
-            <h4 className="font-semibold text-lg pb-4">Client Details</h4>
-            <div className="form-control">
-              <label>Full name</label>
-              <input
-                type="text"
-                // placeholder={userAccount.fullname}
-                disabled={true}
-                className={pStyle}
-              />
-            </div>
-            <div className="form-control">
-              <label>Email</label>
-              <input
-                type="text"
-                // placeholder={userAccount.email}
-                disabled={true}
-                className={pStyle}
-              />
-            </div>
-            <div className="form-control">
-              <label>Phone number</label>
-              <input
-                type="text"
-                // placeholder={userAccount.phone}
-                disabled={true}
-                className={pStyle}
-              />
-            </div>
-          </div>
-        </Modal>
       </div>
     </DashboardLayout>
   );

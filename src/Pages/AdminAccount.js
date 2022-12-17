@@ -32,6 +32,7 @@ const AdminAccount = () => {
       )
       .then((response) => {
         toast.success(response.data.message);
+        window.location.reload();
       })
 
       .catch((err) => {
@@ -52,7 +53,6 @@ const AdminAccount = () => {
         password: values.password,
         newPassword: values.newPassword,
       },
-     
     })
       .then((result) => {
         console.log(result);
@@ -135,10 +135,9 @@ const AdminAccount = () => {
                   8,
                   "Password must not be lass than 8 characters"
                 ),
-                confirmPassword: Yup.string().oneOf(
-                  [Yup.ref("newPassword"), null],
-                  "Passwords must match"
-                ).required("Field is required!"),
+                confirmPassword: Yup.string()
+                  .oneOf([Yup.ref("newPassword"), null], "Passwords must match")
+                  .required("Field is required!"),
               })}
               onSubmit={onSubmitReset}
             >

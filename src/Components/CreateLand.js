@@ -87,7 +87,7 @@ const CreateLand = ({ handleClose, open }) => {
     <Modal open={open} onClose={handleClose}>
       <div
         className="CModal scrollBar"
-        style={{ maxWidth: 750, height: "85%" }}
+        style={{ maxWidth: 750, }}
       >
         <div className="flex justify-between items-center mb-7">
           <h5 className="font-semibold text-accent text-lg">
