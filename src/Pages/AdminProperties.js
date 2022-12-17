@@ -15,7 +15,7 @@ const AdminProperties = () => {
           adminAccount
         />
         <div>
-          <div className="flex items-center gap-4 mb-4">
+          <div className="flex items-center gap-4 mb-8">
             <button
               className={switchProperty ? "button" : "transparentButton"}
               onClick={() => setSwitchProperty(true)}

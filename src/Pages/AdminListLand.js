@@ -5,6 +5,7 @@ import { PageContext } from "../Context/PageContextProvider";
 import CreateLand from "../Components/CreateLand";
 import EditLand from "../Components/EditLand";
 import { AdminLandDetail } from "../Components/AdminHouseAndLandDetails";
+import DataTable from "react-data-table-component";
 
 const AdminListLand = () => {
   const [addModal, setAddModal] = useState(false);
@@ -14,6 +15,8 @@ const AdminListLand = () => {
   const [loading, setLoading] = useState(false);
   const [getId, setGetId] = useState("");
   const [editModal, setEditModal] = useState(false);
+  const [search, setSearch] = useState("");
+  const [filteredLand, setFilteredLand] = useState([]);
 
   const getProperties = useCallback(() => {
     setLoading(true);
@@ -25,10 +28,11 @@ const AdminListLand = () => {
         },
       });
       let data = res.data.properties;
-      let house = data.filter((property) => {
+      let land = data.filter((property) => {
         return property.type === "Land";
       });
-      setProperties(house);
+      setProperties(land);
+      setFilteredLand(land);
       setLoading(false);
     };
     fn1();
@@ -48,6 +52,7 @@ const AdminListLand = () => {
       });
       const newProperty = properties.filter((item) => item.id !== id);
       setProperties(newProperty);
+
       if (res) {
         window.location.reload();
       }
@@ -64,6 +69,15 @@ const AdminListLand = () => {
     setEditModal(true);
     setGetId(id);
   };
+
+  useEffect(() => {
+    const result = properties.filter((item) => {
+      return item.name.toLowerCase().match(search.toLocaleLowerCase());
+    });
+    setFilteredLand(result);
+  }, [search]);
+
+  const columns = [{ name: "Name", selector: "name", sortable: true }];
 
   return (
     <div>
@@ -95,63 +109,83 @@ const AdminListLand = () => {
         </div>
       )}
       {properties.length > 0 && (
-        <table className="general_table mt-10">
-          <thead className="bg-gray-200">
-            <tr>
-              <th>S/N</th>
-              <th>Name</th>
-              <th>Location</th>
-              <th>Description</th>
-              <th>Price</th>
-              <th>Initial deposit</th>
-              <th>Plot size</th>
-              <th>Land title</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {properties.map((item, index) => {
-              return (
-                <>
-                  <tr key={index}>
-                    <td>{index + 1}</td>
-                    <td>{item.name}</td>
-                    <td>{item.location}</td>
-                    <td>{item.description.slice(0, 31)}...</td>
-                    <td>
-                      {item.price.toLocaleString("en-NG", {
-                        style: "currency",
-                        currency: "NGN",
-                      })}
-                    </td>
-                    <td>
-                      {item.intialDeposit.toLocaleString("en-NG", {
-                        style: "currency",
-                        currency: "NGN",
-                      })}
-                    </td>
-                    <td>{item.details}</td>
-                    <td>{item.title}</td>
-                    <td className="flex items-center gap-3 justify-center">
-                      <i
-                        onClick={() => openDetails(item._id)}
-                        className="ri-eye-line cursor-pointer hover:text-primary text-lg"
-                      ></i>
-                      <i
-                        onClick={() => openEdit(item._id)}
-                        className="ri-pencil-fill cursor-pointer hover:text-primary text-lg"
-                      ></i>
-                      <i
-                        onClick={() => deleteProperty(item._id)}
-                        className="ri-delete-bin-6-line cursor-pointer hover:text-primary text-lg"
-                      ></i>
-                    </td>
-                  </tr>
-                </>
-              );
-            })}
-          </tbody>
-        </table>
+        <DataTable
+          columns={columns}
+          data={filteredLand}
+          pagination
+          fixedHeader
+          responsive
+          className="overflow-x-auto"
+          striped
+          highlightOnHover
+          subHeader
+          subHeaderComponent={
+            <input
+              placeholder="Search table.."
+              className="border border-slate-500 py-2 pl-2 pr-5 font-medium rounded text-sm focus:outline-primary"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          }
+          subHeaderAlign="right"
+        />
+        // <table className="general_table mt-10">
+        //   <thead className="bg-gray-200">
+        //     <tr>
+        //       <th>S/N</th>
+        //       <th>Name</th>
+        //       <th>Location</th>
+        //       <th>Description</th>
+        //       <th>Price</th>
+        //       <th>Initial deposit</th>
+        //       <th>Plot size</th>
+        //       <th>Land title</th>
+        //       <th>Action</th>
+        //     </tr>
+        //   </thead>
+        //   <tbody>
+        //     {properties.map((item, index) => {
+        //       return (
+        //         <>
+        //           <tr key={index}>
+        //             <td>{index + 1}</td>
+        //             <td>{item.name}</td>
+        //             <td>{item.location}</td>
+        //             <td>{item.description.slice(0, 31)}...</td>
+        //             <td>
+        //               {item.price.toLocaleString("en-NG", {
+        //                 style: "currency",
+        //                 currency: "NGN",
+        //               })}
+        //             </td>
+        //             <td>
+        //               {item.intialDeposit.toLocaleString("en-NG", {
+        //                 style: "currency",
+        //                 currency: "NGN",
+        //               })}
+        //             </td>
+        //             <td>{item.details}</td>
+        //             <td>{item.title}</td>
+        //             <td className="flex items-center gap-3 justify-center">
+        //               <i
+        //                 onClick={() => openDetails(item._id)}
+        //                 className="ri-eye-line cursor-pointer hover:text-primary text-lg"
+        //               ></i>
+        //               <i
+        //                 onClick={() => openEdit(item._id)}
+        //                 className="ri-pencil-fill cursor-pointer hover:text-primary text-lg"
+        //               ></i>
+        //               <i
+        //                 onClick={() => deleteProperty(item._id)}
+        //                 className="ri-delete-bin-6-line cursor-pointer hover:text-primary text-lg"
+        //               ></i>
+        //             </td>
+        //           </tr>
+        //         </>
+        //       );
+        //     })}
+        //   </tbody>
+        // </table>
       )}
     </div>
   );
