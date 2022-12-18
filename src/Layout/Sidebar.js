@@ -15,7 +15,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
     >
       <div>
         <div className="flex justify-center">
-          <img src={logo} alt="logo" className="h-14 mr-2" />
+          <img src={logo} alt="logo" className={isOpen ? "h-14 mr-2" : "h-7"} />
         </div>
 
         {/* Admin view */}
@@ -118,7 +118,13 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
             title={isOpen ? "Close sidebar" : "Open sidebar"}
             placement="right-start"
           >
-            <i className={isOpen ? "ri-arrow-left-line text-xl font-medium" : "ri-arrow-right-line text-xl font-medium"}></i>
+            <i
+              className={
+                isOpen
+                  ? "ri-arrow-left-line text-xl font-medium"
+                  : "ri-arrow-right-line text-xl font-medium"
+              }
+            ></i>
           </Tooltip>
 
           <span className={isOpen ? "text-base" : "hidden"}>Switch</span>
