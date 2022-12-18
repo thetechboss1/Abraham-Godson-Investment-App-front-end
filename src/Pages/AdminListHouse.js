@@ -1,6 +1,7 @@
 import { Modal } from "@mui/material";
 import axios from "axios";
 import React, { useCallback, useContext, useEffect, useState } from "react";
+import DataTable from "react-data-table-component";
 import { url } from "../Api";
 import { AdminHouseDetail } from "../Components/AdminHouseAndLandDetails";
 import CreateHouse from "../Components/CreateHouse";
@@ -15,6 +16,8 @@ const AdminListHouse = () => {
   const [properties, setProperties] = useState([]);
   const [loading, setLoading] = useState(false);
   const [getId, setGetId] = useState("");
+  const [search, setSearch] = useState("");
+  const [filteredHouse, setFilteredHouse] = useState([]);
 
   const getProperties = useCallback(() => {
     setLoading(true);
@@ -30,6 +33,7 @@ const AdminListHouse = () => {
         return property.type === "House";
       });
       setProperties(house);
+      setFilteredHouse(house);
       setLoading(false);
     };
     fn1();
@@ -66,6 +70,61 @@ const AdminListHouse = () => {
     setGetId(id);
   };
 
+  useEffect(() => {
+    const result = properties.filter((item) => {
+      return item.name.toLowerCase().match(search.toLocaleLowerCase());
+    });
+    setFilteredHouse(result);
+  }, [search]);
+
+  const columns = [
+    { name: "Name", selector: "name", sortable: true },
+    { name: "Location", selector: "location" },
+    {
+      name: "Price",
+      cell: (amount) => (
+        <span>
+          {amount.price.toLocaleString("en-NG", {
+            style: "currency",
+            currency: "NGN",
+          })}
+        </span>
+      ),
+    },
+    {
+      name: "Initial deposit",
+      cell: (amount) => (
+        <span>
+          {amount.intialDeposit.toLocaleString("en-NG", {
+            style: "currency",
+            currency: "NGN",
+          })}
+        </span>
+      ),
+    },
+    { name: "BedRoom", cell: (val) => <span>{val.details[0]}</span> },
+    { name: "BathRoom", cell: (val) => <span>{val.details[1]}</span> },
+    {
+      name: "Action",
+      cell: (val) => (
+        <div className="flex items-center gap-3 justify-center">
+          <i
+            onClick={() => openDetails(val._id)}
+            className="ri-eye-line cursor-pointer hover:text-primary text-lg"
+          ></i>
+          <i
+            onClick={() => openEdit(val._id)}
+            className="ri-pencil-fill cursor-pointer hover:text-primary text-lg"
+          ></i>
+          <i
+            onClick={() => deleteProperty(val._id)}
+            className="ri-delete-bin-6-line cursor-pointer hover:text-primary text-lg"
+          ></i>
+        </div>
+      ),
+    },
+  ];
+
   return (
     <div>
       <div className="-mt-14 flex justify-end">
@@ -84,11 +143,6 @@ const AdminListHouse = () => {
         open={editModal}
         handleClose={() => setEditModal(false)}
       />
-      {!loading && properties.length === 0 && (
-        <div>
-          <h5 className="pt-4 font-medium text-lg"> No Property yet</h5>
-        </div>
-      )}
 
       {loading && (
         <div>
@@ -96,67 +150,26 @@ const AdminListHouse = () => {
         </div>
       )}
 
-      {properties.length > 0 && (
-        <table className="general_table mt-10">
-          <thead className="bg-gray-200">
-            <tr>
-              <th>S/N</th>
-              <th>Name</th>
-              <th>Location</th>
-              <th>Description</th>
-              <th>Price</th>
-              <th>Bedroom</th>
-              <th>Bathroom</th>
-              <th>Initial deposit</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {properties.map((item, index) => {
-              return (
-                <>
-                  <tr key={index}>
-                    <td>{index + 1}</td>
-                    <td>{item.name}</td>
-                    <td>{item.location}</td>
-                    <td>{item.description.slice(0, 31)}...</td>
-                    <td>
-                      {item.price.toLocaleString("en-NG", {
-                        style: "currency",
-                        currency: "NGN",
-                      })}
-                    </td>
-                    <td>{item.details[0]}</td>
-                    <td>{item.details[1]}</td>
-                    <td>
-                      {item.intialDeposit.toLocaleString("en-NG", {
-                        style: "currency",
-                        currency: "NGN",
-                      })}
-                    </td>
-                    <td className="flex items-center gap-3 justify-center">
-                      <i
-                        onClick={() => openDetails(item._id)}
-                        className="ri-eye-line cursor-pointer hover:text-primary text-lg"
-                      ></i>
-                      <i
-                        onClick={() => openEdit(item._id)}
-                        className="ri-pencil-fill cursor-pointer hover:text-primary text-lg"
-                      ></i>
-                      <i
-                        onClick={() => deleteProperty(item._id)}
-                        className="ri-delete-bin-6-line cursor-pointer hover:text-primary text-lg"
-                      ></i>
-                    </td>
-                  </tr>
-                </>
-              );
-            })}
-          </tbody>
-        </table>
-      )}
-
-      {/* description modal */}
+      <DataTable
+        columns={columns}
+        data={filteredHouse}
+        pagination
+        fixedHeader
+        responsive
+        className="overflow-x-auto"
+        striped
+        highlightOnHover
+        subHeader
+        subHeaderComponent={
+          <input
+            placeholder="Search table.."
+            className="border border-slate-500 py-2 pl-2 pr-5 font-medium rounded text-sm focus:outline-primary"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        }
+        subHeaderAlign="right"
+      />
     </div>
   );
 };

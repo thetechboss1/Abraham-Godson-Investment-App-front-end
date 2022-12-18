@@ -91,7 +91,7 @@ const CreateHouse1 = ({ open, handleClose }) => {
     <Modal open={open} onClose={handleClose}>
       <div
         className="CModal scrollBar"
-        style={{ maxWidth: 750 }}
+        style={{ maxWidth: 750, height: "33rem" }}
       >
         <div className="flex justify-between items-center mb-7">
           <h5 className="font-semibold text-accent text-lg">

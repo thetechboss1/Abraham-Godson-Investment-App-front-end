@@ -135,34 +135,29 @@ const SalesRecord = () => {
             handleClose={() => setOpenModal(false)}
           />
         </div>
-        {!loading && sales.length === 0 && (
-          <div>
-            <h5 className="pt-4 font-medium text-lg"> No Sales yet</h5>
-          </div>
-        )}
+
         {loading && <h5 className="pt-4 font-medium text-lg">Loading....</h5>}
-        {sales.length > 0 && (
-          <DataTable
-            columns={columns}
-            data={filteredSales}
-            pagination
-            fixedHeader
-            responsive
-            className="overflow-x-auto"
-            striped
-            highlightOnHover
-            subHeader
-            subHeaderComponent={
-              <input
-                placeholder="Search table.."
-                className="border border-slate-500 py-2 pl-2 pr-5 font-medium rounded text-sm focus:outline-primary"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-              />
-            }
-            subHeaderAlign="left"
-          />
-        )}
+
+        <DataTable
+          columns={columns}
+          data={filteredSales}
+          pagination
+          fixedHeader
+          responsive
+          className="overflow-x-auto"
+          striped
+          highlightOnHover
+          subHeader
+          subHeaderComponent={
+            <input
+              placeholder="Search table.."
+              className="border border-slate-500 py-2 pl-2 pr-5 font-medium rounded text-sm focus:outline-primary"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          }
+          subHeaderAlign="left"
+        />
       </div>
     </DashboardLayout>
   );

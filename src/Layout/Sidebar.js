@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import Tooltip from "@mui/material/Tooltip";
 import { PageContext } from "../Context/PageContextProvider";
+import logo from "../Images/app-logo.png";
 
 const Sidebar = ({ isOpen, setIsOpen }) => {
   const { logout, userInfo } = useContext(PageContext);
@@ -9,24 +10,12 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
 
   return (
     <div
-      className="sidebar px-4 py-8 flex  flex-col justify-between overflow-auto transition-all"
-      style={{ width: isOpen ? "240px" : "63px" }}
+      className="sidebar px-4 pb-8 pt-7 flex  flex-col justify-between overflow-auto transition-all"
+      style={{ width: isOpen ? "220px" : "63px" }}
     >
       <div>
-        <div className="flex items-center gap-x-7">
-          <Tooltip
-            title={isOpen ? "Close sidebar" : "Open sidebar"}
-            placement="right-start"
-          >
-            <i
-              onClick={toggle}
-              className="ri-menu-line text-xl font-bold cursor-pointer"
-            ></i>
-          </Tooltip>
-
-          <h4 className={isOpen ? "font-bold text-xl" : "hidden"}>
-            Abraham Godson
-          </h4>
+        <div className="flex justify-center">
+          <img src={logo} alt="logo" className="h-14 mr-2" />
         </div>
 
         {/* Admin view */}
@@ -109,15 +98,31 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
         </div>
       </div>
 
-      <div
-        className="flex items-center gap-x-7 cursor-pointer justify-start"
-        onClick={logout}
-      >
-        <Tooltip title="Logout" placement="right-start">
-          <i className="ri-logout-circle-r-line text-xl font-medium"></i>
-        </Tooltip>
+      <div>
+        <div
+          className="flex items-center gap-x-7 cursor-pointer justify-start"
+          onClick={logout}
+        >
+          <Tooltip title="Logout" placement="right-start">
+            <i className="ri-logout-circle-r-line text-xl font-medium"></i>
+          </Tooltip>
 
-        <span className={isOpen ? "text-base" : "hidden"}>Logout</span>
+          <span className={isOpen ? "text-base" : "hidden"}>Logout</span>
+        </div>
+
+        <div
+          className="flex items-center gap-x-7 cursor-pointer justify-start mt-3"
+          onClick={toggle}
+        >
+          <Tooltip
+            title={isOpen ? "Close sidebar" : "Open sidebar"}
+            placement="right-start"
+          >
+            <i className={isOpen ? "ri-arrow-left-line text-xl font-medium" : "ri-arrow-right-line text-xl font-medium"}></i>
+          </Tooltip>
+
+          <span className={isOpen ? "text-base" : "hidden"}>Switch</span>
+        </div>
       </div>
     </div>
   );
