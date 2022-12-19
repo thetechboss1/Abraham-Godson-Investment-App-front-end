@@ -95,7 +95,7 @@ body {
 }
 
 .sidebar_link {
-  @apply flex items-center gap-x-7 text-base my-7;
+  @apply flex items-center gap-x-7 text-base my-4;
 }
 
 .sidebar_link i {

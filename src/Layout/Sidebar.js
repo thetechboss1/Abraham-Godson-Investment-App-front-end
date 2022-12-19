@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import Tooltip from "@mui/material/Tooltip";
 import { PageContext } from "../Context/PageContextProvider";
-import logo from "../Images/app-logo.png";
+import logo from "../Images/app-logo-white.png";
 
 const Sidebar = ({ isOpen, setIsOpen }) => {
   const { logout, userInfo } = useContext(PageContext);
@@ -11,11 +11,11 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
   return (
     <div
       className="sidebar px-4 pb-8 pt-7 flex  flex-col justify-between overflow-auto transition-all"
-      style={{ width: isOpen ? "220px" : "63px" }}
+      style={{ width: isOpen ? "227px" : "63px" }}
     >
       <div>
         <div className="flex justify-center">
-          <img src={logo} alt="logo" className={isOpen ? "h-14 mr-2" : "h-7"} />
+          <img src={logo} alt="logo" className={isOpen ? "h-20 mr-2" : "h-7"} />
         </div>
 
         {/* Admin view */}
