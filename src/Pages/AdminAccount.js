@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { url } from "../Api";
 import { useNavigate } from "react-router-dom";
+import { ViewerForm } from "../Components/Helper/ViewerForm";
 
 const AdminAccount = () => {
   const [resetPModal, setResetPModal] = useState(false);
@@ -55,7 +56,6 @@ const AdminAccount = () => {
       },
     })
       .then((result) => {
-        console.log(result);
         toast.success(result.message);
         localStorage.clear("user_info");
         navigate("/login");
@@ -89,24 +89,16 @@ const AdminAccount = () => {
                   Reset password
                 </button>
               </div>
-              <div className="form-control">
-                <label>Full name</label>
-                <input
-                  type="text"
-                  placeholder={userAccount.fullname}
-                  disabled={true}
-                  className="placeholder:text-black bg-gray-100"
-                />
-              </div>
-              <div className="form-control">
-                <label>Email</label>
-                <input
-                  type="text"
-                  placeholder={userAccount.email}
-                  disabled={true}
-                  className="placeholder:text-black bg-gray-100"
-                />
-              </div>
+              <ViewerForm
+                label="Full Name"
+                placeholder={userAccount.fullname}
+                type="input"
+              />
+              <ViewerForm
+                label="Email"
+                placeholder={userAccount.email}
+                type="input"
+              />
             </div>
           </div>
         </div>

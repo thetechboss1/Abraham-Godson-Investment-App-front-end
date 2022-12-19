@@ -3,6 +3,7 @@ import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { url } from "../Api";
 import { PageContext } from "../Context/PageContextProvider";
+import { ViewerForm } from "./Helper/ViewerForm";
 import { pStyle } from "./RealtorsDetails";
 
 export const SalesRecordDetails = ({ handleClose, open, id }) => {
@@ -28,52 +29,31 @@ export const SalesRecordDetails = ({ handleClose, open, id }) => {
     <Modal open={open} onClose={handleClose}>
       <div className="CModal scrollBar" style={{ maxWidth: 600 }}>
         <h4 className="font-semibold text-lg pb-4">More Sale Details</h4>
-
-        <div className="form-control">
-          <label>Created Date</label>
-          <input
-            type="text"
-            placeholder={sale.createdAt?.split("T")[0]}
-            disabled={true}
-            className={pStyle}
-          />
-        </div>
-        <div className="form-control">
-          <label>Created Date</label>
-          <input
-            type="text"
-            placeholder={sale?.updatedAt?.split("T")[0]}
-            disabled={true}
-            className={pStyle}
-          />
-        </div>
-        <div className="form-control">
-          <label>Full name</label>
-          <input
-            type="text"
-            placeholder={sale.buyerDetails?.buyerName}
-            disabled={true}
-            className={pStyle}
-          />
-        </div>
-        <div className="form-control">
-          <label>Email</label>
-          <input
-            type="text"
-            placeholder={sale.buyerDetails?.buyerEmail}
-            disabled={true}
-            className={pStyle}
-          />
-        </div>
-        <div className="form-control">
-          <label>Phone number</label>
-          <input
-            type="text"
-            placeholder={sale.buyerDetails?.buyerPhone}
-            disabled={true}
-            className={pStyle}
-          />
-        </div>
+        <ViewerForm
+          label="Created Date"
+          placeholder={sale.createdAt?.split("T")[0]}
+          type="input"
+        />
+        <ViewerForm
+          label="Updated Date"
+          placeholder={sale?.updatedAt?.split("T")[0]}
+          type="input"
+        />
+        <ViewerForm
+          label="Client Full Name"
+          placeholder={sale.buyerDetails?.buyerName}
+          type="input"
+        />
+        <ViewerForm
+          label="Client Email"
+          placeholder={sale.buyerDetails?.buyerEmail}
+          type="input"
+        />
+        <ViewerForm
+          label="Client Phone"
+          placeholder={sale.buyerDetails?.buyerPhone}
+          type="input"
+        />
       </div>
     </Modal>
   );

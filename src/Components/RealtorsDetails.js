@@ -5,7 +5,6 @@ import { PageContext } from "../Context/PageContextProvider";
 import { ViewerForm } from "./Helper/ViewerForm";
 import PageToper from "./PageToper";
 
-export const pStyle = "placeholder:text-black bg-gray-100";
 const RealtorsDetails = ({ close, id }) => {
   const { userInfo } = useContext(PageContext);
   const [userAccount, setUserAccount] = useState({});

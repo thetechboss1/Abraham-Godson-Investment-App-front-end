@@ -17,8 +17,6 @@ const FirstGen = ({ myDownlineFirstGen, loading }) => {
     setOpenFullDialog(true);
   };
 
-  console.log(myDownlineFirstGen);
-
   return (
     <>
       <Dialog fullScreen open={openFullDialog} TransitionComponent={Transition}>
