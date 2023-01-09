@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { PageContext } from "../Context/PageContextProvider";
-import logo from "../Images/logo1.png";
+import logo from "../Images/app-logo.png";
 import showcase from "../Images/showcase.jpg";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
@@ -66,13 +66,13 @@ const Register = () => {
   };
 
   return (
-    <div className="h-screen bg-neutral">
-      <div className="formWrap" style={{ maxWidth: 700 }}>
+    <div className="bg-neutral" style={{height: "120vh"}}>
+      <div className="formWrap mt-10" style={{ maxWidth: 850 }}>
         <div className="bg-white shadow-md rounded-md grid grid-cols-1 md:grid-cols-2">
           <div className="px-4 py-5 flex items-center justify-center">
             <div>
-              <div className="pb-10">
-                <img src={logo} alt="logo" className="h-12" />
+            <div className="pb-10 pt-2 flex justify-center">
+                <img src={logo} alt="logo" className="h-14 md:h-24" />
               </div>
               <Formik
                 initialValues={initialValues}

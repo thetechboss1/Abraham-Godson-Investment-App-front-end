@@ -1,7 +1,7 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import logo from "../Images/logo1.png";
+import logo from "../Images/app-logo.png";
 import showcase from "../Images/showcase.jpg";
 import { toast } from "react-toastify";
 import { PageContext } from "../Context/PageContextProvider";
@@ -57,12 +57,12 @@ const Login = () => {
 
   return (
     <>
-      <div className="auth_page">
+      <div className="auth_page" >
         <div className="bg-white shadow-md rounded-md grid grid-cols-1 md:grid-cols-2 ">
           <div className="p-5 flex items-center">
             <div>
-              <div className="py-14">
-                <img src={logo} alt="logo" className="h-12" />
+              <div className="pb-10 pt-2 flex justify-center">
+                <img src={logo} alt="logo" className="h-14 md:h-24" />
               </div>
               <Formik
                 initialValues={initialValues}
